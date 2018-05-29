@@ -1,0 +1,26 @@
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-start {
+    justify-content: flex-start;
+}
+
+.space-around {
+    justify-content: space-around;
+}
+
+.flex-end {
+    justify-content: flex-end;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.align-item-start {
+    align-items: flex-start;
+}

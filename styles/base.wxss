@@ -1,0 +1,653 @@
+view {
+    font-size: 30rpx;
+    color: #333;
+}
+
+page {
+    background: #f0eff5;
+}
+
+/* 背景 */
+
+.space {
+    background: #f0eff5;
+    height: 24rpx;
+}
+
+.bg-base {
+    background: #f0eff5;
+}
+
+.container {
+    position: relative;
+    background: #fff;
+}
+
+.shadow {
+    box-shadow: 0rpx 2rpx 10rpx rgba(102, 102, 102, 0.3);
+}
+
+.no_data {
+    font-size: 40rpx;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    color: #8b8b8b;
+    padding-top: 20rpx;
+}
+
+.no_data .iconfont {
+    font-size: 40rpx;
+}
+
+/*元素显示 隐藏  */
+.hidden {
+    display: none;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.tc {
+    text-align: center;
+}
+
+.tl {
+    text-align: left;
+}
+
+.tr {
+    text-align: right;
+}
+
+.text-theme {
+    color: #c81c28;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.text-666 {
+    color: #666;
+}
+
+.text-999 {
+    color: #999;
+}
+
+.ctheme {
+    color: #c81c28;
+}
+
+.c666 {
+    color: #666;
+}
+
+.c333 {
+    color: #333;
+}
+
+.c000 {
+    color: #000;
+}
+
+.c999 {
+    color: #999;
+}
+
+.cfff {
+    color: #fff;
+}
+
+.c-blue {
+    color: #2595ff;
+}
+
+.c-orange {
+    color: #f99130;
+}
+
+.c-red {
+    color: #ff3729;
+}
+
+.bg-theme {
+    background: #c81c28 !important;
+}
+
+.bg-blue {
+    background: #2595ff;
+}
+
+.fs24 {
+    font-size: 24rpx;
+}
+
+.fs25 {
+    font-size: 25rpx;
+}
+
+.fs26 {
+    font-size: 26rpx;
+}
+
+.fs27 {
+    font-size: 27rpx;
+}
+
+.fs28 {
+    font-size: 28rpx;
+}
+
+.fs29 {
+    font-size: 29rpx;
+}
+
+.fs30 {
+    font-size: 30rpx;
+}
+
+.fs31 {
+    font-size: 31rpx;
+}
+
+.fs32 {
+    font-size: 32rpx;
+}
+
+.fs34 {
+    font-size: 34rpx;
+}
+
+.fs36 {
+    font-size: 36rpx;
+}
+
+.fs40 {
+    font-size: 40rpx;
+}
+
+.fs46 {
+    font-size: 46rpx;
+}
+
+.fs50 {
+    font-size: 50rpx;
+}
+
+.b600 {
+    font-weight: 600;
+}
+
+.b500 {
+    font-weight: 500;
+}
+
+.lh40 {
+    line-height: 40rpx;
+}
+
+.lh50 {
+    line-height: 50rpx;
+}
+
+.lh60 {
+    line-height: 60rpx;
+}
+
+.lh70 {
+    line-height: 70rpx;
+}
+
+.lh80 {
+    line-height: 80rpx;
+}
+
+.lh90 {
+    line-height: 90rpx;
+}
+
+.lh100 {
+    line-height: 100rpx;
+}
+
+.lh120 {
+    line-height: 120rpx;
+}
+
+.radius {
+    border-radius: 10rpx;
+}
+
+/*边框  */
+
+.bdb {
+    border-bottom: 1rpx #eee solid;
+}
+
+.bdt {
+    border-top: 1rpx #eee solid;
+}
+
+.bd-theme {
+    border: 1rpx #c81c28 solid;
+}
+
+.border-bottom {
+    position: relative;
+}
+
+.border-bottom::after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1rpx;
+    height: 1px;
+    border-top: 1px solid #ddd;
+    color: #ddd;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    z-index: 2;
+}
+
+/*左右边框  */
+
+.border-left-right {
+    position: relative;
+}
+
+.border-left-right::before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    border-right: 1px solid #ddd;
+    color: #ddd;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleX(0.5);
+    transform: scaleX(0.5);
+    z-index: 2;
+}
+
+.border-left-right::after {
+    content: " ";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    border-right: 1px solid #ddd;
+    color: #ddd;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleX(0.5);
+    transform: scaleX(0.5);
+    z-index: 2;
+}
+
+/*按钮禁用  */
+
+.disabled-btn {
+    border-color: transparent;
+    opacity: 0.45;
+    box-shadow: none;
+}
+
+.disabled {
+    pointer-events: none;
+    border-color: transparent;
+    cursor: not-allowed;
+    opacity: 0.45;
+    box-shadow: none;
+}
+
+/*文字截断  */
+
+.ellipsis, .ellipsis-line2, .ellipsis-line3, .ellipsis-line4 {
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
+.ellipsis-line2 {
+    -webkit-line-clamp: 2;
+}
+
+.ellipsis-line3 {
+    -webkit-line-clamp: 3;
+}
+
+/* 布局 样式类 */
+
+.relative {
+    position: relative;
+}
+
+.fixed-bottom {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 750rpx;
+}
+
+.cell-padding {
+    padding: 0 20rpx;
+}
+
+.cell-padding-40 {
+    padding: 0 40rpx;
+}
+
+.mg10 {
+    margin: 10rpx;
+}
+
+.pd10 {
+    padding: 10rpx;
+}
+
+.pd20 {
+    padding: 20rpx;
+}
+
+.pd30 {
+    padding: 30rpx;
+}
+
+/* 上 */
+
+.mgt10 {
+    margin-top: 10rpx;
+}
+
+.mgt20 {
+    margin-top: 20rpx;
+}
+
+.mgt30 {
+    margin-top: 30rpx;
+}
+
+.mgt34 {
+    margin-top: 34rpx;
+}
+
+.pdt10 {
+    padding-top: 10rpx;
+}
+
+.pdt20 {
+    padding-top: 20rpx;
+}
+
+.pdt30 {
+    padding-top: 30rpx;
+}
+
+/* 右 */
+
+.mgr10 {
+    margin-right: 10rpx;
+}
+
+.mgr20 {
+    margin-right: 20rpx;
+}
+
+.mgr30 {
+    margin-right: 30rpx;
+}
+
+.mgr34 {
+    margin-right: 34rpx;
+}
+
+.mgr50 {
+    margin-right: 50rpx;
+}
+
+.pdr10 {
+    padding-right: 10rpx;
+}
+
+.pdr20 {
+    padding-right: 20rpx;
+}
+
+.pdr30 {
+    padding-right: 30rpx;
+}
+
+.pdr40 {
+    padding-right: 40rpx;
+}
+
+/* 下 */
+
+.mgb10 {
+    margin-bottom: 10rpx;
+}
+
+.mgb20 {
+    margin-bottom: 20rpx;
+}
+
+.mgb30 {
+    margin-bottom: 30rpx;
+}
+
+.pdb10 {
+    padding-bottom: 10rpx;
+}
+
+.pdb20 {
+    padding-bottom: 20rpx;
+}
+
+.pdb30 {
+    padding-bottom: 30rpx;
+}
+
+/* 左 */
+
+.mgl10 {
+    margin-left: 10rpx;
+}
+
+.mgl20 {
+    margin-left: 20rpx;
+}
+
+.mgl26 {
+    margin-left: 26rpx;
+}
+
+.mgl30 {
+    margin-left: 30rpx;
+}
+
+.mgl50 {
+    margin-left: 50rpx;
+}
+
+.pdl10 {
+    padding-left: 10rpx;
+}
+
+.pdl20 {
+    padding-left: 20rpx;
+}
+
+.pdl30 {
+    padding-left: 30rpx;
+}
+
+/*高度 宽度  */
+
+.h260 {
+    height: 260rpx;
+}
+.h200 {
+    height: 200rpx;
+}
+
+.w200 {
+    width: 200rpx;
+}
+
+/* 隐藏 */
+
+.hidden {
+    display: none;
+}
+
+.type_red {
+    background: #ea4a3a;
+    color: #fff;
+}
+
+.type_yellow {
+    background: #ff6a3c;
+    color: #fff;
+}
+
+.type_green {
+    background: #09bb07;
+    color: #fff;
+}
+
+.type_pick {
+    background: #ff4856;
+    color: #fff;
+    border: 1px solid #ff4856;
+}
+
+.type_empity {
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.button {
+    font-size: 36rpx;
+    height: 95rpx;
+    line-height: 95rpx;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    -moz-border-radius: 10rpx;
+    /* Firefox */
+    -webkit-border-radius: 10rpx;
+    /* Safari 和 Chrome */
+    border-radius: 10rpx;
+    /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+}
+
+/*弹窗样式 S  */
+
+.pop-window {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.form-box-1 {
+    position: relative;
+    width: 600rpx;
+    margin: 130rpx auto;
+    padding: 0rpx 40rpx 50rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    text-align: center;
+    line-height: 80rpx;
+}
+
+.submit-box button {
+    width: 270rpx;
+    margin-top: 50rpx;
+    background: #c81c28;
+    color: #fff;
+    line-height: 80rpx;
+}
+
+.close {
+    position: absolute;
+    right: 0rpx;
+    top: 0rpx;
+    padding: 20rpx;
+    font-size: 50rpx;
+}
+
+/* 找不到物料 */
+
+.form-box-2 {
+    position: relative;
+    width: 600rpx;
+    margin: 130rpx auto;
+    padding-top: 34rpx;
+    padding-bottom: 50rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    text-align: center;
+    line-height: 80rpx;
+}
+
+.lh36 {
+    line-height: 36rpx;
+}
+
+.reason {
+    width: 540rpx;
+    padding: 10rpx 30rpx;
+    margin-top: 36rpx;
+}
+
+/* 回执信息 */
+
+.form-box-3 {
+    position: relative;
+    width: 600rpx;
+    margin: 130rpx auto;
+    padding: 0rpx 40rpx 50rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    text-align: center;
+    line-height: 60rpx;
+}
+
+.form-add-img image {
+    display: block;
+    width: 200rpx;
+    height: 200rpx;
+    /* margin: 28rpx 0 28rpx 8rpx; */
+    background: #f2f2f2 url(https://static.yidap.com/miniapp/deer/upload.png) no-repeat;
+    background-size: 200rpx 200rpx;
+}
+
+/*弹窗样式 E  */
+
+/*没有相关数据 统一样式  */
+
+.empty {
+    text-align: center;
+}
+
+.empty image {
+    width: 114rpx;
+    height: 144rpx;
+    padding: 86rpx 0 66rpx;
+}

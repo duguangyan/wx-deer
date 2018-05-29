@@ -1,0 +1,31 @@
+
+
+
+.task-info {
+  width: 670rpx;
+  margin: 20rpx auto;
+  background: #FFF;
+  padding: 14rpx 20rpx;
+  border-radius: 10rpx;
+  line-height: 56rpx;
+}
+/*顶部  */
+.commission-box {
+    background:#FFF url(https://static.yidap.com/miniapp/deer/commission-bg.png) no-repeat center right;
+    background-size: 165rpx 128rpx
+}
+
+.reward-box {
+    background:#FFF url(https://static.yidap.com/miniapp/deer/reward-bg.png) no-repeat center right;
+    background-size: 165rpx 128rpx
+}
+
+.list-detail {
+  width: 670rpx;
+  background: #FFF;
+  padding: 14rpx 20rpx 0 20rpx;
+  margin: 0 auto;
+}
+.list-item {
+  padding: 14rpx 0;
+}

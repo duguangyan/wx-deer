@@ -1,0 +1,54 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/order/order",
+        "pages/rewardTask/rewardTask",
+        "pages/personalCenter/personalCenter",
+        "pages/rewardTaskDetail/rewardTaskDetail",
+        "pages/recordList/recordList",
+        "pages/orderDetail/orderDetail",
+        "pages/register/register",
+        "pages/login/login"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "WeChat",
+        "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+        "color": "#000000",
+        "selectedColor": "#C81A29",
+        "backgroundColor": "#ffffff",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "首页",
+                "iconPath": "images/index.jpg",
+                "selectedIconPath": "images/index-1.jpg"
+            },
+            {
+                "pagePath": "pages/order/order",
+                "text": "订单",
+                "iconPath": "images/order.jpg",
+                "selectedIconPath": "images/order-1.jpg"
+            },
+            {
+                "pagePath": "pages/rewardTask/rewardTask",
+                "text": "悬赏任务",
+                "iconPath": "images/reward-task.jpg",
+                "selectedIconPath": "images/reward-task-1.jpg"
+            },
+            {
+                "pagePath": "pages/personalCenter/personalCenter",
+                "text": "个人中心",
+                "iconPath": "images/personal-center.jpg",
+                "selectedIconPath": "images/personal-center-1.jpg"
+            }
+        ]
+    },
+    "networkTimeout": {
+        "request": 20000,
+        "downloadFile": 20000
+    }
+}

@@ -1,0 +1,22 @@
+.member-info {
+  width: 710rpx;
+  min-height: 346rpx;
+  margin: 20rpx auto;
+  background: #FFF;
+  border-radius: 10rpx;
+}
+.member-accout {
+  padding: 46rpx 20rpx 24rpx;
+}
+.service-list > view, .service-list > navigator{
+  width: 345rpx;
+  min-height: 214rpx;
+  margin: 0 0 20rpx 20rpx;
+  border-radius: 8rpx;
+  background: #FFF;
+}
+
+/*悬赏文字  */
+.text-red {
+    color: #FF3728;
+}

@@ -1,0 +1,143 @@
+<view class="container tl">
+    <view wx:if="{{detailData.button_status.status === 1}}" class="b600 tl padding lh60">
+        <text class="iconfont icon-zhaoliaoyuan fs50 mgr20" /> 找料中
+    </view>
+
+    <view wx:if="{{detailData.button_status.status === 2}}" class="b600 tl padding lh60">
+        <text class="iconfont icon-peisongyuan fs50 mgr20" /> 配送中
+    </view>
+
+    <view wx:if="{{detailData.button_status.status === 3}}" class="b600 tl padding lh60">
+        <text class="iconfont icon-icon02 fs50 mgr20" /> 已完成
+    </view>
+
+    <view class="space" />
+    <view class="padding">
+    <view wx:if="{{detailData.confirm_finish_at}}">
+            <text class="c999"> 确认收货：</text>
+            <text>{{detailData.confirm_finish_at}}</text>
+        </view>
+        <view wx:if="{{detailData.confirm_shipping_at}}">
+            <text class="c999"> 确认送达：</text>
+            <text>{{detailData.confirm_shipping_at}}</text>
+        </view>
+        <view wx:if="{{detailData.find_at}}">
+            <text class="c999"> 找到物料：</text>
+            <text>{{detailData.find_at}}</text>
+        </view>
+    </view>
+    <view class="space" />
+    <view class="padding">
+        <view>
+            <text class="c999"> 物料类型：</text>
+            <text>{{detailData.cname}}</text>
+        </view>
+        <view>
+            <text class="c999"> 物料数量：</text>
+            <text>{{detailData.fetch_num}}</text>
+        </view>
+        <view class="flex">
+            <view class=" c999">描　述　：</view>
+            <view class="flex-1 ellipsis-line3">{{detailData.desc }}
+            </view>
+        </view>
+        <view wx:if="{{detailData.type === 1}}">
+            <view>
+                <text class="c999"> 找料方式：</text>
+                <text>图片找料</text>
+            </view>
+            <view class="flex space-around pdt30 pdb30">
+                <image wx:if="{{detailData.front_img}}" src="{{detailData.front_img}}" style="width:180rpx;height:200rpx;background:#CCC;" />
+                <image  wx:if="{{detailData.side_img}}" src="{{detailData.side_img}}" style="width:180rpx;height:200rpx;background:#CCC;" />
+                <image  wx:if="{{detailData.back_img}}" src="{{detailData.back_img}}" style="width:180rpx;height:200rpx;background:#CCC;" />
+            </view>
+        </view>
+
+        <view wx:if="{{detailData.type === 2}}">
+            <text class="c999"> 找料方式：</text>
+            <text>按样找料</text>
+        </view>
+
+        <view wx:if="{{detailData.type === 3}}">
+            <text class="c999"> 找料方式：</text>
+            <text>按描述找料</text>
+        </view>
+
+    </view>
+
+    <view wx:if="{{detailData.type === 2}}" class="space" />
+    <view wx:if="{{detailData.type === 2}}" class="padding">
+        <view class="flex">
+            <view class=" c999">　联系人：</view>
+            <view class="flex-1">
+               {{detailData.get_address.consignee}} {{detailData.get_address.mobile}}
+            </view>
+        </view>
+        <view class="flex">
+            <view class="c999 ">取料地址：</view>
+            <view class="flex-1 ellipsis-line2">
+               {{ detailData.get_address.city_str}} {{ detailData.get_address.address}}
+            </view>
+        </view>
+    </view>
+
+    <view class="space" />
+    <view class="padding">
+        <view class="flex">
+            <view class=" c999">　联系人：</view>
+            <view class="flex-1">
+               {{detailData.shipping_address.consignee}} {{detailData.shipping_address.mobile}}
+            </view>
+        </view>
+        <view class="flex">
+            <view class="c999 ">送样地址：</view>
+            <view class="flex-1 ellipsis-line2">
+              {{ detailData.shipping_address.city_str}} {{ detailData.shipping_address.address}}
+            </view>
+        </view>
+    </view>
+    
+    <view class="space" />
+    <view class="padding">
+        <!-- <view class="flex flex-start">
+                    <view class="">订单详情:</view>
+                    <view>23423432523452435243</view>
+                </view> -->
+        <view>
+            <text class="c999">订单编号： </text> {{detailData.order_sn}}
+        </view>
+        <view>
+            <text class="c999">下单时间：</text> {{detailData.created_at}}
+        </view>
+        <view wx:if=" {{detailData.findman_name}}">
+            <text class="c999">　找料员：</text> {{detailData.findman_name}}/{{detailData.findman_mobile }}
+        </view>
+         <view wx:if="{{detailData.find_at}}">
+            <text class="c999">找到物料：</text> {{detailData.find_at}}
+        </view>
+        <view wx:if="{{detailData.distribution_name}}">
+            <text class="c999">　配送员：</text> {{detailData.distribution_name}}/{{detailData.distribution_mobile}}
+        </view>
+        <view wx:if="{{detailData.confirm_shipping_at}}">
+            <text class="c999">确认送达： </text> {{detailData.confirm_shipping_at}}
+        </view>
+       
+        <view wx:if="{{detailData.confirm_finish_at}}">
+            <text class="c999">客户确认收货：</text> {{detailData.confirm_finish_at}}
+        </view>
+    </view>
+
+    <view class="space" />
+    <view class="padding">
+        <view class="flex">
+            <view class="c999">服务费用:</view>
+            <view>{{'￥' + detailData.find_fee}}</view>
+        </view>
+   
+    </view>
+    <view class="space" />
+    <view wx:if="{{false}}" class="pd30 flex flex-end">
+        <view class="normal-btn">找不到物料</view>
+        <view class="warm-btn mgl30">找到物料</view>
+    </view>
+</view>

@@ -1,0 +1,28 @@
+/* pages/rewardTaskDetail/rewardTaskDetail.wxss */
+
+.img-box {
+
+}
+
+.img-box image {
+    display: block;
+    width: 180rpx;
+    height: 200rpx;
+    background: #CCC;
+    border-radius: 10rpx;
+}
+
+.handle-box {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 710rpx;
+    padding: 20rpx;
+    background: #FFF;
+    border-top: 1rpx #EEE solid;
+}
+
+.handle-box view {
+   padding: 12rpx 4rpx;
+    border-radius: 6rpx;
+}

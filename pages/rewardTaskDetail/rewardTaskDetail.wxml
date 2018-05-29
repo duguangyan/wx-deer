@@ -1,0 +1,126 @@
+<view class="container">
+    <view wx:if="{{data.type === 'accepted' && !data.finish_at}}" class="pd20 fs36">
+        <text class="iconfont icon-jinhangzhong fs50"></text> 
+        进行中
+    </view>
+
+    <view wx:if="{{data.type === 'accepted' && data.finish_at}}" class="pd20 fs36">
+        <text class="iconfont icon-icon02 fs50"></text> 
+        已完成
+    </view>
+
+    <view class="space"></view>
+
+    <view class="pd20">
+        <view class="flex mgb20">
+            <view>悬赏内容:</view>
+            <view class="flex-1 mgl20">
+                {{data.desc}}
+            </view>
+        </view>
+
+        <view class="flex mgb20">
+            <view>验收说明:</view>
+            <view class="flex-1 mgl20">
+                {{data.check_desc}}
+            </view>
+        </view>
+
+        <view class="flex mgb20">
+            <view>　有效期:</view>
+            <view class="flex-1 mgl20">
+                {{data.begin_date}} 至 {{data.end_date}}
+            </view>
+        </view>
+
+        <view wx:if="{{data.examples}}" class="flex flex-start img-box pd20">
+            <block wx:for="{{data.examples}}" wx:key="{{i}}">
+                <image class="mgr20" src="{{item}}"></image>
+            </block>
+        </view>
+
+    </view>
+
+    <view class="space"></view>
+
+<!--悬赏信息  -->
+    <view class="pd20 lh50">
+        <view>
+            　悬赏号: {{data.id}}
+        </view>
+
+         <view>
+            发布时间: {{data.created_at}}
+        </view>
+
+        <view>
+            <text>任务类型: {{data.task_type_label}}</text>
+           
+            <text class="mgl50">悬赏类型:</text>
+            <text>{{data.reward_type_label}}</text>
+        </view>
+
+        <view>
+            最大参与人数: {{data.people_limit ? data.people_limit+ '人' : '不限'}}
+        </view>
+        <!--已经完成  -->
+        <view wx:if="{{true}}">
+            <view>
+                　领取人: 张三
+            </view>
+            <view>
+                领取时间: 2048-234234
+            </view>
+        
+        </view>
+    </view>
+
+    <view class="space"></view>
+
+    <!--审核意见  -->
+    <view wx:if="{{data.type === 'accepted'}}">
+
+    <view wx:if="{{data.submit_at}}" class="pd20">
+        <view class="mgb20">提交时间: {{data.submit_at}}</view>
+
+        <view class="flex mgb20">
+            <view>提交内容: </view>
+            <view class="flex-1 mgl20">{{data.content}}</view>
+        </view>
+
+        <view wx:if="{{data.examples}}" class="flex mgb20">
+            <view>上传图片: </view>
+            <view class="flex flex-start flex-1 mgl20 img-box">
+            <block wx:for="{{data.imgs}}" wx:key="{{i}}">
+                 <image src="{{item}}" class="mgr20"></image>
+            </block>
+            </view>
+        </view>
+<view class="flex mgb20">
+            <view>审批状态: </view>
+            <view class="flex-1 mgl20">{{data.audit_status_label}}</view>
+        </view>
+        <view class="flex mgb20">
+            <view>审批意见: </view>
+            <view class="flex-1 mgl20">{{data.check_desc}}</view>
+        </view>
+    </view>
+    <view wx:else class="pd20">
+        尚未提交审批
+    </view>
+    <view class="space"></view>
+
+    </view>
+
+    <view class="flex pd20">
+        <view>悬赏币</view>
+        <view>{{data.reward_amount}}个</view>
+    </view>
+
+    <view class="space h260"></view>
+
+    <view  wx:if="{{data.type === 'acceptable'}}"  class=" flex flex-end handle-box">
+        <view bindtap="acceptTask" data-id="{{data.id}}" class="fs30 bd-theme text-theme">接受此任务</view>
+    </view>
+
+</view>

@@ -1,0 +1,19 @@
+.container {
+  background: #FFF;
+  line-height: 50rpx;
+}
+.padding {
+  padding: 16rpx 20rpx;
+}
+.warm-btn {
+  border: 1rpx #C81C28 solid;
+  color: #C81C28;
+  padding: 2rpx 10rpx;
+  border-radius: 6rpx;
+}
+.normal-btn {
+  border: 1rpx #666 solid;
+  color: #666;
+  padding: 2rpx 10rpx;
+  border-radius: 6rpx;
+}

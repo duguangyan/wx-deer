@@ -1,0 +1,18 @@
+.section-item {
+  width: 710rpx;
+  margin: 30rpx auto 0;
+  background: #FFF;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 2rpx 10rpx rgba(102, 102, 102, 0.3);
+}
+.section-title {
+  line-height: 89rpx;
+  border-bottom: 1rpx #EEE solid;
+  padding: 0 26rpx;
+  font-size: 28rpx;
+}
+.section-task-info {
+  line-height: 84rpx;
+  padding: 0 26rpx;
+  font-size: 24rpx;
+}
