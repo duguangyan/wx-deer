@@ -52,6 +52,22 @@ Page({
         this.getMyOrderList(params)
     },
 
+    // 预览图片
+
+    preview (e) {
+
+        let index = e.currentTarget.dataset.index;
+        let idx = e.currentTarget.dataset.idx;
+
+        let imgs = this.data.orderList[index].imgs
+
+        wx.previewImage({
+            current: imgs[idx], // 当前显示图片的http链接
+            urls: imgs // 需要预览的图片http链接列表
+        })
+
+    },
+
     // 弹窗
 
     showForm(e) {
@@ -499,6 +515,9 @@ Page({
 
             let orderList = res.data;
 
+            // 合并图片
+            this.mergeImg(orderList)
+
             // 判断是否完毕
             let isFullLoad = this.isFullLoad(res);
             console.log('是否加载完毕', isFullLoad)
@@ -540,6 +559,9 @@ Page({
 
             let orderList = res.data;
 
+            // 合并图片
+            this.mergeImg(orderList)
+
             // 判断是否完毕
             let isFullLoad = this.isFullLoad(res);
             console.log('是否加载完毕', isFullLoad)
@@ -567,6 +589,27 @@ Page({
         } else {
             return false
         }
+    },
+
+    // 处理预览图片
+    mergeImg (list) {
+
+        list.forEach((ele, i) => {
+
+            let imgs = [];
+
+            if (ele.front_img.length !== 0) {
+                imgs.push(ele.front_img)
+            }
+            if (ele.side_img.length !== 0) {
+                imgs.push(ele.front_img)
+            }
+            if (ele.back_img.length !== 0) {
+                imgs.push(ele.front_img)
+            }
+            ele.imgs = imgs;
+        })
+
     }
 
 })

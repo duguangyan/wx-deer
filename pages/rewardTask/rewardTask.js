@@ -16,6 +16,21 @@ Page({
         files: [{}, {}],
     },
 
+    // 预览图片
+    preview(e) {
+
+        let index = e.currentTarget.dataset.index;
+        let idx = e.currentTarget.dataset.idx;
+
+        let imgs = this.data.rewardList[index].examples
+
+        wx.previewImage({
+            current: imgs[idx], // 当前显示图片的http链接
+            urls: imgs // 需要预览的图片http链接列表
+        })
+
+    },
+
     //   接受悬赏任务
     acceptTask(e) {
         let id = e.currentTarget.dataset.id;
@@ -182,7 +197,8 @@ Page({
 
     // 提交表单
     formSubmit(e) {
-
+        
+        console.log('上传图片',this.data.files)
         let formData = e.detail.value;
 
         formData.imgs = [];
@@ -363,10 +379,10 @@ Page({
                 status: 0,
             })
 
-            wx.pageScrollTo({
-                scrollTop: 0,
-                duration: 0
-            })
+            // wx.pageScrollTo({
+            //     scrollTop: 0,
+            //     duration: 0
+            // })
 
         }).catch((res) => {
 

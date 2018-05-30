@@ -19,7 +19,7 @@
 
         <!-- 任务为空 -->
         <view class="empty" wx:if="{{isEmpty}}">
-            <image  src="../../images/empty.png"></image>
+            <image src="../../images/empty.png"></image>
             <view class="tc">
                 <text class="c999 fs34">您还没有相关任务</text>
             </view>
@@ -29,7 +29,7 @@
         <view wx:if="{{!isEmpty}}">
             <block wx:for="{{rewardList}}" wx:key="{{i}}">
                 <view class="order-item">
-                    <navigator url="../rewardTaskDetail/rewardTaskDetail?id={{item.id}}&type={{type}}" open-type='navigate' class="flex order-status">
+                    <navigator url="../rewardTaskDetail/rewardTaskDetail?id={{item.id}}&type={{type}}&index={{index}}" open-type='navigate' class="flex order-status">
                         <view>
                             <view>
                                 悬赏号：{{item.id}}
@@ -39,12 +39,14 @@
                             </view>
                         </view>
                         <view wx:if="{{type === 'accepted'}}">
-                            <view wx:if="{{item.status == 1}}" class="text-theme relative">进行中 <image wx:if="{{false}}"src="../../images/new.png" class="new"></image></view>
+                            <view wx:if="{{item.status == 1}}" class="text-theme relative">进行中
+                                <image wx:if="{{false}}" src="../../images/new.png" class="new"></image>
+                            </view>
                             <view wx:if="{{item.status == 2}}" class="text-999">已完成</view>
                         </view>
                     </navigator>
 
-                    <navigator url="../rewardTaskDetail/rewardTaskDetail?id={{item.id}}" open-type='navigate' class="order-info flex">
+                    <view class="order-info flex">
                         <view class="order-info-left">
                             <view class="ellipsis">
                                 悬赏内容： {{item.desc}}
@@ -62,15 +64,19 @@
 
                             <view wx:if="{{item.examples}}" class="order-pics-list">
                                 <block wx:for="{{item.examples}}" wx:key="{{i}}">
-                                    <image src="{{item}}" />
+                                    <image bindtap='preview' wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}" src="{{img}}" />
                                 </block>
                             </view>
 
                         </view>
                         <view class="order-info-right">
+                         <!--{{item.reward_amount}}  -->
+                              <!-- <view class="c-orange">
+                                <text class="iconfont icon-dui mgr10" />悬赏币：10个
+                            </view>   -->
                             <image src="../../images/reward-task.png" />
                         </view>
-                    </navigator>
+                    </view>
 
                     <view class="flex order-handle">
                         <view class="c-orange">
@@ -95,36 +101,41 @@
 </view>
 
 <!-- 悬赏任务回执信息 -->
- <view wx:if="{{isShow}}" class="pop-window" catchtouchmove="preventD">
-         <view  class="form-box-3">
-            <text bindtap='colse' class="iconfont icon-guanbi close fs50 c999"></text>
-            <form bindsubmit="formSubmit" report-submit>
-                <view class="fs34 b600 bdb lh120">请填写回执信息</view>
-                <view class="flex flex-start bdb form-add-img">
-                    <view>上传图片：</view>
-                    <view class="flex-1 flex space-around pd20">
+<view wx:if="{{isShow}}" class="pop-window" catchtouchmove="preventD">
+    <view class="form-box-3">
+        <text bindtap='colse' class="iconfont icon-guanbi close fs50 c999"></text>
+        <form bindsubmit="formSubmit" report-submit>
+            <view class="fs34 b600 bdb lh120">请填写回执信息</view>
+            <view class="flex flex-start bdb form-add-img">
+                <view>上传图片：</view>
+                <view class="flex-1 flex space-around pd20">
 
-                        <view class="relative" wx:for="{{files}}">
-                            <image  bindtap='chooseImage' data-id="{{index}}" src="{{item.url}}"></image>
-                            <image data-id="{{index}}" catchtap='deleteItem' wx:if="{{item.pct}}" style="width:44rpx;height:44rpx;position:absolute;right:0;top:0rpx;background: transparent;z-index:999;" src='../../images/delete.png'></image>
+                    <view class="relative" wx:for="{{files}}" wx:key="{{i}}">
+                        <image bindtap='chooseImage' data-id="{{index}}" src="{{item.url}}"></image>
+                        <image data-id="{{index}}" catchtap='deleteItem' wx:if="{{item.pct}}" style="width:44rpx;height:44rpx;position:absolute;right:0;top:0rpx;background: transparent;z-index:999;" src='../../images/delete.png'></image>
 
-                    <view wx:if="{{item.pct}}" style="width:200rpx;height:200rpx;background:rgba(0,0,0,0.4);position:absolute;left:0;top:0;text-align:center;line-height:200rpx;color:white;font-size:30rpx;">{{item.pct}}</view>
-                     <input class="hidden" value="{{item.full_url}}" name="{{'img' + ( index +1 )}}" />
-                        </view>
-                       
+                        <view wx:if="{{item.pct}}" style="width:200rpx;height:200rpx;background:rgba(0,0,0,0.4);position:absolute;left:0;top:0;text-align:center;line-height:200rpx;color:white;font-size:30rpx;">{{item.pct}}</view>
+                        <input class="hidden" value="{{item.full_url}}" name="{{'img' + ( index +1 )}}" />
                     </view>
-                </view>
-                <view class="flex tl bdb lh60">
-                    <view class="mgr20 lh80"> <text class="ctheme"> * </text>内容: </view> <input class="flex-1" name="content" placeholder='请填写内容'></input>
-                </view>
-                <!--暂时隐藏  -->
-                <view wx:if="{{false}}" class="flex tl bdb lh60">
-                    <view class="mgr20 lh80"> <text class="cfff"> * </text>文件: </view> <input class="hidden" ></input> <button class="bg-blue cfff" bindtap='uploadFile' size="mini">点击上传文件</button>
-                </view>
-                <view class="submit-box">
-                    <button formType="submit" >提交</button>
-                </view>
-            </form>
-        </view>
 
- </view>
+                </view>
+            </view>
+            <view class="flex tl bdb lh60">
+                <view class="mgr20 lh80">
+                    <text class="ctheme"> * </text>内容: </view>
+                <input class="flex-1" name="content" placeholder='请填写内容'></input>
+            </view>
+            <!--暂时隐藏  -->
+            <view wx:if="{{false}}" class="flex tl bdb lh60">
+                <view class="mgr20 lh80">
+                    <text class="cfff"> * </text>文件: </view>
+                <input class="hidden"></input>
+                <button class="bg-blue cfff" bindtap='uploadFile' size="mini">点击上传文件</button>
+            </view>
+            <view class="submit-box">
+                <button formType="submit">提交</button>
+            </view>
+        </form>
+    </view>
+
+</view>

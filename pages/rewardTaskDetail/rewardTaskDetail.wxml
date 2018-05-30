@@ -35,7 +35,7 @@
 
         <view wx:if="{{data.examples}}" class="flex flex-start img-box pd20">
             <block wx:for="{{data.examples}}" wx:key="{{i}}">
-                <image class="mgr20" src="{{item}}"></image>
+                <image bindtap='preview' data-index="{{index}}" class="mgr20" src="{{item}}"></image>
             </block>
         </view>
 
@@ -92,7 +92,7 @@
             <view>上传图片: </view>
             <view class="flex flex-start flex-1 mgl20 img-box">
             <block wx:for="{{data.imgs}}" wx:key="{{i}}">
-                 <image src="{{item}}" class="mgr20"></image>
+                 <image bindtap='preview2' data-index="{{index}}" src="{{item}}" class="mgr20"></image>
             </block>
             </view>
         </view>

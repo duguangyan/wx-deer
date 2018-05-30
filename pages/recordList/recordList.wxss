@@ -5,9 +5,9 @@
   width: 670rpx;
   margin: 20rpx auto;
   background: #FFF;
-  padding: 14rpx 20rpx;
+  padding: 14rpx 20rpx; 
   border-radius: 10rpx;
-  line-height: 56rpx;
+  line-height: 46rpx;
 }
 /*顶部  */
 .commission-box {

@@ -1,18 +1,44 @@
 .section-item {
-  width: 710rpx;
-  margin: 30rpx auto 0;
-  background: #FFF;
-  border-radius: 10rpx;
-  box-shadow: 0rpx 2rpx 10rpx rgba(102, 102, 102, 0.3);
+    width: 710rpx;
+    margin: 30rpx auto 0;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0rpx 2rpx 10rpx rgba(102, 102, 102, 0.3);
 }
+
 .section-title {
-  line-height: 89rpx;
-  border-bottom: 1rpx #EEE solid;
-  padding: 0 26rpx;
-  font-size: 28rpx;
+    line-height: 89rpx;
+    border-bottom: 1rpx #eee solid;
+    padding: 0 26rpx;
+    font-size: 28rpx;
 }
+
 .section-task-info {
-  line-height: 84rpx;
-  padding: 0 26rpx;
-  font-size: 24rpx;
+    line-height: 84rpx;
+    padding: 0 26rpx;
+    font-size: 24rpx;
+}
+
+/*骨架屏  */
+
+.index-shell {
+    width: 670rpx;
+    margin: 30rpx auto 0;
+    padding:25rpx 20rpx 15rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0rpx 2rpx 10rpx rgba(102, 102, 102, 0.3);
+
+    height: 120rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    
+}
+
+.index-shell>view {
+    background: #eee;
+    width: 670rpx;
+    height: 30rpx;
 }

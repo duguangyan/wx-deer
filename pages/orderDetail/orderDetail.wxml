@@ -46,10 +46,9 @@
                 <text class="c999"> 找料方式：</text>
                 <text>图片找料</text>
             </view>
-            <view class="flex space-around pdt30 pdb30">
-                <image wx:if="{{detailData.front_img}}" src="{{detailData.front_img}}" style="width:180rpx;height:200rpx;background:#CCC;" />
-                <image  wx:if="{{detailData.side_img}}" src="{{detailData.side_img}}" style="width:180rpx;height:200rpx;background:#CCC;" />
-                <image  wx:if="{{detailData.back_img}}" src="{{detailData.back_img}}" style="width:180rpx;height:200rpx;background:#CCC;" />
+            <view class="flex flex-start pdt30 pdb30">
+                <!--遍历图片  -->
+                <image bindtap='preview' wx:for="{{detailData.imgs}}" src="{{img}}" wx:for-item="img"  wx:for-index="idx" data-idx="{{idx}}"  wx:key="{{idx}}" style="width:180rpx;height:200rpx;background:#CCC;margin-right:20rpx;" mode='aspectFill'></image>
             </view>
         </view>
 

@@ -69,7 +69,7 @@ Page({
             password = this.data.password;
 
             let openid = wx.getStorageSync('openid');
-
+            console.log('openid', openid)
         // 可前台判断一下手机格式 util.vailPhone( num)
         const isMatch = util.vailPhone(user_name);
 

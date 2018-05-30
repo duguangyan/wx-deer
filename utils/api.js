@@ -50,8 +50,8 @@ const myRequest = function (params = {}, url) {
                         console.log('401统一处理');
 
                         wx.showModal({
-                            title: '您尚未登录',
-                            content: '是否前往登录页面',
+                            title: '提示',
+                            content: '您还没有使用权限，如果您是我们公司的找料员，请前往登录页登录使用系统',
                             confirmText: '前往',
                             confirmColor: '#c81a29',
                             success: (res) => {

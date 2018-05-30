@@ -13,6 +13,8 @@
                 <view class="flex fs24">
                         <view wx:if="{{userInfo.is_find_man}}"> <text class="iconfont icon-zhaoliaoyuan text-theme"/> 找料员</view>
                         <view wx:if="{{userInfo.is_delivery}}" class="mgl20"> <text class="iconfont icon-peisongyuan text-theme"/> 配送员</view>
+
+                        <view wx:else>您还不是我们的找料员</view>
                 </view>
             </view>
 

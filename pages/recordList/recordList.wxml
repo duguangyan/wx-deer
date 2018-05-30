@@ -51,8 +51,8 @@
         </view>
 
         <!--没有数据  -->
-        <view class="lh80" wx:if="{{list.length === 0}}" >
-            没有相关数据
+        <view class="lh80 tc c999" wx:if="{{list.length === 0}}" >
+            您暂时没有相关明细
         </view>
 
 

@@ -7,27 +7,35 @@ App({
         wx.setStorageSync('logs', logs)
 
         // 登录
-        wx.login({
-            success: res => {
-                // 发送 res.code 到后台换取 openId, sessionKey, unionId
-                console.log(res.code)
 
-                if (res.code) {
-                    api.getOpenid({
-                        data: {
-                            code: res.code,
-                            from: '4'
-                        }
-                    }).then((res) => {
-                        console.log('openid信息 == ', res)
-                        wx.setStorage({
-                            key: 'openid',
-                            data: res.data.openid,
+        // 是否有openid
+
+        let openid = wx.getStorageSync('openid');
+
+        if (!openid) {
+            wx.login({
+                success: res => {
+                    // 发送 res.code 到后台换取 openId, sessionKey, unionId
+                    console.log(res.code)
+
+                    if (res.code) {
+                        api.getOpenid({
+                            data: {
+                                code: res.code,
+                                from: '4'
+                            }
+                        }).then((res) => {
+                            console.log('openid信息 == ', res)
+                            wx.setStorage({
+                                key: 'openid',
+                                data: res.data.openid,
+                            })
                         })
-                    })
+                    }
                 }
-            }
-        })
+            })
+
+        }
 
         // 获取用户信息
         const access_token = wx.getStorageSync('access_token');

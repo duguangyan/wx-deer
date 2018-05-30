@@ -8,6 +8,19 @@ Page({
   
   },
 
+  // 预览图片
+  preview(e) {
+      let idx = e.currentTarget.dataset.idx;
+
+      let imgs = this.data.detailData.imgs;
+
+      wx.previewImage({
+          current: imgs[idx], 
+          urls: imgs 
+      })
+
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

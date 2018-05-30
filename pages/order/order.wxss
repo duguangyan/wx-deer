@@ -4,6 +4,7 @@
   position: fixed;
   left: 0;
   right: 0;
+  z-index:999;
   background: #f0eff5;
 }
 .select-section {
@@ -50,7 +51,7 @@
   padding: 28rpx 30rpx 28rpx 20rpx;
 }
 .order-info {
-  padding: 24rpx 20rpx;
+  padding: 24rpx 20rpx 10rpx;
   border-top: 1rpx #eee solid;
   border-bottom: 1rpx #eee solid;
 }
@@ -61,12 +62,18 @@
   padding-top: 20rpx;
 }
 .order-pics-list image {
-  width: 90rpx;
-  height: 100rpx;
+    width: 100rpx;
+  height: 100rpx; 
   margin-right: 46rpx;
   background: #ccc;
   border-radius: 4rpx;
 }
+
+/*地址边框,边距  */
+.address-space {
+    padding :10rpx 0; border-top:1rpx #EEE solid;
+}
+
 .order-info-right {
   padding: 0 28rpx;
 }

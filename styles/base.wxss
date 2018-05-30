@@ -40,7 +40,13 @@ page {
     font-size: 40rpx;
 }
 
+/*点击样式  */
+.hover {
+    background: #eee;
+}
+
 /*元素显示 隐藏  */
+
 .hidden {
     display: none;
 }
@@ -103,6 +109,10 @@ page {
 
 .c-blue {
     color: #2595ff;
+}
+
+.c-green {
+    color: #49d34a;
 }
 
 .c-orange {
@@ -498,12 +508,29 @@ page {
 .h260 {
     height: 260rpx;
 }
+
 .h200 {
-    height: 200rpx;
+    height: 200rpx !important;
 }
 
 .w200 {
-    width: 200rpx;
+    width: 200rpx !important;
+}
+
+.w300 {
+    width: 300rpx !important;
+}
+
+.w400 {
+    width: 400rpx !important;
+}
+
+.w500 {
+    width: 500rpx !important;
+}
+
+.w600 {
+    width: 600rpx !important;
 }
 
 /* 隐藏 */
@@ -650,4 +677,64 @@ page {
     width: 114rpx;
     height: 144rpx;
     padding: 86rpx 0 66rpx;
+}
+
+/*列表骨架  */
+
+.item-shell {
+    width: 710rpx;
+    min-height: 300rpx;
+    margin: 30rpx auto;
+    background: #fff;
+    border-radius: 10rpx;
+}
+
+.item-shell .item-shell-title {
+    height: 80rpx;
+    width: 670rpx;
+    padding: 0 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    border-bottom: 1rpx #eee solid;
+}
+
+.item-shell .item-shell-title>view {
+    height: 30rpx;
+    width: 640rpx;
+    background: #eee;
+}
+
+/*主体  */
+
+.item-shell .item-shell-body {
+    height: 220rpx;
+    width: 670rpx;
+    padding: 0 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-bottom: 1rpx #eee solid;
+}
+
+.item-shell .item-shell-body > view {
+    height: 30rpx;
+    width: 640rpx;
+    margin-top: 20rpx;
+    background: #eee;
+}
+
+/*脚步  */
+
+.item-shell .item-shell-foot {
+    height: 70rpx;
+    width: 670rpx;
+}
+
+.item-shell .item-shell-foot> view {
+    width: 200rpx;
+    height: 40rpx;
+    background: #eee;
 }

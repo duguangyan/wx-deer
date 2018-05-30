@@ -29,12 +29,12 @@
             </view>
         </view>
 
-        <view wx:if="{{isShow &&orderList.length !== 0}}">
+        <view wx:elif="{{isShow &&orderList.length !== 0}}">
 
             <block wx:for="{{orderList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
 
                 <view class="order-item">
-                    <navigator data-index="{{index}}" open-type='navigate' url="../orderDetail/orderDetail?index={{index}}" class="flex order-status">
+                    <navigator data-index="{{index}}" open-type='navigate' url="../orderDetail/orderDetail?index={{index}}" class="flex order-status relative">
                         <view>
                             <view>
                                 订单编号：{{item.id}}
@@ -45,6 +45,10 @@
                         </view>
                         <view class="ctheme">
                             {{item.button_status.red_title}}
+                        </view>
+
+                        <view wx:if="{{index === 0}}" class="new" style="position:absolute;right:-2rpx;;top:-2rpx;z-index:10;">
+                            <image style="width:50rpx;height:50rpx;" src="../../images/new-1.png"></image>
                         </view>
                     </navigator>
                     <view class="order-info">
@@ -66,40 +70,84 @@
                                 </view>
 
                                 <view class="order-info-right">
-                                    <image src="{{params.task_type == 1 ? '../../images/find.png': '../../images/send.png'}}" />
+                                    <image wx:if="{{item.is_prompt === 1}}" src="../../images/reminder.png"></image>
+                                    <image wx:else src="{{params.task_type == 1 ? '../../images/find.png': '../../images/send.png'}}" />
                                 </view>
 
                             </view>
                             <!--图片找料  -->
                             <view wx:if="{{item.type === 1}}">
                                 <view class="order-pics-list">
-                                    <image wx:if="{{item.front_img.length !== 0}}" src="{{item.front_img}}" />
+                                    <!-- <image wx:if="{{item.front_img.length !== 0}}" src="{{item.front_img}}" />
                                     <image wx:if="{{item.side_img.length !== 0}}" src="{{item.side_img}}" />
-                                    <image wx:if="{{item.back_img.length !== 0}}" src="{{item.back_img}}" />
+                                    <image wx:if="{{item.back_img.length !== 0}}" src="{{item.back_img}}" /> -->
+                                    <image bindtap='preview' wx:for="{{item.imgs}}" src="{{img}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}"></image>
                                 </view>
                             </view>
                             <!--按样取样  -->
-                            <view wx:if="{{item.type === 2}}" class="flex align-item-start">
-                                <view>取料地址：</view>
-                                <view class="flex-1">
-                                    <view class="ellipsis">{{item.get_address.consignee}} {{item.get_address.mobile}}</view>
-                                    <view class="ellipsis-line2 "> {{ item.get_address.city_str}} {{ item.get_address.address}}</view>
+
+                            <view class="address-space" wx:if="{{item.type === 2}}">
+                                <!--档口名称  -->
+                                <view class="flex align-item-start">
+                                    <view>
+                                        档口名称：
+                                    </view>
+                                    <view class="flex-1">
+                                        <view class="ellipsis">{{item.get_address.stall}}</view>
+                                    </view>
                                 </view>
+                                <!--联系人  -->
+                                <view class="flex align-item-start">
+                                    <view>
+                                    　联系人：
+                                    </view>
+                                    <view class="flex-1">
+                                        <view class="ellipsis">{{item.get_address.consignee}} {{item.get_address.mobile}}</view>
+                                    </view>
+                                </view>
+                                <!--取料地址  -->
+                                <view class="flex align-item-start">
+                                    <view>
+                                        取料地址：
+                                    </view>
+                                    <view class="flex-1">
+                                        <view class="ellipsis-line2"> {{ item.get_address.city_str}} {{ item.get_address.address}}</view>
+                                    </view>
+                                </view>
+
                             </view>
                             <!--邮寄送料地址  -->
-                            <view class="flex align-item-start">
-                                <view>送料地址：</view>
-                                <view class="flex-1">
-                                    <view class="ellipsis">{{item.shipping_address.consignee}} {{item.shipping_address.mobile}}</view>
-                                    <view class="ellipsis-line2 "> {{ item.shipping_address.city_str}} {{ item.shipping_address.address}}</view>
+
+                            <view  class="address-space">
+
+                                <view class="flex align-item-start">
+                                    <view>档口名称：</view>
+                                    <view class="flex-1">
+                                        {{item.shipping_address.stall}}
+                                    </view>
                                 </view>
+
+                                <view class="flex align-item-start">
+                                    <view>　联系人：</view>
+                                    <view class="flex-1">
+                                        <view class="ellipsis">{{item.shipping_address.consignee}} {{item.shipping_address.mobile}}</view>
+                                    </view>
+                                </view>
+
+                                <view class="flex align-item-start">
+                                    <view>送料地址：</view>
+                                    <view class="flex-1">
+                                        <view class="ellipsis-line2"> {{ item.shipping_address.city_str}} {{ item.shipping_address.address}}</view>
+                                    </view>
+                                </view>
+
                             </view>
                         </view>
 
                     </view>
                     <!--按钮  -->
-                    <view class="flex order-handle">
-                        <view class="c-blue {{item.is_prompt === 1 ? '': 'invisible'}}">
+                    <view class="flex  order-handle">
+                        <view class="c-blue invisible">
                             <text class="iconfont icon-kehu mgr10" />客户催单
                         </view>
                         <!--找料中  -->
@@ -124,6 +172,27 @@
             </view>
         </view>
 
+        <!--骨架  -->
+        <view wx:else>
+            <view wx:for="{{[1,2]}}" wx:key="{{i}}" class="item-shell">
+                <view class="item-shell-title">
+                    <view></view>
+                </view>
+
+                <view class="item-shell-body">
+
+                    <view class="w400"></view>
+                    <view class="w500"></view>
+                    <view class="w600"></view>
+                    <view class="w300"></view>
+                </view>
+
+                <view class="item-shell-foot flex flex-end">
+                    <view></view>
+                </view>
+            </view>
+        </view>
+
     </view>
 </view>
 
@@ -142,7 +211,7 @@
             <view class="flex tl bdb">
                 <view class="mgr20">
                     <text class="ctheme">*</text>　联系人: </view>
-                <input name="contacts" class="flex-1"  confirm-hold="true" confirm-type="next" placeholder='请填写联系人'></input>
+                <input name="contacts" class="flex-1" confirm-hold="true" confirm-type="next" placeholder='请填写联系人'></input>
             </view>
             <view class="flex tl bdb">
                 <view class="mgr20">
@@ -195,7 +264,7 @@
                 <view class="flex-1 pd20">
 
                     <view class="relative w200" wx:for="{{files}}">
-                        <image bindtap='chooseImage' data-id="{{index}}" src="{{item.url}}"></image>
+                        <image bindtap='chooseImage' data-id="{{index}}" src="{{item.url}}" mode='aspectFill'></image>
                         <image data-id="{{index}}" catchtap='deleteItem' wx:if="{{item.pct}}" style="width:44rpx;height:44rpx;position:absolute;right:0;top:0rpx;background: transparent;z-index:999;" src='../../images/delete.png'></image>
 
                         <view wx:if="{{item.pct}}" style="width:200rpx;height:200rpx;background:rgba(0,0,0,0.4);position:absolute;left:0;top:0;text-align:center;line-height:200rpx;color:white;font-size:30rpx;">{{item.pct}}</view>
