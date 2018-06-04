@@ -1,5 +1,5 @@
 <view class="container">
-    <view wx:if="{{data.type === 'accepted' && !data.finish_at}}" class="pd20 fs36">
+    <!-- <view wx:if="{{data.type === 'accepted' && !data.finish_at}}" class="pd20 fs36">
         <text class="iconfont icon-jinhangzhong fs50"></text> 
         进行中
     </view>
@@ -7,6 +7,11 @@
     <view wx:if="{{data.type === 'accepted' && data.finish_at}}" class="pd20 fs36">
         <text class="iconfont icon-icon02 fs50"></text> 
         已完成
+    </view> -->
+
+     <view wx:if="{{data.type === 'accepted' && data.finish_at}}" class="pd20 fs36">
+        <!-- <text class="iconfont icon-icon02 fs50"></text>  -->
+        {{data.status_label}}
     </view>
 
     <view class="space"></view>
@@ -29,13 +34,14 @@
         <view class="flex mgb20">
             <view>　有效期:</view>
             <view class="flex-1 mgl20">
-                {{data.begin_date}} 至 {{data.end_date}}
+                <view>{{data.begin_date}} 至 </view>
+                <view> {{data.end_date}}</view>
             </view>
         </view>
 
         <view wx:if="{{data.examples}}" class="flex flex-start img-box pd20">
             <block wx:for="{{data.examples}}" wx:key="{{i}}">
-                <image bindtap='preview' data-index="{{index}}" class="mgr20" src="{{item}}"></image>
+                <image mode='aspectFill' bindtap='preview' data-index="{{index}}" class="mgr20" src="{{item}}"></image>
             </block>
         </view>
 
@@ -64,12 +70,12 @@
             最大参与人数: {{data.people_limit ? data.people_limit+ '人' : '不限'}}
         </view>
         <!--已经完成  -->
-        <view wx:if="{{true}}">
+        <view wx:if="{{false}}">
             <view>
-                　领取人: 张三
+                　领取人: {{}}
             </view>
             <view>
-                领取时间: 2048-234234
+                领取时间: {{}}
             </view>
         
         </view>
@@ -88,11 +94,11 @@
             <view class="flex-1 mgl20">{{data.content}}</view>
         </view>
 
-        <view wx:if="{{data.examples}}" class="flex mgb20">
+        <view wx:if="{{data.imgs.length !== 0}}" class="flex mgb20">
             <view>上传图片: </view>
             <view class="flex flex-start flex-1 mgl20 img-box">
             <block wx:for="{{data.imgs}}" wx:key="{{i}}">
-                 <image bindtap='preview2' data-index="{{index}}" src="{{item}}" class="mgr20"></image>
+                 <image bindtap='preview2' data-index="{{index}}" src="{{item}}" mode='aspectFill' class="mgr20"></image>
             </block>
             </view>
         </view>
@@ -100,9 +106,9 @@
             <view>审批状态: </view>
             <view class="flex-1 mgl20">{{data.audit_status_label}}</view>
         </view>
-        <view class="flex mgb20">
+        <view wx:if="{{data.audit_content}}" class="flex mgb20">
             <view>审批意见: </view>
-            <view class="flex-1 mgl20">{{data.check_desc}}</view>
+            <view class="flex-1 mgl20">{{data.audit_content}}</view>
         </view>
     </view>
     <view wx:else class="pd20">

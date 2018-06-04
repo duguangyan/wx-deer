@@ -24,26 +24,26 @@
             {
                 "pagePath": "pages/index/index",
                 "text": "首页",
-                "iconPath": "images/index.jpg",
-                "selectedIconPath": "images/index-1.jpg"
+                "iconPath": "images/index.png",
+                "selectedIconPath": "images/index-1.png"
             },
             {
                 "pagePath": "pages/order/order",
                 "text": "订单",
-                "iconPath": "images/order.jpg",
-                "selectedIconPath": "images/order-1.jpg"
+                "iconPath": "images/order.png",
+                "selectedIconPath": "images/order-1.png"
             },
             {
                 "pagePath": "pages/rewardTask/rewardTask",
                 "text": "悬赏任务",
-                "iconPath": "images/reward-task.jpg",
-                "selectedIconPath": "images/reward-task-1.jpg"
+                "iconPath": "images/reward-task-icon.png",
+                "selectedIconPath": "images/reward-task-icon-1.png"
             },
             {
                 "pagePath": "pages/personalCenter/personalCenter",
                 "text": "个人中心",
-                "iconPath": "images/personal-center.jpg",
-                "selectedIconPath": "images/personal-center-1.jpg"
+                "iconPath": "images/personal-center.png",
+                "selectedIconPath": "images/personal-center-1.png"
             }
         ]
     },

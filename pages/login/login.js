@@ -2,6 +2,7 @@ const api = require('../../utils/api.js');
 const util = require('../../utils/util.js');
 let app = getApp();
 
+
 Page({
 
     /**
@@ -68,8 +69,8 @@ Page({
         let user_name = this.data.account,
             password = this.data.password;
 
-            let openid = wx.getStorageSync('openid');
-            console.log('openid', openid)
+        let openid = wx.getStorageSync('openid');
+        console.log('openid', openid)
         // 可前台判断一下手机格式 util.vailPhone( num)
         const isMatch = util.vailPhone(user_name);
 
@@ -78,43 +79,42 @@ Page({
             return false;
         }
 
+        wx.showLoading({
+            title: '登录中',
+            mask: true
+        })
+
         api.login({
             method: 'POST',
             data: {
                 user_name,
                 password,
-                open_id : openid,
+                open_id: openid,
                 from: '4'
             }
         }).then((res) => {
             console.log(res);
-
+            wx.hideLoading()
+            // 储存信息
             app.globalData.memberData = res.data;
+
             wx.setStorage({
                 key: 'memberData',
                 data: res.data,
             })
 
-            wx.setStorage({
-                key: 'access_token',
-                data: res.data.access_token,
-            })
+            wx.setStorageSync('access_token', res.data.access_token)
 
-            // 获取用户信息
-            api.getUserInfo().then((res) => {
-                console.log('用户信息', res);
-                this.globalData.userInfo = res.data;
-
-            }).catch((res) => {
-                console.log('用户信息', res)
-            })
-
-            wx.navigateBack();
-          
+            wx.reLaunch({
+                url: '../personalCenter/personalCenter',
+            });
 
         }).catch((res) => {
-
+            wx.hideLoading()
             util.errorTips(res.msg);
+
+        }).finally(() => {
+
         })
 
 

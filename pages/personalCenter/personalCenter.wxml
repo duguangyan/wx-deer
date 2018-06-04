@@ -14,18 +14,18 @@
                         <view wx:if="{{userInfo.is_find_man}}"> <text class="iconfont icon-zhaoliaoyuan text-theme"/> 找料员</view>
                         <view wx:if="{{userInfo.is_delivery}}" class="mgl20"> <text class="iconfont icon-peisongyuan text-theme"/> 配送员</view>
 
-                        <view wx:else>您还不是我们的找料员</view>
+                        <view class="b500" wx:elif="{{ !userInfo.is_find_man}}">您还不是我们的找料员</view>
                 </view>
             </view>
 
             <view class="flex tc lh50">
 
                 <navigator open-type='navigate' url="../recordList/recordList?type=commission&num={{userInfo.asset.commission_amount}}" class="flex-1">
-                    <view class="text-red">{{userInfo.asset ? '￥' + userInfo.asset.commission_amount : ''}}</view>
+                    <view class="text-red">{{userInfo.asset ? '￥' + userInfo.asset.commission_amount : '　'}}</view>
                     <view class="text-red"><text class="iconfont icon-yongjin"/>佣金</view>
                 </navigator>
                 <navigator open-type='navigate' url="../recordList/recordList?type=reward&num={{userInfo.asset.reward_amount}}" class="flex-1">
-                     <view class="c-orange">{{userInfo.asset ?  userInfo.asset.reward_amount + '个' : ''}}</view>
+                     <view class="c-orange">{{userInfo.asset ?  userInfo.asset.reward_amount + '个' : '　'}}</view>
                     <view class="c-orange"><text class="iconfont icon-jinbi "/>悬赏币</view>
                 </navigator>
             </view>
@@ -36,12 +36,12 @@
 
         <view class="flex flex-start tc service-list">
             <navigator open-type='switchTab' url="../order/order" class="shadow">
-                <image src="../../images/order.png" class="mgt30" style="width:90rpx;height:90rpx;"/>
+                <image src="../../images/order-icon.png" class="mgt30" style="width:90rpx;height:90rpx;"/>
                 <view class="fs30 b600 lh50">我的订单</view>
                  <image src="../../images/member-bg-2.png" style="display:block;width:345rpx;height:44rpx;"></image>
             </navigator>
             <navigator open-type='switchTab' url="../rewardTask/rewardTask" class="shadow">
-                <image src="../../images/task.png" class="mgt30" style="width:90rpx;height:90rpx;"/>
+                <image src="../../images/task-icon.png" class="mgt30" style="width:90rpx;height:90rpx;"/>
                 <view class="fs30 b600 lh50">我的悬赏任务</view>
                   <image src="../../images/member-bg-3.png" style="display:block;width:345rpx;height:44rpx;"></image>
             </navigator>

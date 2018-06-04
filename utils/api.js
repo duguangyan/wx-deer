@@ -76,7 +76,7 @@ const myRequest = function (params = {}, url) {
                 if (err.errMsg || err.errMsg === "request:fail timeout") {
                     wx.showToast({
                         title: '网络请求超时',
-                        image: '../../images/icons/error.png',
+                        image: '../../images/error.png',
                         duration: 3000
                     })
                 }
@@ -116,6 +116,9 @@ const homeData = (params) => myRequest(params, `${apiUrl}/find/api/home`);
 
 // 订单列表
 const myOrderList = (params) => myRequest(params, `${apiUrl}/find/api/order_records/index/${params.query.task_type}/${params.query.type}`);
+
+// 接单去new
+const receiveOrder = (params) => myRequest(params, `${apiUrl}/find/api/order_records/receive`);
 
 // 订单已经找到
 const orderBeenFound = (params) => myRequest(params, `${apiUrl}/find/api/order_records/found/${params.query.id}`);
@@ -167,6 +170,7 @@ module.exports = {
     homeData,
 
     myOrderList,
+    receiveOrder,
     orderBeenFound,
     orderNotFound,
     orderFeedback,

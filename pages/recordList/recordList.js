@@ -6,7 +6,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+        list: []
     },
 
     // 查看更多数据
@@ -15,8 +15,8 @@ Page({
             title: '加载中',
             mask: true
         })
-        
-        let page = e.currenTarget.dataset.page + 1;
+
+        let page = e.currentTarget.dataset.page + 1;
         this.commissionRecord(page, this.data.asset_type)
     },
 
@@ -31,7 +31,7 @@ Page({
         let asset_type;
 
         if (type === 'commission') {
-            asset_type = 2;
+            asset_type = 4;
         } else if (type === 'reward') {
             asset_type = 3;
         }
@@ -39,7 +39,7 @@ Page({
         this.setData({
             type,
             num,
-            asset_type: 3
+            asset_type
         })
 
         this.commissionRecord(1, asset_type)
@@ -104,6 +104,8 @@ Page({
             }
         }).then((res) => {
             console.log('佣金记录', res)
+
+            wx.hideLoading()
             let list = res.data;
 
             let fullLoad = false
@@ -113,15 +115,20 @@ Page({
             }
 
             this.setData({
-                list,
+                list: this.data.list.concat(list),
                 fullLoad,
                 nowPage: page
             })
 
         }).catch((res) => {
+            wx.hideLoading()
+
+            if(res.code !== 401){
+                util.errorTips(res.msg)
+            }
 
         }).finally ( () => {
-            wx.hideLoading()
+           
         }) 
 
     }

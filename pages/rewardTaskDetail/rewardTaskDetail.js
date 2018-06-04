@@ -69,7 +69,7 @@ Page({
 
 
         }).catch((res) => {
-                util.errorTips(res.message);
+                util.errorTips(res.msg);
             })
     },
 
@@ -102,7 +102,27 @@ Page({
                     id
                 }
             }).then((res) => {
-                console.log(res)
+                console.log(res);
+
+                // 查看
+                let taskseen = wx.getStorageSync('taskseen') || [];
+
+                let id_num = parseInt(id);
+
+                if (!taskseen.includes(id_num)) {
+                    taskseen.push(id_num)
+                    wx.setStorageSync('taskseen', taskseen);
+
+                    // 更新上页数据
+                    let pages = getCurrentPages(),
+                        prevPage = pages[pages.length - 2];
+
+                     prevPage.data.rewardList[index].is_new = false;
+
+                     prevPage.setData({
+                         rewardList: prevPage.data.rewardList
+                     })
+                }
 
                 let data = res.data;
                 data.type = type;

@@ -2,8 +2,8 @@
 
 <view wx:if="{{homeData}}" class="">
     <!-- 找料单  -->
-    <view class="section-item">
-        <view bindtap='goFindPage' hover-class="hover" class="section-title flex">
+    <view bindtap='goFindPage' class="section-item">
+        <view  hover-class="hover" class="section-title flex">
             <view class="b600">找料单(
                 <text class="ctheme">{{homeData.find.un_finish_num+homeData.find.finish_num}}</text>)</view>
             <view class="c666 fs24">{{homeData.begin}}~{{homeData.end}}</view>
@@ -30,8 +30,8 @@
         </view>
     </view>
     <!--配送单  -->
-    <view class="section-item">
-        <view bindtap='goSendPage' hover-class="hover" class="section-title flex">
+    <view bindtap='goSendPage' class="section-item">
+        <view  hover-class="hover" class="section-title flex">
             <view class="b600">配送单(
                 <text class="ctheme">{{homeData.delivery.un_finish_num + homeData.delivery.finish_num}}</text>)</view>
             <view class="c666 fs24">{{homeData.begin}}~{{homeData.end}}</view>
@@ -94,7 +94,7 @@
 
 <view wx:else>
     <view wx:for="{{[1,2,3]}}" wx:key="{{i}}" class="index-shell">
-        <view class="w600"></view>
+        <view class="w500"></view>
         <view ></view>
     </view>
 </view>

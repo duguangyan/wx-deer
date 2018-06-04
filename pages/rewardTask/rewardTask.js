@@ -11,7 +11,7 @@ Page({
         status: 0,
         page: 1,
         // 弹窗
-        isShow: false,
+        isShowPop: false,
         // 回执信息图片
         files: [{}, {}],
     },
@@ -45,7 +45,7 @@ Page({
             success: (res) => {
 
                 if (res.confirm) {
-                   
+
                     api.acceptTask({
                         method: "POST",
                         data: {
@@ -65,7 +65,7 @@ Page({
                         })
 
                     }).catch((res) => {
-                        util.errorTips(res.message);
+                        util.errorTips(res.msg);
                     })
 
                 } else if (res.cancel) {
@@ -74,7 +74,7 @@ Page({
             }
         })
 
-        
+
     },
 
     // 提交任务
@@ -84,7 +84,7 @@ Page({
             index = e.currentTarget.dataset.index;
 
         this.setData({
-            isShow: true,
+            isShowPop: true,
             id,
             index
         })
@@ -187,7 +187,7 @@ Page({
     colse() {
 
         this.setData({
-            isShow: false
+            isShowPop: false
         })
     },
     // 上传文件
@@ -197,8 +197,8 @@ Page({
 
     // 提交表单
     formSubmit(e) {
-        
-        console.log('上传图片',this.data.files)
+
+        console.log('上传图片', this.data.files)
         let formData = e.detail.value;
 
         formData.imgs = [];
@@ -244,15 +244,15 @@ Page({
             rewardList[index].audit_status = 0;
 
             this.setData({
-                isShow: false,
+                isShowPop: false,
                 files: [{}, {}],
                 rewardList
             })
             console.log(res)
         }).catch((res) => {
-            util.errorTips(res.message);
+            wx.hideLoading()
+            util.errorTips(res.msg);
         }).finally(() => {
-
             
         })
 
@@ -334,7 +334,7 @@ Page({
             rewardList: [],
             type: 'acceptable',
             status: 0,
-            isEmpty:false
+            isShow: false
         })
 
         wx.showLoading({
@@ -347,47 +347,38 @@ Page({
             }
         }).then((res) => {
             console.log('可接悬赏列表数据', res);
+            wx.hideLoading()
             let rewardList = res.data;
 
-            if (Array.isArray(rewardList) && rewardList.length === 0) {
-                console.log('空数组')
-                this.setData({
-                    isEmpty: true
-                })
-            } else {
-
-                let fullLoad = false;
-                if (res.current_page * res.perPage >= res.total) {
-                    // 加载完毕
-                    fullLoad = true
-                }
-                this.setData({
-                    isEmpty: false,
-                    fullLoad
-                })
-
+            let fullLoad = false;
+            if (res.current_page * res.perPage >= res.total) {
+                // 加载完毕
+                fullLoad = true
             }
 
-            rewardList.forEach((ele, i) => {
-                ele.examples = JSON.parse(ele.examples)
-
-            })
+            // rewardList.forEach((ele, i) => {
+            //     ele.examples = JSON.parse(ele.examples)
+            //     ele.reward_amount = parseInt(ele.reward_amount)
+            // })
+            // 更新 悬赏状态
+            this.dealTask(rewardList)
 
             this.setData({
                 rewardList,
                 type: 'acceptable',
                 status: 0,
+                isShow: true,
+                fullLoad,
             })
 
-            // wx.pageScrollTo({
-            //     scrollTop: 0,
-            //     duration: 0
-            // })
 
         }).catch((res) => {
-
-        }).finally(() => {
             wx.hideLoading()
+            if (res.code !== 401) {
+                util.errorTips(res.msg)
+            }
+        }).finally(() => {
+           
         })
     },
     // 可接悬赏下拉刷新
@@ -405,13 +396,15 @@ Page({
             }
         }).then((res) => {
             console.log('下拉刷新可接悬赏列表数据', res);
-
+            wx.hideLoading()
             let rewardList = res.data;
 
-            rewardList.forEach((ele, i) => {
-                ele.examples = JSON.parse(ele.examples)
-                
-            })
+            // rewardList.forEach((ele, i) => {
+            //     ele.examples = JSON.parse(ele.examples);
+            //     ele.reward_amount = parseInt(ele.reward_amount)
+
+            // })
+            this.dealTask(rewardList)
 
             // 判定数据为空
             if (res.current_page * res.perPage > res.total) {
@@ -434,9 +427,13 @@ Page({
 
 
         }).catch((res) => {
+            wx.hideLoading()
+            if (res.code !== 401) {
+                util.errorTips(res.msg)
+            }
 
         }).finally(() => {
-            wx.hideLoading()
+           
         })
 
 
@@ -456,7 +453,7 @@ Page({
             rewardList: [],
             type: 'accepted',
             status,
-            isEmpty: false
+            isShow: false
         })
 
         wx.showLoading({
@@ -471,43 +468,39 @@ Page({
         }).then((res) => {
             console.log('已接悬赏列表数据', res);
             let rewardList = res.data;
-
+            wx.hideLoading()
+            
             rewardList.forEach((ele, i) => {
-                ele.examples = JSON.parse(ele.examples)
+                ele.reward_amount = parseInt(ele.reward_amount)
+              
             })
-            // 判定数据为空
-            if (Array.isArray(rewardList) && rewardList.length === 0) {
-                console.log('空数组')
-                this.setData({
-                    isEmpty: true
-                })
-            } else {
 
+            // 判定数据为空
+          
                 let fullLoad = false;
                 if (res.current_page * res.perPage >= res.total) {
                     // 加载完毕
                     fullLoad = true
                 }
 
+                
+
                 this.setData({
-                    isEmpty: false,
-                    fullLoad
+                    isShow: true,
+                    fullLoad,
+                    rewardList
                 })
+        
+      
+
+        }).catch((res) => {
+            wx.hideLoading()
+            if (res.code !== 401) {
+                util.errorTips(res.msg)
             }
 
-            this.setData({
-                rewardList,
-                
-            })
-            // 返回顶部
-            wx.pageScrollTo({
-                scrollTop: 0,
-                duration: 0
-            })
-        }).catch((res) => {
-
         }).finally(() => {
-            wx.hideLoading()
+           
         })
 
     },
@@ -528,11 +521,12 @@ Page({
             }
         }).then((res) => {
             console.log('下拉刷新已接悬赏列表数据', res);
-
+            wx.hideLoading()
             let rewardList = res.data;
-            
+
             rewardList.forEach((ele, i) => {
-                ele.examples = JSON.parse(ele.examples)
+              
+                ele.reward_amount = parseInt(ele.reward_amount)
             })
 
             // 判定数据为空
@@ -554,12 +548,37 @@ Page({
 
 
         }).catch((res) => {
-
-        }).finally(() => {
             wx.hideLoading()
+            if (res.code !== 401) {
+               
+                util.errorTips(res.msg)
+            }
+        }).finally(() => {
+           
         })
 
 
+
+    },
+    // 处理 点击更新new状态
+    dealTask (list) {
+        // 已经点赞
+        let arr1 = wx.getStorageSync('taskseen') || [];
+        console.log(arr1)
+        list.forEach( (ele, i) => {
+
+                let id = ele.id;
+                // 已经点赞
+                if(arr1.includes(id)){
+                    ele.is_new = false
+                }else {
+                    ele.is_new = true
+                }
+                // 已经接受要解json
+                ele.examples = JSON.parse(ele.examples);
+                ele.reward_amount = parseInt(ele.reward_amount)
+
+        })
 
     }
 })

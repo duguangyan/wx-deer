@@ -1,105 +1,121 @@
-
 /*顶部固定栏目  */
+
 .fixed-block {
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: 999;
-  background: #f0eff5;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: #f0eff5;
 }
+
 .select-section {
-  width: 710rpx;
-  margin: 20rpx auto 20rpx;
-  border-radius: 10rpx;
-  background: #fff;
-  color: #666;
-  line-height: 82rpx;
-  box-shadow: 6rpx 6rpx 10rpx #ccc;
+    width: 710rpx;
+    margin: 20rpx auto 20rpx;
+    border-radius: 10rpx;
+    background: #fff;
+    color: #666;
+    line-height: 82rpx;
+    box-shadow: 6rpx 6rpx 10rpx #ccc;
 }
+
 .select-order view {
-  flex: 1;
-  text-align: center;
-  border-bottom: 4rpx #ddd solid;
+    flex: 1;
+    text-align: center;
+    border-bottom: 4rpx #ddd solid;
 }
+
 .select-order view:nth-of-type(1) {
-  border-right: 2rpx #ddd solid;
+    border-right: 2rpx #ddd solid;
 }
+
 .status-section {
-  padding-bottom: 2rpx;
+    padding-bottom: 2rpx;
 }
+
 .status-section view {
-  padding: 0 30rpx;
+    height: 82rpx;
+    padding: 0 30rpx;
+    box-sizing: border-box;
 }
-.status-section view.selected,
-.select-order view.selected {
-  color: #c91a29;
-  border-bottom: 4rpx #c91a29 solid;
+
+.status-section view.selected, .select-order view.selected {
+    color: #c91a29;
+    border-bottom: 4rpx #c91a29 solid;
 }
+
 .item-container {
-  padding: 200rpx 0 30rpx;
+    padding: 200rpx 0 30rpx;
 }
 
 /*任务块 S  */
+
 .order-item {
-  width: 710rpx;
-  margin: 20rpx auto 0;
-  background: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0rpx 2rpx 10rpx rgba(102, 102, 102, 0.3);
+    width: 710rpx;
+    margin: 20rpx auto 0;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0rpx 2rpx 10rpx rgba(102, 102, 102, 0.3);
 }
+
 .order-status {
-  padding: 28rpx 30rpx 28rpx 20rpx;
+    padding: 28rpx 30rpx 28rpx 20rpx;
 }
+
 .order-info {
-  padding: 24rpx 20rpx;
-  border-top: 1rpx #eee solid;
-  border-bottom: 1rpx #eee solid;
+    padding: 24rpx 20rpx;
+    border-top: 1rpx #eee solid;
+    border-bottom: 1rpx #eee solid;
+    background: #fff url(https://static.yidap.com/miniapp/deer/reward-task.png) no-repeat 540rpx 70rpx;
+    background-size: 126rpx 126rpx;
 }
+
 .order-info-left {
-  width: 430rpx;
+    width: 500rpx;
 }
+
 .order-pics-list {
-  padding-top: 20rpx;
+    padding-top: 20rpx;
 }
+
 .order-pics-list image {
-  width: 90rpx;
-  height: 100rpx;
-  margin-right: 46rpx;
-  background: #ccc;
+    width: 90rpx;
+    height: 100rpx;
+    margin-right: 46rpx;
+    background: #ccc;
 }
-.order-info-right {
-  padding: 0 28rpx;
-}
-.order-info-right image {
-  width: 126rpx;
-  height: 126rpx;
-}
+
 .order-handle {
-  padding: 30rpx 20rpx 30rpx 30rpx;
+    padding: 30rpx 20rpx 30rpx 30rpx;
 }
+
 .find-status view {
-  line-height: 54rpx;
-  min-width: 160rpx;
-  border-radius: 6rpx;
-  border: 1rpx #666 solid;
-  margin-left: 30rpx;
-  font-size: 28rpx;
-  text-align: center;
+    line-height: 54rpx;
+    min-width: 160rpx;
+    border-radius: 6rpx;
+    border: 1rpx #666 solid;
+    margin-left: 30rpx;
+    font-size: 28rpx;
+    text-align: center;
 }
+
 .find-status view.theme-border {
-  border: 1rpx #c91a29 solid;
+    border: 1rpx #c91a29 solid;
 }
 
 .find-status view.gray-border {
     border: 1rpx #999 solid;
 }
 
+/*new 标志  */
 .new {
     position: absolute;
-    top: -20rpx;
-    right: -20rpx;
-    width: 32rpx;
-    height: 20rpx;
+    right: -2rpx;
+    top: -2rpx;
+    z-index: 10;
+}
+
+.new image{
+    width:50rpx;height:50rpx;
 }
 
 /*任务块 E */

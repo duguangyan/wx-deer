@@ -31,11 +31,12 @@
             <block wx:for="{{list}}" wx:for-index="index" wx:for-item="item" wx:key="key">
                 <view class="flex bdb list-item">
                     <view>
-                        <view wx:if="{{type === 'commission'}}" class="lh50 b600">找料订单</view>
-                        <view wx:elif="{{type === 'reward'}}" class="lh50 b600">悬赏任务</view>
+                        <!-- <view wx:if="{{type === 'commission'}}" class="lh50 b600">找料订单</view>
+                        <view wx:elif="{{type === 'reward'}}" class="lh50 b600">悬赏任务</view> -->
+                         <view  class="lh50 b600">{{item.desc}}</view>
                         <view class="c999 fs24">{{item.created_at}}</view>
                     </view>
-                    <view class="c666"> {{ '+ ' + '￥' + item.total_amount }}</view>
+                    <view class="c666"> {{ '+ ' + '￥' + item.assets_amount }}</view>
                 </view>
 
             </block>

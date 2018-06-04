@@ -5,7 +5,7 @@
                 <view bindtap="getAcceptableTaskList" class="{{type === 'acceptable' ? 'selected' : ''}}">可接悬赏</view>
                 <view bindtap="getAcceptedTaskList" data-status="0" class="{{type === 'accepted' ? 'selected' : ''}}" data-wpyacceptedtask-a="0">已接悬赏</view>
             </view>
-            <view wx:if="{{type === 'acceptable'}}" class="flex status-section">
+            <view wx:if="{{type === 'acceptable'}}" class="flex">
                 <!-- <view class="selected">全部</view> -->
             </view>
             <view wx:if="{{type === 'accepted'}}" class="flex status-section">
@@ -15,10 +15,10 @@
             </view>
         </view>
     </view>
-    <view class="item-container">
+    <view class="item-container {{type === 'accepted' ? '' : 'pdt110'}}">
 
         <!-- 任务为空 -->
-        <view class="empty" wx:if="{{isEmpty}}">
+        <view class="empty" wx:if="{{isShow && rewardList.length === 0}}">
             <image src="../../images/empty.png"></image>
             <view class="tc">
                 <text class="c999 fs34">您还没有相关任务</text>
@@ -26,67 +26,71 @@
         </view>
 
         <!-- 渲染悬赏任务列表 -->
-        <view wx:if="{{!isEmpty}}">
+        <view wx:elif="{{isShow && rewardList.length !== 0}}">
             <block wx:for="{{rewardList}}" wx:key="{{i}}">
-                <view class="order-item">
-                    <navigator url="../rewardTaskDetail/rewardTaskDetail?id={{item.id}}&type={{type}}&index={{index}}" open-type='navigate' class="flex order-status">
+                <view class="order-item relative">
+                    <navigator url="../rewardTaskDetail/rewardTaskDetail?id={{item.id}}&type={{type}}&index={{index}}" open-type='navigate' class="flex order-status relative">
                         <view>
-                            <view>
+                            <view class="c999">
                                 悬赏号：{{item.id}}
                             </view>
-                            <view>
+                            <view class="c999">
                                 发布时间：{{item.created_at}}
                             </view>
                         </view>
                         <view wx:if="{{type === 'accepted'}}">
-                            <view wx:if="{{item.status == 1}}" class="text-theme relative">进行中
-                                <image wx:if="{{false}}" src="../../images/new.png" class="new"></image>
-                            </view>
-                            <view wx:if="{{item.status == 2}}" class="text-999">已完成</view>
+                            <view  class="text-theme {{item.status === 3 ? 'c666' : ''}}">{{item.status_label}}</view>
+                        </view>
+
+                        <view wx:if="{{type === 'acceptable' && item.is_new}}" class="new">
+                            <image src="../../images/new-1.png"></image>
                         </view>
                     </navigator>
 
-                    <view class="order-info flex">
+                    <view class="order-info flex relative">
                         <view class="order-info-left">
-                            <view class="ellipsis">
+                            <view class="ellipsis w450">
                                 悬赏内容： {{item.desc}}
                             </view>
-                            <view class="ellipsis">
+                            <view class="ellipsis w450">
                                 验收说明： {{item.check_desc}}
                             </view>
 
                             <view class="flex">
                                 <view>　有效期 : </view>
                                 <view class="flex-1 mgl20">
-                                    <view class="ellipsis-line2 ">{{item.begin_date}} 至 {{item.end_date}}</view>
+                                    <view class="ellipsis-line2 ">
+                                        <view> {{item.begin_date}} </view>
+                                        <view>{{item.end_date}}</view>
+                                    </view>
                                 </view>
                             </view>
 
-                            <view wx:if="{{item.examples}}" class="order-pics-list">
-                                <block wx:for="{{item.examples}}" wx:key="{{i}}">
-                                    <image bindtap='preview' wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}" src="{{img}}" />
-                                </block>
+                            <!--图片  -->
+                            <view wx:if="{{item.examples.length !== 0}}" class="order-pics-list">
+                               
+                                    <image mode='aspectFill' bindtap='preview'  wx:for="{{item.examples}}" wx:key="{{i}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}" src="{{img}}" />
+                               
                             </view>
 
                         </view>
-                        <view class="order-info-right">
-                         <!--{{item.reward_amount}}  -->
-                              <!-- <view class="c-orange">
-                                <text class="iconfont icon-dui mgr10" />悬赏币：10个
-                            </view>   -->
-                            <image src="../../images/reward-task.png" />
+
+                        <!--悬赏币定位  -->
+                        <view class="c-orange" style="position:absolute;right:10rpx;top:20rpx;">
+                            <text class="iconfont icon-jinbi mgr10" />悬赏币：{{item.reward_amount}} 个
                         </view>
+
                     </view>
 
-                    <view class="flex order-handle">
-                        <view class="c-orange">
-                            <text class="iconfont icon-dui mgr10" />悬赏币：{{item.reward_amount}}个
-                        </view>
+                    <view class="flex flex-end order-handle">
+                        <!-- <view class="c-orange ">
+                            <text class="iconfont icon-dui mgr10" />悬赏币：{{item.reward_amount}} 个
+                        </view>  -->
                         <view class="flex find-status">
                             <view class="theme-border text-theme" wx:if="{{type === 'acceptable'}}" bindtap="acceptTask" data-id="{{item.id}}" data-index="{{index}}">接此任务</view>
 
                             <view data-id="{{item.id}}" data-index="{{index}}" bindtap='submitJob' wx:if="{{type === 'accepted'  && item.audit_status === null}}" class="ctheme theme-border">提交任务</view>
-                            <view data-id="{{item.id}}" data-index="{{index}}" bindtap='submitJob' wx:if="{{type === 'accepted' && item.audit_status === 0 || item.audit_status === 1}}" class="ctheme theme-border">再次提交</view>
+                            <view data-id="{{item.id}}" data-index="{{index}}" bindtap='submitJob' wx:if="{{type === 'accepted' && (item.audit_status === 0 || item.audit_status === 1 || item.audit_status === 2)}}" class="ctheme theme-border">再次提交</view>
                             <view data-id="{{item.id}}" wx:if="{{type === 'accepted' && item.status == 2}}" class="c999 gray-border">详情</view>
                         </view>
                     </view>
@@ -97,11 +101,32 @@
                 已经全部加载完毕
             </view>
         </view>
+
+        <view wx:else>
+            <view wx:for="{{[1,2]}}" wx:key="{{i}}" class="item-shell">
+                <view class="item-shell-title">
+                    <view></view>
+                </view>
+
+                <view class="item-shell-body">
+
+                    <view class="w400"></view>
+                    <view class="w500"></view>
+                    <view class="w600"></view>
+                    <view class="w300"></view>
+                </view>
+
+                <view class="item-shell-foot flex flex-end">
+                    <view></view>
+                </view>
+            </view>
+
+        </view>
     </view>
 </view>
 
 <!-- 悬赏任务回执信息 -->
-<view wx:if="{{isShow}}" class="pop-window" catchtouchmove="preventD">
+<view wx:if="{{isShowPop}}" class="pop-window" catchtouchmove="preventD">
     <view class="form-box-3">
         <text bindtap='colse' class="iconfont icon-guanbi close fs50 c999"></text>
         <form bindsubmit="formSubmit" report-submit>
@@ -111,7 +136,7 @@
                 <view class="flex-1 flex space-around pd20">
 
                     <view class="relative" wx:for="{{files}}" wx:key="{{i}}">
-                        <image bindtap='chooseImage' data-id="{{index}}" src="{{item.url}}"></image>
+                        <image mode='aspectFill' bindtap='chooseImage' data-id="{{index}}" src="{{item.url}}"></image>
                         <image data-id="{{index}}" catchtap='deleteItem' wx:if="{{item.pct}}" style="width:44rpx;height:44rpx;position:absolute;right:0;top:0rpx;background: transparent;z-index:999;" src='../../images/delete.png'></image>
 
                         <view wx:if="{{item.pct}}" style="width:200rpx;height:200rpx;background:rgba(0,0,0,0.4);position:absolute;left:0;top:0;text-align:center;line-height:200rpx;color:white;font-size:30rpx;">{{item.pct}}</view>

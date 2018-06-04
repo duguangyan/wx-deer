@@ -8,6 +8,10 @@
 .member-accout {
   padding: 46rpx 20rpx 24rpx;
 }
+
+.member-accout image{
+  border-radius: 50%;
+}
 .service-list > view, .service-list > navigator{
   width: 345rpx;
   min-height: 214rpx;

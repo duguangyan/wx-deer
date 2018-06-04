@@ -19,7 +19,6 @@ Page({
         files: [{}],
         multiIndex: [6, 0, 8]
     },
-
     // 大类选择
     getOrderData(e) {
 
@@ -259,7 +258,7 @@ Page({
             method:"POST"
         }).then( (res) => {
             console.log(res);
-
+            wx.hideLoading()
             // 提交成功，关闭窗口，清空
             this.setData({
                 multiIndex: [6, 0, 8],
@@ -272,12 +271,12 @@ Page({
 
 
         }).catch( (res) => {
-
-            util.errorTips(res.message);
+           wx.hideLoading()
+            if (res.code !== 401) {
+                util.errorTips(res.msg)
+            }
 
         }).finally( () => {
-
-            wx.hideLoading()
 
         })
 
@@ -289,7 +288,7 @@ Page({
     formSubmit2(e) {
         let formData = e.detail.value;
         let id = this.data.id;
-
+       
         if (formData.remark.trim().length === 0) {
             util.errorTips('请填写回执内容');
             return false
@@ -312,7 +311,7 @@ Page({
             method: "POST"
         }).then( (res) => {
             console.log('找不到物料回执',res.data)
-
+            wx.hideLoading()
             this.setData({
                 formshow: false,
             })
@@ -322,9 +321,13 @@ Page({
             this.getMyOrderList(params)
 
         }).catch( (res) => {
+            wx.hideLoading()
+            if (res.code !== 401) {
+                util.errorTips(res.msg)
+            }
 
         }).finally( () => {
-            wx.hideLoading()
+           
         })
     },
     // 提交表单
@@ -333,7 +336,7 @@ Page({
         let formData = e.detail.value;
 
         let id = this.data.id;
-
+        console.log('ididiididididi', id)
         formData.id = id;
 
         formData.imgs = [];
@@ -351,7 +354,7 @@ Page({
         }
         // 内容不为空
         if (formData.back_info.trim().length === 0) {
-            util.errorTips('请填写内容')
+            util.errorTips('请填写回执信息')
             return false
         }
 
@@ -378,14 +381,19 @@ Page({
             })
 
             let params = this.data.params;
+            
+
             this.getMyOrderList(params);
 
             console.log(res)
 
         }).catch((res) => {
-            util.errorTips(res.message);
-        }).finally(() => {
             wx.hideLoading()
+            if (res.code !== 401) {
+                util.errorTips(res.msg)
+            }
+        }).finally(() => {
+          
         })
 
 
@@ -448,6 +456,8 @@ Page({
         console.log('onSHow 进入');
         onfire.fire('getInfo', '参数');
 
+        onfire.fire('updataOrder', 'neworder');
+
     },
 
     /**
@@ -456,6 +466,7 @@ Page({
     onHide: function () {
 
         onfire.un('getInfo')
+        onfire.un('updataOrder')
 
     },
 
@@ -470,7 +481,10 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
+        let params = this.data.params;
 
+        this.getMyOrderList(params)
+        wx.stopPullDownRefresh()
     },
 
     /**
@@ -493,7 +507,7 @@ Page({
 
         wx.showLoading({
             title: '加载中',
-            mask: true
+            mask: false
         })
 
         this.setData({
@@ -510,7 +524,7 @@ Page({
                 page: 1
             }
         }).then((res) => {
-
+            wx.hideLoading()
             console.log('订单列表', res.data);
 
             let orderList = res.data;
@@ -528,11 +542,13 @@ Page({
             })
 
         }).catch((res) => {
-
-            util.errorTips(res.message)
+            wx.hideLoading()
+            if (res.code !== 401) {
+                util.errorTips(res.msg)
+            }
 
         }).finally((res) => {
-            wx.hideLoading()
+           
         })
 
     },
@@ -556,7 +572,7 @@ Page({
         }).then((res) => {
 
             console.log('订单列表', res.data);
-
+            wx.hideLoading()
             let orderList = res.data;
 
             // 合并图片
@@ -572,11 +588,13 @@ Page({
             })
 
         }).catch((res) => {
-
-            util.errorTips(res.message)
+            wx.hideLoading()
+            if (res.code !== 401) {
+                util.errorTips(res.msg)
+            }
 
         }).finally((res) => {
-            wx.hideLoading()
+           
         })
 
     },
@@ -602,10 +620,10 @@ Page({
                 imgs.push(ele.front_img)
             }
             if (ele.side_img.length !== 0) {
-                imgs.push(ele.front_img)
+                imgs.push(ele.side_img)
             }
             if (ele.back_img.length !== 0) {
-                imgs.push(ele.front_img)
+                imgs.push(ele.back_img)
             }
             ele.imgs = imgs;
         })

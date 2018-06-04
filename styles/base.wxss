@@ -41,6 +41,7 @@ page {
 }
 
 /*点击样式  */
+
 .hover {
     background: #eee;
 }
@@ -213,6 +214,10 @@ page {
 
 .lh80 {
     line-height: 80rpx;
+}
+
+.lh86 {
+    line-height: 86rpx;
 }
 
 .lh90 {
@@ -405,6 +410,14 @@ page {
     padding-top: 30rpx;
 }
 
+.pdt100 {
+    padding-top: 100rpx !important;
+}
+
+.pdt110 {
+    padding-top: 110rpx !important;
+}
+
 /* 右 */
 
 .mgr10 {
@@ -505,6 +518,18 @@ page {
 
 /*高度 宽度  */
 
+.h80 {
+    height: 80rpx;
+}
+
+.h90 {
+    height: 90rpx;
+}
+
+.h100 {
+    height: 100rpx;
+}
+
 .h260 {
     height: 260rpx;
 }
@@ -523,6 +548,10 @@ page {
 
 .w400 {
     width: 400rpx !important;
+}
+
+.w450 {
+    width: 450rpx !important;
 }
 
 .w500 {

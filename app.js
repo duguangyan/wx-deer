@@ -1,4 +1,5 @@
 const api = require('./utils/api.js');
+let onfire = require('./utils/onfire.js');
 App({
     onLaunch: function () {
         // 展示本地存储能力
@@ -47,6 +48,17 @@ App({
             ).then((res) => {
                 console.log('用户信息', res);
                 this.globalData.userInfo = res.data;
+
+                // 订阅事件
+                onfire.on('updataUserInfo', function (data) {
+
+                    let pages = getCurrentPages()[0];
+                    console.log('页面对象',data , pages)
+                    pages.setData({
+                        userInfo: res.data
+                    })
+
+                })
 
             }).catch((res) => {
                 console.log('用户信息', res)

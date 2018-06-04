@@ -118,7 +118,23 @@ Page({
 
             console.log('首页统计数据', res)
 
+            if(res.code !== 401) {
+                util.errorTips(res.msg)
+            }
+           
+        }).finally( () => {
+            
         })
+    },
+
+    /**
+    * 页面相关事件处理函数--监听用户下拉动作
+    */
+    onPullDownRefresh: function () {
+       this.onShow();
+       setTimeout( () => {
+            wx.stopPullDownRefresh();
+       },500)
     },
     getUserInfo: function (e) {
         console.log(e)
