@@ -16,6 +16,19 @@ Page({
         files: [{}, {}],
     },
 
+    // 查看详情
+    seeDetail(e) {
+
+        let index = e.currentTarget.dataset.index;
+        let id = e.currentTarget.dataset.id;
+        let type = e.currentTarget.dataset.type;
+
+        wx.navigateTo({
+            url: `../rewardTaskDetail/rewardTaskDetail?id=${id}&type=${type}&index=${index}`
+        })
+
+    },
+
     // 预览图片
     preview(e) {
 
@@ -56,13 +69,15 @@ Page({
 
                         util.successTips('接单成功')
 
-                        let rewardList = this.data.rewardList;
+                        // 刷新可接悬赏列表
+                        this.getAcceptableTaskList()
+                        // let rewardList = this.data.rewardList;
 
-                        rewardList.splice(index, 1);
+                        // rewardList.splice(index, 1);
 
-                        this.setData({
-                            rewardList
-                        })
+                        // this.setData({
+                        //     rewardList
+                        // })
 
                     }).catch((res) => {
                         util.errorTips(res.msg);
@@ -87,6 +102,17 @@ Page({
             isShowPop: true,
             id,
             index
+        })
+
+    },
+    // 查看详情
+    viewDetail(e) {
+
+        let id = e.currentTarget.dataset.id,
+            index = e.currentTarget.dataset.index;
+
+        wx.navigateTo({
+            url: `../rewardTaskDetail/rewardTaskDetail?id=${id}&type=accepted&index=${index}`,
         })
 
     },
@@ -214,10 +240,19 @@ Page({
 
         console.log(formData);
 
-        if (formData.imgs.length === 0) {
-            util.errorTips('请上传图片');
-            return false
+        // if (formData.imgs.length === 0) {
+        //     util.errorTips('请上传图片');
+        //     return false
+        // }
+
+        let files = this.data.files;
+
+
+        if (((files[0].pct && files[0].pct !== '100%') === true) || ((files[1].pct && files[1].pct !== '100%') === true)) {
+            util.errorTips('图片正在上传')
+            return false;
         }
+
         // 内容不为空
         if (formData.content.trim().length === 0) {
             util.errorTips('请填写内容')
@@ -238,22 +273,32 @@ Page({
             }
         }).then((res) => {
             util.successTips('提交成功');
-            // 更新列表数据
-            let rewardList = this.data.rewardList,
-                index = this.data.index;
-            rewardList[index].audit_status = 0;
+            // 更新列表数据 ,刷新页面数据
+            try {
+                let e = {
+                    currentTarget: {
+                        dataset: {
+                            status: this.data.status
+                        }                   
+                    }
+                };
+                this.getAcceptedTaskList(e);
+            }
+            catch (err) {
+                console.log(err)
+            }
 
+            // 关闭弹窗，清空弹窗数据
             this.setData({
                 isShowPop: false,
                 files: [{}, {}],
-                rewardList
             })
-            console.log(res)
+
         }).catch((res) => {
             wx.hideLoading()
             util.errorTips(res.msg);
         }).finally(() => {
-            
+
         })
 
 
@@ -278,6 +323,7 @@ Page({
      */
     onShow: function () {
 
+        
     },
 
     /**
@@ -356,10 +402,6 @@ Page({
                 fullLoad = true
             }
 
-            // rewardList.forEach((ele, i) => {
-            //     ele.examples = JSON.parse(ele.examples)
-            //     ele.reward_amount = parseInt(ele.reward_amount)
-            // })
             // 更新 悬赏状态
             this.dealTask(rewardList)
 
@@ -378,7 +420,7 @@ Page({
                 util.errorTips(res.msg)
             }
         }).finally(() => {
-           
+
         })
     },
     // 可接悬赏下拉刷新
@@ -424,8 +466,6 @@ Page({
                 })
             }
 
-
-
         }).catch((res) => {
             wx.hideLoading()
             if (res.code !== 401) {
@@ -433,7 +473,7 @@ Page({
             }
 
         }).finally(() => {
-           
+
         })
 
 
@@ -469,38 +509,32 @@ Page({
             console.log('已接悬赏列表数据', res);
             let rewardList = res.data;
             wx.hideLoading()
-            
+
             rewardList.forEach((ele, i) => {
                 ele.reward_amount = parseInt(ele.reward_amount)
-              
             })
-
             // 判定数据为空
-          
-                let fullLoad = false;
-                if (res.current_page * res.perPage >= res.total) {
-                    // 加载完毕
-                    fullLoad = true
-                }
+            let fullLoad = false;
+            if (res.current_page * res.perPage >= res.total) {
+                // 加载完毕
+                fullLoad = true
+            }
 
-                
-
-                this.setData({
-                    isShow: true,
-                    fullLoad,
-                    rewardList
-                })
-        
-      
+            this.setData({
+                isShow: true,
+                fullLoad,
+                rewardList
+            })
+            // 更新数量信息
+            this.rewardTaskNum()
 
         }).catch((res) => {
             wx.hideLoading()
             if (res.code !== 401) {
                 util.errorTips(res.msg)
             }
-
         }).finally(() => {
-           
+
         })
 
     },
@@ -525,7 +559,7 @@ Page({
             let rewardList = res.data;
 
             rewardList.forEach((ele, i) => {
-              
+
                 ele.reward_amount = parseInt(ele.reward_amount)
             })
 
@@ -550,35 +584,44 @@ Page({
         }).catch((res) => {
             wx.hideLoading()
             if (res.code !== 401) {
-               
+
                 util.errorTips(res.msg)
             }
         }).finally(() => {
-           
+
         })
-
-
 
     },
     // 处理 点击更新new状态
-    dealTask (list) {
+    dealTask(list) {
         // 已经点赞
         let arr1 = wx.getStorageSync('taskseen') || [];
         console.log(arr1)
-        list.forEach( (ele, i) => {
+        list.forEach((ele, i) => {
 
-                let id = ele.id;
-                // 已经点赞
-                if(arr1.includes(id)){
-                    ele.is_new = false
-                }else {
-                    ele.is_new = true
-                }
-                // 已经接受要解json
-                ele.examples = JSON.parse(ele.examples);
-                ele.reward_amount = parseInt(ele.reward_amount)
+            let id = ele.id;
+            // 已经点赞
+            if (arr1.includes(id)) {
+                ele.is_new = false
+            } else {
+                ele.is_new = true
+            }
+            // 已经接受要解json
+            ele.examples = JSON.parse(ele.examples);
+            ele.reward_amount = parseInt(ele.reward_amount)
 
         })
+    } ,
+    // 数量更新请求
+    rewardTaskNum () {
 
+        api.rewardTaskNum({
+
+        }).then((res) => {
+            console.log(res)
+            this.setData({
+                taskNum: res.data
+            })
+        })
     }
 })

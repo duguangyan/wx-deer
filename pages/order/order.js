@@ -1,6 +1,7 @@
 const api = require('../../utils/api.js');
 const util = require('../../utils/util.js');
 let onfire = require('../../utils/onfire.js');
+let app = getApp();
 
 Page({
 
@@ -12,7 +13,7 @@ Page({
     data: {
         params: {
             task_type: 1,
-            type: 0,
+            type: -1,
             page: 1
         },
 
@@ -27,7 +28,7 @@ Page({
         this.setData({
             params: {
                 task_type,
-                type: 0,
+                type: -1,
             }
         })
 
@@ -50,10 +51,21 @@ Page({
 
         this.getMyOrderList(params)
     },
+    // 查看详情
+    seeDetail(e) {
+
+        let index = e.currentTarget.dataset.index;
+        let id = e.currentTarget.dataset.id;
+
+        wx.navigateTo({
+            url: `../orderDetail/orderDetail?index=${index}&id=${id}`,
+        })
+
+    },
 
     // 预览图片
 
-    preview (e) {
+    preview(e) {
 
         let index = e.currentTarget.dataset.index;
         let idx = e.currentTarget.dataset.idx;
@@ -215,7 +227,7 @@ Page({
         //  限制填写
 
         if (formData.name.trim().length === 0) {
-            util.errorTips('请填写档口信息');
+            util.errorTips('请填写地址信息');
             return false
         }
         if (formData.contacts.trim().length === 0) {
@@ -249,14 +261,14 @@ Page({
             title: '正在提交...',
             mask: true
         })
-  
+
         api.orderBeenFound({
             data: formData,
-            query:{
+            query: {
                 id
             },
-            method:"POST"
-        }).then( (res) => {
+            method: "POST"
+        }).then((res) => {
             console.log(res);
             wx.hideLoading()
             // 提交成功，关闭窗口，清空
@@ -270,13 +282,13 @@ Page({
             this.getMyOrderList(params)
 
 
-        }).catch( (res) => {
-           wx.hideLoading()
+        }).catch((res) => {
+            wx.hideLoading()
             if (res.code !== 401) {
                 util.errorTips(res.msg)
             }
 
-        }).finally( () => {
+        }).finally(() => {
 
         })
 
@@ -288,7 +300,7 @@ Page({
     formSubmit2(e) {
         let formData = e.detail.value;
         let id = this.data.id;
-       
+
         if (formData.remark.trim().length === 0) {
             util.errorTips('请填写回执内容');
             return false
@@ -300,7 +312,7 @@ Page({
 
         wx.showLoading({
             title: '提交中..',
-            maskt:true
+            maskt: true
         })
 
         api.orderNotFound({
@@ -309,8 +321,8 @@ Page({
                 id
             },
             method: "POST"
-        }).then( (res) => {
-            console.log('找不到物料回执',res.data)
+        }).then((res) => {
+            console.log('找不到物料回执', res.data)
             wx.hideLoading()
             this.setData({
                 formshow: false,
@@ -320,14 +332,14 @@ Page({
             let params = this.data.params;
             this.getMyOrderList(params)
 
-        }).catch( (res) => {
+        }).catch((res) => {
             wx.hideLoading()
             if (res.code !== 401) {
                 util.errorTips(res.msg)
             }
 
-        }).finally( () => {
-           
+        }).finally(() => {
+
         })
     },
     // 提交表单
@@ -381,7 +393,6 @@ Page({
             })
 
             let params = this.data.params;
-            
 
             this.getMyOrderList(params);
 
@@ -393,7 +404,7 @@ Page({
                 util.errorTips(res.msg)
             }
         }).finally(() => {
-          
+
         })
 
 
@@ -403,14 +414,34 @@ Page({
      */
     onLoad: function (options) {
 
+        let userInfo = app.globalData.userInfo;
+        console.log('用户信息', userInfo);
+
         let params = this.data.params;
+
+        if (userInfo && userInfo.is_delivery) {
+            params.task_type = 2;
+            this.setData({
+                isDeliveryMan: true,
+                params
+            })
+        }
+
+        if (userInfo && userInfo.is_find_man) {
+            params.task_type = 1;
+            this.setData({
+                isFindMan: true,
+                params
+            })
+        }
+
 
         this.getMyOrderList(params)
 
         // 缓存地址信息
         let addressList = wx.getStorageSync('addressList');
 
-        if (!!addressList){
+        if (!!addressList) {
 
             this.setData({
                 multiArray: addressList,
@@ -418,7 +449,7 @@ Page({
                 city: this.data.multiIndex[1]
             })
 
-        }else {
+        } else {
 
             api.getAddress(
 
@@ -454,6 +485,9 @@ Page({
      */
     onShow: function () {
         console.log('onSHow 进入');
+
+
+
         onfire.fire('getInfo', '参数');
 
         onfire.fire('updataOrder', 'neworder');
@@ -548,9 +582,35 @@ Page({
             }
 
         }).finally((res) => {
-           
+
         })
 
+        // 更新数量数据
+
+        api.orderNum({
+            query: {
+                id: params.task_type
+            }
+        }).then((res) => {
+            console.log(res);
+            let id = params.task_type;
+            if (id == 1) {
+
+                this.setData({
+                    findNum: res.data
+                })
+
+            } else if (id == 2) {
+                this.setData({
+                    sendNum: res.data
+                })
+            }
+
+
+
+        }).catch((err) => {
+            console.log(err)
+        })
     },
 
     // 下拉加载数据
@@ -594,7 +654,7 @@ Page({
             }
 
         }).finally((res) => {
-           
+
         })
 
     },
@@ -610,7 +670,7 @@ Page({
     },
 
     // 处理预览图片
-    mergeImg (list) {
+    mergeImg(list) {
 
         list.forEach((ele, i) => {
 
@@ -628,6 +688,16 @@ Page({
             ele.imgs = imgs;
         })
 
+    },
+
+    orderNum(id) {
+        api.orderNum({
+            query: {
+                id
+            }
+        }).then((res) => {
+            console.log(res)
+        })
     }
 
 })

@@ -5,6 +5,10 @@
 .padding {
   padding: 16rpx 20rpx;
 }
+
+.pd-cell {
+  padding: 0 20rpx;
+}
 .warm-btn {
   border: 1rpx #C81C28 solid;
   color: #C81C28;

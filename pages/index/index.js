@@ -29,7 +29,7 @@ Page({
 
             let params = {
                 task_type: 1,
-                type: 0,
+                type: -1,
                 page: 1
             }
 
@@ -56,7 +56,7 @@ Page({
 
             let params = {
                 task_type: 2,
-                type: 0,
+                type: -1,
                 page: 1
             }
 
@@ -104,6 +104,12 @@ Page({
     },
 
     onShow() {
+
+       
+
+        // 触发
+        //onfire.fire('updataUserInfo',app);
+
         //   更新数据
         api.homeData().then((res) => {
 
@@ -117,6 +123,21 @@ Page({
         }).catch((res) => {
 
             console.log('首页统计数据', res)
+
+            // 用户身份判定,显示对应栏目
+            let userInfo = app.globalData.userInfo;
+
+            if (userInfo && !userInfo.is_delivery) {
+                this.setData({
+                    isDeliveryMan: false,
+                })
+            }
+
+            if (userInfo && !userInfo.is_find_man) {
+                this.setData({
+                    isFindMan: false,
+                })
+            }
 
             if(res.code !== 401) {
                 util.errorTips(res.msg)

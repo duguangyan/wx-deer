@@ -3,18 +3,18 @@
     <view class="fixed-block">
         <view class="select-section">
             <view class="flex select-order">
-                <view wx:if="{{true}}" bindtap='getOrderData' data-task_type="1" class="{{params.task_type == 1 ? 'selected' : ''}}">找料订单</view>
-                <view wx:if="{{true}}" bindtap='getOrderData' data-task_type="2" class="{{params.task_type == 2 ? 'selected' : ''}}">取料订单</view>
+                <view wx:if="{{isFindMan}}" bindtap='getOrderData' data-task_type="1" class="{{params.task_type == 1 ? 'selected' : ''}}">找料订单</view>
+                <view wx:if="{{isDeliveryMan}}" bindtap='getOrderData' data-task_type="2" class="{{params.task_type == 2 ? 'selected' : ''}}">取送订单</view>
             </view>
-            <view wx:if="{{params.task_type == 1}}" class="flex status-section">
-                <view bindtap='getOrderTypeData' data-type="0" class="{{params.type == 0 ? 'selected' : ''}}">全部</view>
-                <view bindtap='getOrderTypeData' data-type="1" class="{{params.type == 1 ? 'selected' : ''}}">找料中</view>
-                <view bindtap='getOrderTypeData' data-type="2" class="{{params.type == 2 ? 'selected' : ''}}">配送中</view>
+            <view wx:if="{{isFindMan && params.task_type == 1}}" class="flex status-section find-section">
+                <view bindtap='getOrderTypeData' data-type="-1" class="{{params.type == -1 ? 'selected' : ''}}">新接（{{findNum.new}}）</view>
+                <view bindtap='getOrderTypeData' data-type="1" class="{{params.type == 1 ? 'selected' : ''}}">找料中（{{findNum.find_in}}）</view>
+                <view bindtap='getOrderTypeData' data-type="2" class="{{params.type == 2 ? 'selected' : ''}}">配送中（{{findNum.delivery_in}}）</view>
                 <view bindtap='getOrderTypeData' data-type="3" class="{{params.type == 3 ? 'selected' : ''}}">已完成</view>
             </view>
-            <view wx:elif="{{params.task_type == 2}}" class="flex status-section">
-                <view bindtap='getOrderTypeData' data-type="0" class="{{params.type == 0 ? 'selected' : ''}}">全部</view>
-                <view bindtap='getOrderTypeData' data-type="2" class="{{params.type == 2 ? 'selected' : ''}}">配送中</view>
+            <view wx:elif="{{isDeliveryMan && params.task_type == 2}}" class="flex status-section">
+                <view bindtap='getOrderTypeData' data-type="-1" class="{{params.type == -1 ? 'selected' : ''}}">新接（{{sendNum.new}}）</view>
+                <view bindtap='getOrderTypeData' data-type="2" class="{{params.type == 2 ? 'selected' : ''}}">配送中（{{sendNum.delivery_in}}）</view>
                 <view bindtap='getOrderTypeData' data-type="3" class="{{params.type == 3 ? 'selected' : ''}}">已完成</view>
             </view>
         </view>
@@ -33,124 +33,129 @@
 
             <block wx:for="{{orderList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
 
-                <view  class="order-item">
-                    <navigator data-index="{{index}}" open-type='navigate' url="../orderDetail/orderDetail?index={{index}}&id={{item.id}}" class="flex order-status relative">
-                        <view>
+                <view class="order-item">
+                    <view bindtap='seeDetail' data-index="{{index}}" data-id="{{item.id}}">
+                        <view class="flex order-status relative">
                             <view>
-                                订单编号：{{item.order_sn}}
+                                <view>
+                                    订单编号：{{item.order_sn}}
+                                </view>
+                                <view>
+                                    下单时间：{{item.created_at}}
+                                </view>
                             </view>
-                            <view>
-                                下单时间：{{item.created_at}}
+                            <view class="ctheme">
+                                {{item.button_status.red_title}}
+                            </view>
+
+                            <view wx:if="{{ item.task_type === 1 && item.button_status.red_title !== '已找到' && (item.find_status === 1 || (item.find_status === 4 && item.distribution_status === 1) )}}" class="new">
+                                <image src="../../images/new-1.png"></image>
+                            </view>
+                            <view wx:if="{{ item.task_type === 2 && (item.distribution_status === 1)}}" class="new">
+                                <image src="../../images/new-1.png"></image>
                             </view>
                         </view>
-                        <view class="ctheme">
-                            {{item.button_status.red_title}}
-                        </view>
+                        <view class="order-info">
+                            <view class="order-info-left">
 
-                        <view wx:if="{{ item.task_type === 1 && item.button_status.red_title !== '已找到' && (item.find_status === 1 || (item.find_status === 4 && item.distribution_status === 1) )}}" class="new">
-                            <image src="../../images/new-1.png"></image>
-                        </view>
-                        <view wx:if="{{ item.task_type === 2 && (item.distribution_status === 1)}}" class="new">
-                            <image src="../../images/new-1.png"></image>
-                        </view>
-                    </navigator>
-                    <view class="order-info">
-                        <view class="order-info-left">
+                                <view class="flex align-item-start">
+                                    <view class="flex-1">
+                                        <view>
+                                            物料品类： {{item.cname}}
+                                        </view>
+                                        <view class="ellipsis">
+                                            物料描述： {{item.desc}}
+                                        </view>
 
-                            <view class="flex align-item-start">
-                                <view class="flex-1">
-                                    <view>
-                                        物料品类： {{item.cname}}
-                                    </view>
-                                    <view class="ellipsis">
-                                        物料描述： {{item.desc}}
+                                        <view wx:if="{{item.type === 1}}">提供找料方式： 按图找料</view>
+                                        <view wx:if="{{item.type === 2}}">提供找料方式：
+                                            <text wx:if="{{item.get_type === 1}}">按样找料-上门取样</text>
+                                            <text wx:elif="{{item.get_type === 2}}">按样找料-寄送样品</text>
+                                        </view>
+                                        <view wx:if="{{item.type === 3}}">提供找料方式： 按描述找料</view>
                                     </view>
 
-                                    <view wx:if="{{item.type === 1}}">提供找料方式： 按图找料</view>
-                                    <view wx:if="{{item.type === 2}}">提供找料方式： 按样找料</view>
-                                    <view wx:if="{{item.type === 3}}">提供找料方式： 按描述找料</view>
+                                    <view class="order-info-right">
+                                        <image wx:if="{{item.is_prompt === 1}}" src="../../images/reminder.png"></image>
+                                        <image wx:else src="{{params.task_type == 1 ? '../../images/find.png': '../../images/send.png'}}" />
+                                    </view>
 
                                 </view>
-
-                                <view class="order-info-right">
-                                    <image wx:if="{{item.is_prompt === 1}}" src="../../images/reminder.png"></image>
-                                    <image wx:else src="{{params.task_type == 1 ? '../../images/find.png': '../../images/send.png'}}" />
-                                </view>
-
-                            </view>
-                            <!--图片找料  -->
-                            <view wx:if="{{item.type === 1}}">
-                                <view class="order-pics-list">
-                                    <!-- <image wx:if="{{item.front_img.length !== 0}}" src="{{item.front_img}}" />
+                                <!--图片找料  -->
+                                <view wx:if="{{item.type === 1}}">
+                                    <view class="order-pics-list">
+                                        <!-- <image wx:if="{{item.front_img.length !== 0}}" src="{{item.front_img}}" />
                                     <image wx:if="{{item.side_img.length !== 0}}" src="{{item.side_img}}" />
                                     <image wx:if="{{item.back_img.length !== 0}}" src="{{item.back_img}}" /> -->
-                                    <image mode='aspectFill' bindtap='preview' wx:for="{{item.imgs}}" src="{{img}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}"></image>
+                                        <image mode='aspectFill' catchtap='preview' wx:for="{{item.imgs}}" src="{{img}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}"></image>
+                                    </view>
+                                </view>
+                                <!--按样取样  -->
+
+                                <view class="address-space" wx:if="{{item.type === 2 && item.get_type === 1}}">
+                                    <!--地址名称  -->
+                                    <view class="flex align-item-start">
+                                        <view>
+                                            地址名称：
+                                        </view>
+                                        <view class="flex-1">
+                                            <view class="ellipsis">{{item.get_address.stall || ''}}</view>
+                                        </view>
+                                    </view>
+                                    <!--联系人  -->
+                                    <view class="flex align-item-start">
+                                        <view>
+                                            联系人：
+                                        </view>
+                                        <view class="flex-1">
+                                            <view class="ellipsis">{{item.get_address.consignee}} {{item.get_address.mobile}}</view>
+                                        </view>
+                                    </view>
+                                    <!--取料地址  -->
+                                    <view class="flex align-item-start">
+                                        <view>
+                                            取料地址：
+                                        </view>
+                                        <view class="flex-1">
+                                            <view class="ellipsis-line2"> {{item.get_address.city_str}} {{ item.get_address.address}}</view>
+                                        </view>
+                                    </view>
+
+                                </view>
+                                <!--邮寄送料地址  -->
+
+                                <view class="address-space">
+
+                                    <view class="flex align-item-start">
+                                        <view>地址名称：</view>
+                                        <view class="flex-1">
+                                            {{item.shipping_address.stall || ''}}
+                                        </view>
+                                    </view>
+
+                                    <view class="flex align-item-start">
+                                        <view>　联系人：</view>
+                                        <view class="flex-1">
+                                            <view class="ellipsis">{{item.shipping_address.consignee}} {{item.shipping_address.mobile}}</view>
+                                        </view>
+                                    </view>
+
+                                    <view class="flex align-item-start">
+                                        <view>送料地址：</view>
+                                        <view class="flex-1">
+                                            <view class="ellipsis-line2"> {{ item.shipping_address.city_str}} {{ item.shipping_address.address}}</view>
+                                        </view>
+                                    </view>
+
                                 </view>
                             </view>
-                            <!--按样取样  -->
 
-                            <view class="address-space" wx:if="{{item.type === 2}}">
-                                <!--档口名称  -->
-                                <view class="flex align-item-start">
-                                    <view>
-                                        档口名称：
-                                    </view>
-                                    <view class="flex-1">
-                                        <view class="ellipsis">{{item.get_address.stall}}</view>
-                                    </view>
-                                </view>
-                                <!--联系人  -->
-                                <view class="flex align-item-start">
-                                    <view>
-                                    　联系人：
-                                    </view>
-                                    <view class="flex-1">
-                                        <view class="ellipsis">{{item.get_address.consignee}} {{item.get_address.mobile}}</view>
-                                    </view>
-                                </view>
-                                <!--取料地址  -->
-                                <view class="flex align-item-start">
-                                    <view>
-                                        取料地址：
-                                    </view>
-                                    <view class="flex-1">
-                                        <view class="ellipsis-line2"> {{ item.get_address.city_str}} {{ item.get_address.address}}</view>
-                                    </view>
-                                </view>
-
-                            </view>
-                            <!--邮寄送料地址  -->
-
-                            <view  class="address-space">
-
-                                <view class="flex align-item-start">
-                                    <view>档口名称：</view>
-                                    <view class="flex-1">
-                                        {{item.shipping_address.stall}}
-                                    </view>
-                                </view>
-
-                                <view class="flex align-item-start">
-                                    <view>　联系人：</view>
-                                    <view class="flex-1">
-                                        <view class="ellipsis">{{item.shipping_address.consignee}} {{item.shipping_address.mobile}}</view>
-                                    </view>
-                                </view>
-
-                                <view class="flex align-item-start">
-                                    <view>送料地址：</view>
-                                    <view class="flex-1">
-                                        <view class="ellipsis-line2"> {{ item.shipping_address.city_str}} {{ item.shipping_address.address}}</view>
-                                    </view>
-                                </view>
-
-                            </view>
                         </view>
 
                     </view>
                     <!--按钮  -->
-                    <view wx:if="{{item.button_status.status === 1 || item.button_status.status === 2 || item.button_status.status === 3}}" class="flex flex-end order-handle">
-                       
+                    <view wx:if="{{item.button_status.status === 1 || item.button_status.status === 2 }}" class="flex flex-end order-handle">
+
                         <!--找料中  -->
                         <view wx:if="{{item.button_status.status === 1}}" class="flex find-status">
                             <view data-type='2' data-id="{{item.id}}" bindtap='showForm'>找不到物料</view>
@@ -161,9 +166,9 @@
                             <view data-type='3' data-id="{{item.id}}" bindtap='showForm' class="ctheme warm-border">确认送达</view>
                         </view>
                         <!--已经完成状态  -->
-                        <navigator  wx:elif="{{item.button_status.status === 3}}" data-index="{{index}}" data-id="{{item.id}}" open-type='navigate' url="../orderDetail/orderDetail?index={{index}}" class="flex find-status">
+                        <!-- <navigator wx:elif="{{item.button_status.status === 3}}" data-index="{{index}}" data-id="{{item.id}}" open-type='navigate' url="../orderDetail/orderDetail?index={{index}}" class="flex find-status">
                             <view>详情</view>
-                        </navigator>
+                        </navigator> -->
                     </view>
                 </view>
             </block>
@@ -199,15 +204,15 @@
 
 
 <view wx:if="{{formshow}}" class="pop-window" catchtouchmove="preventD">
-    <!-- 填写档口 -->
+    <!-- 填写地址 -->
     <view wx:if="{{formtype === '1'}}" class="form-box-1">
         <text bindtap='close' class="iconfont icon-guanbi close"></text>
         <form bindsubmit="formSubmit1" report-submit>
-            <view class="fs34 b600 bdb lh120">请填写档口信息</view>
+            <view class="fs34 b600 bdb lh120">请填写地址信息</view>
             <view class="flex tl bdb">
                 <view class="mgr20">
-                    <text class="ctheme">*</text>档口信息: </view>
-                <input name="name" class="flex-1" confirm-hold="true" confirm-type="next" placeholder='请填写档口名称'></input>
+                    <text class="ctheme">*</text>地址信息: </view>
+                <input name="name" class="flex-1" confirm-hold="true" confirm-type="next" placeholder='请填写地址名称'></input>
             </view>
             <view class="flex tl bdb lh80">
                 <view class="mgr20">
@@ -226,7 +231,7 @@
 
                 <view class="flex-1 ">
                     <view class="flex">
-                        <picker  style="flex:1;" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range-key="region_name" range="{{[multiArray,multiArray[province].children, multiArray[province].children[city].children]}}">
+                        <picker style="flex:1;" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range-key="region_name" range="{{[multiArray,multiArray[province].children, multiArray[province].children[city].children]}}">
                             <view class="picker" style="text-align:left;min-height:60rpx;line-height:60rpx;">
                                 {{multiArray[multiIndex[0]].region_name}} {{multiArray[multiIndex[0]].children[multiIndex[1]].region_name}} {{multiArray[multiIndex[0]].children[multiIndex[1]].children[multiIndex[2]].region_name}}
                             </view>
@@ -262,7 +267,8 @@
         <form bindsubmit="formSubmit3" report-submit>
             <view class="fs34 b600 bdb lh120">请填写回执信息</view>
             <view class="flex flex-start bdb form-add-img">
-                <view>添加图片：</view>
+                <view>
+                    <text class="ctheme">*</text>添加图片：</view>
                 <view class="flex-1 pd20">
 
                     <view class="relative w200" wx:for="{{files}}">
@@ -277,7 +283,7 @@
             </view>
             <view class="flex tl bdb lh60">
                 <view class="mgr20 lh80">
-                    <text class="ctheme">*</text>回执信息: </view>
+                    <text class="ctheme">*</text>回执信息：</view>
                 <input class="flex-1" name="back_info" confirm-type="done" placeholder='请填写回执信息'></input>
             </view>
             <view class="submit-box">

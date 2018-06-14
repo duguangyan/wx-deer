@@ -9,7 +9,7 @@
         已完成
     </view> -->
 
-     <view wx:if="{{data.type === 'accepted' && data.finish_at}}" class="pd20 fs36">
+     <view wx:if="{{data.type === 'accepted'}}" class="pd20 fs36">
         <!-- <text class="iconfont icon-icon02 fs50"></text>  -->
         {{data.status_label}}
     </view>

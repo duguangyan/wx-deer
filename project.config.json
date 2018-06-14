@@ -64,6 +64,18 @@
 					"name": "登录页面",
 					"pathName": "pages/login/login",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "订单列表",
+					"pathName": "pages/order/order",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "个人中心",
+					"pathName": "pages/personalCenter/personalCenter",
+					"query": ""
 				}
 			]
 		}

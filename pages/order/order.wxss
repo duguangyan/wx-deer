@@ -37,6 +37,13 @@
     box-sizing: border-box;
     padding: 0 30rpx;
 }
+/*增加数量,减少边距  */
+/* .status-section.find-section {
+    padding: 0 10px;
+} */
+.status-section.find-section view {
+    padding: 0 14rpx;
+}
 
 .status-section view.selected, .select-order view.selected {
     color: #c91a29;

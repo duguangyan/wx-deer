@@ -1,4 +1,4 @@
-//const apiUrl = 'https://api.yidap.com';
+//const apiUrl = 'https://apiv2.yidap.com';
 const apiUrl = 'https://devv2.yidap.com';
 
 const apiAddress = 'https://devapi.yidap.com';
@@ -147,11 +147,14 @@ const rewardTaskDetail = (params) => myRequest(params, `${apiUrl}/find/api/task_
 // 未接悬赏任务详情
 const rewardTaskDetailUnanswered = (params) => myRequest(params, `${apiUrl}/find/api/task_rewards/${params.query.id}`);
 
-
-// 佣金记录
+// 佣金悬赏记录
 const commissionRecord = (params) => myRequest(params, `${apiUrl}/find/api/commissions`);
 
-// 悬赏记录
+// 订单数量 
+const orderNum = (params) => myRequest(params, `${apiUrl}/find/api/order_records/num/${params.query.id}`);
+
+// 悬赏数量统计展示
+const rewardTaskNum = (params) => myRequest(params, `${apiUrl}/find/api/task_records/num`);
 
 
 
@@ -183,6 +186,9 @@ module.exports = {
     rewardTaskDetailUnanswered,
 
     commissionRecord,
+
+    orderNum,
+    rewardTaskNum,
 
 
     getAddress

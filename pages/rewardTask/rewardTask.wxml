@@ -3,15 +3,15 @@
         <view class="select-section">
             <view class="flex select-order">
                 <view bindtap="getAcceptableTaskList" class="{{type === 'acceptable' ? 'selected' : ''}}">可接悬赏</view>
-                <view bindtap="getAcceptedTaskList" data-status="0" class="{{type === 'accepted' ? 'selected' : ''}}" data-wpyacceptedtask-a="0">已接悬赏</view>
+                <view bindtap="getAcceptedTaskList" data-status="1" class="{{type === 'accepted' ? 'selected' : ''}}" data-wpyacceptedtask-a="0">已接悬赏</view>
             </view>
             <view wx:if="{{type === 'acceptable'}}" class="flex">
                 <!-- <view class="selected">全部</view> -->
             </view>
             <view wx:if="{{type === 'accepted'}}" class="flex status-section">
-                <view bindtap="getAcceptedTaskList" class="{{status == 0 ? 'selected' : ''}}" data-status="0">全部</view>
-                <view bindtap="getAcceptedTaskList" class="{{status == 1 ? 'selected' : ''}}" data-status="1">进行中</view>
-                <view bindtap="getAcceptedTaskList" class="{{status == 2 ? 'selected' : ''}}" data-status="2">已完成</view>
+                <view bindtap="getAcceptedTaskList" class="{{status == 1 ? 'selected' : ''}}" data-status="1">进行中({{taskNum.in}})</view>
+                <view bindtap="getAcceptedTaskList" class="{{status == 2 ? 'selected' : ''}}" data-status="2">已提交({{taskNum.submit}})</view>
+                <view bindtap="getAcceptedTaskList" class="{{status == 3 ? 'selected' : ''}}" data-status="3">已完成</view>
             </view>
         </view>
     </view>
@@ -29,7 +29,9 @@
         <view wx:elif="{{isShow && rewardList.length !== 0}}">
             <block wx:for="{{rewardList}}" wx:key="{{i}}">
                 <view class="order-item relative">
-                    <navigator url="../rewardTaskDetail/rewardTaskDetail?id={{item.id}}&type={{type}}&index={{index}}" open-type='navigate' class="flex order-status relative">
+
+                <view bindtap='seeDetail' data-index="{{index}}" data-id="{{item.id}}" data-type="{{type}}">
+                    <view class="flex order-status relative">
                         <view>
                             <view class="c999">
                                 悬赏号：{{item.id}}
@@ -45,7 +47,7 @@
                         <view wx:if="{{type === 'acceptable' && item.is_new}}" class="new">
                             <image src="../../images/new-1.png"></image>
                         </view>
-                    </navigator>
+                    </view>
 
                     <view class="order-info flex relative">
                         <view class="order-info-left">
@@ -69,7 +71,7 @@
                             <!--图片  -->
                             <view wx:if="{{item.examples.length !== 0}}" class="order-pics-list">
                                
-                                    <image mode='aspectFill' bindtap='preview'  wx:for="{{item.examples}}" wx:key="{{i}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}" src="{{img}}" />
+                                    <image mode='aspectFill' catchtap='preview'  wx:for="{{item.examples}}" wx:key="{{i}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}" src="{{img}}" />
                                
                             </view>
 
@@ -81,17 +83,21 @@
                         </view>
 
                     </view>
-
-                    <view class="flex flex-end order-handle">
-                        <!-- <view class="c-orange ">
-                            <text class="iconfont icon-dui mgr10" />悬赏币：{{item.reward_amount}} 个
-                        </view>  -->
+                     </view>
+                <!--已接  -->
+                    <view class="flex flex-end order-handle" wx:if="{{type === 'accepted' && item.status !== 2}}">
+                      
                         <view class="flex find-status">
-                            <view class="theme-border text-theme" wx:if="{{type === 'acceptable'}}" bindtap="acceptTask" data-id="{{item.id}}" data-index="{{index}}">接此任务</view>
+                            <view data-id="{{item.id}}" data-index="{{index}}" bindtap='submitJob' wx:if="{{item.audit_status === null  && item.status !== 3}}" class="ctheme theme-border">提交任务</view>
+                            <view data-id="{{item.id}}" data-index="{{index}}" bindtap='submitJob' wx:if="{{(item.audit_status === 0 && item.status === 1)}}" class="ctheme theme-border">再次提交</view>
+                            <!-- <view bindtap='viewDetail' data-index="{{index}}" data-id="{{item.id}}" wx:if="{{ item.status === 3}}" class="c999 gray-border">详情</view> -->
+                        </view>
+                    </view>
+                <!--未接  -->
+                     <view class="flex flex-end order-handle" wx:if="{{type === 'acceptable'}}">
+                        <view class="flex find-status">
+                            <view class="theme-border text-theme" bindtap="acceptTask" data-id="{{item.id}}" data-index="{{index}}">接此任务</view>
 
-                            <view data-id="{{item.id}}" data-index="{{index}}" bindtap='submitJob' wx:if="{{type === 'accepted'  && item.audit_status === null}}" class="ctheme theme-border">提交任务</view>
-                            <view data-id="{{item.id}}" data-index="{{index}}" bindtap='submitJob' wx:if="{{type === 'accepted' && (item.audit_status === 0 || item.audit_status === 1 || item.audit_status === 2)}}" class="ctheme theme-border">再次提交</view>
-                            <view data-id="{{item.id}}" wx:if="{{type === 'accepted' && item.status == 2}}" class="c999 gray-border">详情</view>
                         </view>
                     </view>
 

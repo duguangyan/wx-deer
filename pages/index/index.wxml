@@ -2,9 +2,9 @@
 
 <view wx:if="{{homeData}}" class="">
     <!-- 找料单  -->
-    <view bindtap='goFindPage' class="section-item">
-        <view  hover-class="hover" class="section-title flex">
-            <view class="b600">找料单(
+    <view wx:if="{{isFindMan || true}}" bindtap='goFindPage' class="section-item" hover-class='hover-default'>
+        <view class="section-title flex">
+            <view class="b600">找料订单(
                 <text class="ctheme">{{homeData.find.un_finish_num+homeData.find.finish_num}}</text>)</view>
             <view class="c666 fs24">{{homeData.begin}}~{{homeData.end}}</view>
             <view class="c666 fs24">更多
@@ -30,9 +30,9 @@
         </view>
     </view>
     <!--配送单  -->
-    <view bindtap='goSendPage' class="section-item">
-        <view  hover-class="hover" class="section-title flex">
-            <view class="b600">配送单(
+    <view  wx:if="{{isDeliveryMan || true}}" bindtap='goSendPage' class="section-item" hover-class='hover-default'>
+        <view class="section-title flex">
+            <view class="b600">取送订单(
                 <text class="ctheme">{{homeData.delivery.un_finish_num + homeData.delivery.finish_num}}</text>)</view>
             <view class="c666 fs24">{{homeData.begin}}~{{homeData.end}}</view>
             <view class="c666 fs24">更多
@@ -59,15 +59,15 @@
         </view>
     </view>
     <!--悬赏任务  -->
-    <view class="section-item">
-        <navigator open-type='switchTab' url="../rewardTask/rewardTask" class="section-title flex">
+    <navigator class="section-item" open-type='switchTab' url="../rewardTask/rewardTask">
+        <view class="section-title flex">
             <view class="b600">悬赏任务(
                 <text class="ctheme">{{homeData.reward.un_finish_num + homeData.reward.finish_num}}</text>)</view>
             <view class="c666 fs24">{{homeData.begin}}~{{homeData.end}}</view>
             <view class="c666 fs24">更多
                 <text class="iconfont icon-gengduo-right"></text>
             </view>
-        </navigator>
+        </view>
         <view class="section-task-info flex">
             <view class="fs28">
                 <text class="iconfont icon-xinrenwu mgr10" />
@@ -88,7 +88,7 @@
                 homeData.reward.finish_num}}</text>)
             </view>
         </view>
-    </view>
+    </navigator>
 
 </view>
 

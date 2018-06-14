@@ -8,6 +8,33 @@ Page({
      * 页面的初始数据
      */
     data: {
+        formid: []
+    },
+    formSubmit(e) {
+        console.log(e.detail.formId);
+        let formid = this.data.formid;
+        formid.push(e.detail.formId);
+
+        this.setData({
+            formid
+        })
+    },
+    // 复制订单
+    copy(e) {
+
+        let data = e.currentTarget.dataset.formid;
+
+        wx.setClipboardData({
+            data,
+            success: function (res) {
+                wx.hideToast();
+
+                wx.showToast({
+                    title: '复制成功',
+                })
+   
+            }
+        })
 
     },
 
@@ -44,7 +71,6 @@ Page({
             console.log('用户信息err', res)
         }).finally(() => {
 
-
         })
 
 
@@ -54,7 +80,7 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide: function () {
-      
+
     },
 
     /**

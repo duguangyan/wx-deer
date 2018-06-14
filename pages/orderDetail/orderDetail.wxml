@@ -1,5 +1,14 @@
 <view class="container tl">
-    <view wx:if="{{detailData.button_status.status === 1}}" class="b500 tl padding lh60">
+
+
+    <view class="b500 tl padding lh60">
+        <text wx:if="{{detailData.button_status.status === 1}}" class="iconfont icon-zhaoliaoyuan fs50 mgr20" />
+        <text wx:elif="{{detailData.button_status.status === 2}}" class="iconfont icon-peisongyuan fs50 mgr20" />
+        <text wx:elif="{{detailData.button_status.status === 3 || detailData.button_status.status === 4}}" class="iconfont icon-icon02 fs50 mgr20" /> 
+        {{detailData.button_status.red_title}}
+    </view>
+
+    <!-- <view wx:if="{{detailData.button_status.status === 1}}" class="b500 tl padding lh60">
         <text class="iconfont icon-zhaoliaoyuan fs50 mgr20" /> 找料中
     </view>
 
@@ -9,10 +18,10 @@
 
     <view wx:if="{{detailData.button_status.status === 3 || detailData.button_status.status === 4}}" class="b500 tl padding lh60">
         <text class="iconfont icon-icon02 fs50 mgr20" /> 已完成
-    </view>
+    </view> -->
 
-    <view class="space" />
-    <view class="padding">
+    <view class="space" wx:if="{{detailData.confirm_finish_at || detailData.confirm_shipping_at || detailData.find_at}}" />
+    <view  wx:if="{{detailData.confirm_finish_at || detailData.confirm_shipping_at || detailData.find_at}}" class="padding">
         <view wx:if="{{detailData.confirm_finish_at}}">
             <text class="c999"> 确认收货：</text>
             <text>{{detailData.confirm_finish_at}}</text>
@@ -27,6 +36,7 @@
         </view>
     </view>
     <view class="space" />
+
     <view class="padding">
         <view>
             <text class="c999"> 物料类型：</text>
@@ -54,7 +64,8 @@
 
         <view wx:if="{{detailData.type === 2}}">
             <text class="c999"> 找料方式：</text>
-            <text>按样找料</text>
+             <text wx:if="{{detailData.get_type === 1}}">按样找料-上门取样</text>
+             <text wx:elif="{{detailData.get_type === 2}}">按样找料-寄送样品</text>
         </view>
 
         <view wx:if="{{detailData.type === 3}}">
@@ -65,13 +76,13 @@
     </view>
 
     <view class="space" />
-    <view wx:if="{{detailData.type === 2}}" class="padding b600 c999 bdb">取样地址</view>
-    <view wx:if="{{detailData.type === 2}}" class="padding">
+    <view wx:if="{{detailData.type === 2 && detailData.get_address}}" class="padding b600 c999 bdb">取样地址</view>
+    <view wx:if="{{detailData.type === 2 && detailData.get_address}}" class="padding">
 
         <view class="flex">
-            <view class=" c999">档口名称：</view>
+            <view class=" c999">地址名称：</view>
             <view class="flex-1">
-                {{detailData.get_address.stall}}
+                {{detailData.get_address.stall || ''}}
             </view>
         </view>
         <view class="flex">
@@ -87,13 +98,13 @@
             </view>
         </view>
     </view>
-    
+
     <view class="padding b600 c999 bdb bdt">送料地址</view>
     <view class="padding">
         <view class="flex">
-            <view class=" c999">档口名称：</view>
+            <view class=" c999">地址名称：</view>
             <view class="flex-1">
-                {{detailData.shipping_address.stall}}
+                {{detailData.shipping_address.stall || ''}}
             </view>
         </view>
         <view class="flex">
@@ -122,7 +133,7 @@
         <view>
             <text class="c999">下单时间：</text> {{detailData.created_at}}
         </view>
-        <view wx:if=" {{detailData.findman_name}}">
+        <view wx:if="{{detailData.findman_name}}">
             <text class="c999">　找料员：</text> {{detailData.findman_name}}/{{detailData.findman_mobile }}
         </view>
         <view wx:if="{{detailData.find_at}}">
