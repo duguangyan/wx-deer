@@ -15,3 +15,5 @@
       <view bindtap='uploadAll' wx:if="{{addUpload}}" class="upload-box" style="">+</view>
 
 </view>
+
+<view>upload 分支</view>
