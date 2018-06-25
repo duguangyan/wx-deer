@@ -76,8 +76,8 @@
     </view>
 
     <view class="space" />
-    <view wx:if="{{detailData.type === 2 && detailData.get_address}}" class="padding b600 c999 bdb">取样地址</view>
-    <view wx:if="{{detailData.type === 2 && detailData.get_address}}" class="padding">
+    <view wx:if="{{detailData.get_address}}" class="padding b600 c999 bdb">取样地址</view>
+    <view wx:if="{{detailData.get_address}}" class="padding">
 
         <view class="flex">
             <view class=" c999">地址名称：</view>

@@ -1,0 +1,11 @@
+.upload-box {
+    width: 200rpx;
+    height: 200rpx;
+    line-height: 200rpx;
+    text-align: center;
+    font-weight: 600;
+    font-size: 120rpx;
+    color: #fff;
+    background: #ccc;
+    margin: 20rpx;
+}

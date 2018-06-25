@@ -184,9 +184,10 @@ Page({
                     console.log('上传进度', res.progress);
                     files[i].pct = res.progress + '%';
 
-                    // if (res.progress == 100){
-                    //     files[i].pct = '上传成功'
-                    // }
+                    if (res.progress == 100){
+                        files[i].pct = 'finish';
+                    }
+
                     this.setData({
                         files
                     })
@@ -248,7 +249,7 @@ Page({
         let files = this.data.files;
 
 
-        if (((files[0].pct && files[0].pct !== '100%') === true) || ((files[1].pct && files[1].pct !== '100%') === true)) {
+        if (((files[0].pct && files[0].pct !== 'finish') === true) || ((files[1].pct && files[1].pct !== 'finish') === true)) {
             util.errorTips('图片正在上传')
             return false;
         }

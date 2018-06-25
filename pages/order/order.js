@@ -162,6 +162,10 @@ Page({
                     console.log('上传进度', res.progress);
                     files[i].pct = res.progress + '%';
 
+                    if (res.progress == 100) {
+                        files[i].pct = 'finish';
+                    }
+
                     this.setData({
                         files
                     })

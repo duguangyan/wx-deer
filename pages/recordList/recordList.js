@@ -20,6 +20,10 @@ Page({
         this.commissionRecord(page, this.data.asset_type)
     },
 
+    _yybindchange (e) {
+            console.log(e)
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */

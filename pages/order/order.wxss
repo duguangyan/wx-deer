@@ -42,7 +42,7 @@
     padding: 0 10px;
 } */
 .status-section.find-section view {
-    padding: 0 14rpx;
+    padding: 0 10rpx;
 }
 
 .status-section view.selected, .select-order view.selected {

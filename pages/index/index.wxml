@@ -1,5 +1,4 @@
 <!--index.wxml-->
-
 <view wx:if="{{homeData}}" class="">
     <!-- 找料单  -->
     <view wx:if="{{isFindMan || true}}" bindtap='goFindPage' class="section-item" hover-class='hover-default'>
@@ -30,7 +29,7 @@
         </view>
     </view>
     <!--配送单  -->
-    <view  wx:if="{{isDeliveryMan || true}}" bindtap='goSendPage' class="section-item" hover-class='hover-default'>
+    <view wx:if="{{isDeliveryMan || true}}" bindtap='goSendPage' class="section-item" hover-class='hover-default'>
         <view class="section-title flex">
             <view class="b600">取送订单(
                 <text class="ctheme">{{homeData.delivery.un_finish_num + homeData.delivery.finish_num}}</text>)</view>
@@ -95,6 +94,6 @@
 <view wx:else>
     <view wx:for="{{[1,2,3]}}" wx:key="{{i}}" class="index-shell">
         <view class="w500"></view>
-        <view ></view>
+        <view></view>
     </view>
 </view>

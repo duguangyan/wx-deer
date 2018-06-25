@@ -20,6 +20,12 @@ Page({
         })
     },
 
+    close1 () {
+        wx.showToast({
+            title: '已读',
+        })
+    },
+
     //   找料单页
     goFindPage() {
 
