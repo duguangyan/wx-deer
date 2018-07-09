@@ -672,6 +672,10 @@ page {
     line-height: 36rpx;
 }
 
+.lh42 {
+    line-height: 42rpx;
+}
+
 .reason {
     width: 540rpx;
     padding: 10rpx 30rpx;

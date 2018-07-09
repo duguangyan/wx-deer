@@ -1,27 +1,14 @@
 <view class="container tl">
-
-
+    <!--顶部订单状态展示  -->
     <view class="b500 tl padding lh60">
         <text wx:if="{{detailData.button_status.status === 1}}" class="iconfont icon-zhaoliaoyuan fs50 mgr20" />
         <text wx:elif="{{detailData.button_status.status === 2}}" class="iconfont icon-peisongyuan fs50 mgr20" />
-        <text wx:elif="{{detailData.button_status.status === 3 || detailData.button_status.status === 4}}" class="iconfont icon-icon02 fs50 mgr20" /> 
-        {{detailData.button_status.red_title}}
+        <text wx:elif="{{detailData.button_status.status === 3 || detailData.button_status.status === 4}}" class="iconfont icon-icon02 fs50 mgr20" /> {{detailData.button_status.red_title}}
     </view>
 
-    <!-- <view wx:if="{{detailData.button_status.status === 1}}" class="b500 tl padding lh60">
-        <text class="iconfont icon-zhaoliaoyuan fs50 mgr20" /> 找料中
-    </view>
-
-    <view wx:if="{{detailData.button_status.status === 2}}" class="b500 tl padding lh60">
-        <text class="iconfont icon-peisongyuan fs50 mgr20" /> 配送中
-    </view>
-
-    <view wx:if="{{detailData.button_status.status === 3 || detailData.button_status.status === 4}}" class="b500 tl padding lh60">
-        <text class="iconfont icon-icon02 fs50 mgr20" /> 已完成
-    </view> -->
-
+    <!--订单详情 S  -->
     <view class="space" wx:if="{{detailData.confirm_finish_at || detailData.confirm_shipping_at || detailData.find_at}}" />
-    <view  wx:if="{{detailData.confirm_finish_at || detailData.confirm_shipping_at || detailData.find_at}}" class="padding">
+    <view wx:if="{{detailData.confirm_finish_at || detailData.confirm_shipping_at || detailData.find_at}}" class="padding">
         <view wx:if="{{detailData.confirm_finish_at}}">
             <text class="c999"> 确认收货：</text>
             <text>{{detailData.confirm_finish_at}}</text>
@@ -64,8 +51,8 @@
 
         <view wx:if="{{detailData.type === 2}}">
             <text class="c999"> 找料方式：</text>
-             <text wx:if="{{detailData.get_type === 1}}">按样找料-上门取样</text>
-             <text wx:elif="{{detailData.get_type === 2}}">按样找料-寄送样品</text>
+            <text wx:if="{{detailData.get_type === 1}}">按样找料-上门取样</text>
+            <text wx:elif="{{detailData.get_type === 2}}">按样找料-寄送样品</text>
         </view>
 
         <view wx:if="{{detailData.type === 3}}">
@@ -76,46 +63,50 @@
     </view>
 
     <view class="space" />
-    <view wx:if="{{detailData.get_address}}" class="padding b600 c999 bdb">取样地址</view>
-    <view wx:if="{{detailData.get_address}}" class="padding">
+    <!--找到物料地址  -->
+    <view wx:if="{{detailData.find_stalls}}" class="padding b600 c999 bdb">找到物料地址</view>
 
-        <view class="flex">
-            <view class=" c999">地址名称：</view>
-            <view class="flex-1">
-                {{detailData.get_address.stall || ''}}
-            </view>
+    <view wx:elif="{{detailData.get_address}}" class="padding b600 c999 bdb">取样地址</view>
+
+    <view wx:if="{{detailData.find_stalls}}" class="padding">
+
+        <view class="lh42">
+            {{detailData.find_stalls.stall || ''}}
+            <!-- <text wx:if="{{detailData.find_stalls.stall}}" class="tag mgl30 lh42"></text> -->
         </view>
-        <view class="flex">
-            <view class=" c999">　联系人：</view>
-            <view class="flex-1">
-                {{detailData.get_address.consignee}} {{detailData.get_address.mobile}}
-            </view>
-        </view>
-        <view class="flex">
-            <view class="c999 ">取料地址：</view>
-            <view class="flex-1 ellipsis-line2">
-                {{ detailData.get_address.city_str}} {{ detailData.get_address.address}}
+        <view class="flex align-item-start lh42">
+            <view class="c999 mgr30">{{detailData.find_stalls.consignee}} {{detailData.find_stalls.mobile}}</view>
+            <view class="flex-1 c999">
+                {{detailData.find_stalls.city_str}} {{ detailData.find_stalls.address}}
             </view>
         </view>
     </view>
 
+
+    <!--取样地址  -->
+    <view wx:elif="{{detailData.get_address}}" class="padding">
+
+        <view class="lh42">
+            {{detailData.get_address.stall || ''}}
+            <text wx:if="{{detailData.get_address.stall}}" class="tag mgl30 lh42">取样</text>
+        </view>
+        <view class="flex align-item-start lh42">
+            <view class="c999 mgr30">{{detailData.get_address.consignee}} {{detailData.get_address.mobile}}</view>
+            <view class="flex-1 c999">
+                {{detailData.get_address.city_str}} {{ detailData.get_address.address}}
+            </view>
+        </view>
+    </view>
+    <!--送料地址  -->
     <view class="padding b600 c999 bdb bdt">送料地址</view>
     <view class="padding">
-        <view class="flex">
-            <view class=" c999">地址名称：</view>
-            <view class="flex-1">
-                {{detailData.shipping_address.stall || ''}}
-            </view>
+        <view class="lh42">
+            {{detailData.shipping_address.stall || ''}}
+            <text wx:if="{{detailData.shipping_address.stall}}" class="tag mgl30 lh42">送料</text>
         </view>
-        <view class="flex">
-            <view class=" c999">　联系人：</view>
-            <view class="flex-1">
-                {{detailData.shipping_address.consignee}} {{detailData.shipping_address.mobile}}
-            </view>
-        </view>
-        <view class="flex">
-            <view class="c999 ">送样地址：</view>
-            <view class="flex-1 ellipsis-line2">
+        <view class="flex align-item-start lh42">
+            <view class="c999 mgr30">{{detailData.shipping_address.consignee}} {{detailData.shipping_address.mobile}}</view>
+            <view class="flex-1 c999">
                 {{ detailData.shipping_address.city_str}} {{ detailData.shipping_address.address}}
             </view>
         </view>

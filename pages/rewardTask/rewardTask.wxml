@@ -34,7 +34,7 @@
                     <view class="flex order-status relative">
                         <view>
                             <view class="c999">
-                                悬赏号：{{item.id}}
+                                悬赏号：{{item.id}} <text class="mgl20" wx:if="{{item.times_limit}}">({{item.times_limit}})</text>
                             </view>
                             <view class="c999">
                                 发布时间：{{item.created_at}}
@@ -137,7 +137,14 @@
         <text bindtap='colse' class="iconfont icon-guanbi close fs50 c999"></text>
         <form bindsubmit="formSubmit" report-submit>
             <view class="fs34 b600 bdb lh120">请填写回执信息</view>
-            <view class="flex flex-start bdb form-add-img">
+
+
+            <view class="flex flex-start form-add-img">
+                <view class="tl">上传图片：</view>
+                <upload id="upload"/>
+            </view>
+<!-- 
+             <view class="flex flex-start bdb form-add-img">
                 <view>上传图片：</view>
                 <view class="flex-1 flex space-around pd20">
 
@@ -150,7 +157,7 @@
                     </view>
 
                 </view>
-            </view>
+            </view> -->
             <view class="flex tl bdb lh60">
                 <view class="mgr20 lh80">
                     <text class="ctheme"> * </text>内容: </view>

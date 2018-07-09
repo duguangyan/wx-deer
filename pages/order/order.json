@@ -1,4 +1,7 @@
 {
     "navigationBarTitleText": "订单",
-    "enablePullDownRefresh": false
+    "enablePullDownRefresh": true,
+    "usingComponents": {
+        "upload": "../../component/upload/index"
+    }
 }

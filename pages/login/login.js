@@ -75,7 +75,7 @@ Page({
         const isMatch = util.vailPhone(user_name);
 
         if (!isMatch) {
-            util.errorTips('请确认手机号！');
+            util.errorTips('请确认手机号');
             return false;
         }
 
@@ -111,7 +111,11 @@ Page({
 
         }).catch((res) => {
             wx.hideLoading()
-            util.errorTips(res.msg);
+           // util.errorTips(res.msg);
+            wx.showToast({
+                title: res.msg,
+                icon: 'none'
+            })
 
         }).finally(() => {
 

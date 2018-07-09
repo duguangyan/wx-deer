@@ -1,0 +1,15 @@
+<view class="upload-box">
+
+    <view class="upload-img-box relative" wx:for="{{files}}" wx:key="{{i}}">
+
+        <image style="width:160rpx;height:160rpx;" mode='aspectFill' bindtap='chooseImage' data-id="{{index}}" src="{{item.url}}" mode='aspectFill'></image>
+        <image data-id="{{index}}" catchtap='deleteItem' wx:if="{{item.pct}}" class="delete-icon" style="width:44rpx;height:44rpx;position:absolute;right:-12rpx;top:-12rpx;background: transparent;z-index:999;" src='../../images/delete.png'></image>
+
+        <view wx:if="{{item.pct && item.pct !== 'finish'}}" style="width:160rpx;height:160rpx;background:rgba(0,0,0,0.4);position:absolute;left:0;top:0;text-align:center;line-height:160rpx;color:white;font-size:30rpx;">{{item.pct}}</view>
+        <input class="hidden" value="{{item.full_url}}" name="{{'img' + ( index +1 )}}" />
+
+    </view>
+
+      <view bindtap='uploadAll' wx:if="{{addUpload}}" class="upload-img-box">+</view>
+
+</view>
