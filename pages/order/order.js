@@ -222,13 +222,22 @@ Page({
         }
 
     },
+
+    saveformid(e) {
+        // 增加formid
+        let formId = e.detail.formId;
+        app.saveformid(formId);
+    },
     // 提交表单
     formSubmit1(e) {
         let formData = e.detail.value;
         let id = this.data.id;
 
-        //  限制填写
+        // 增加formid
+        let formId = e.detail.formId;
+        app.saveformid(formId);
 
+        //  限制填写
         if (formData.name.trim().length === 0) {
             util.errorTips('请填写地址信息');
             return false
@@ -301,8 +310,12 @@ Page({
     },
 
     formSubmit2(e) {
-        let formData = e.detail.value;
+        let formData = e.detail.value,
+            formId = e.detail.formId;
         let id = this.data.id;
+
+        // 增加formid
+        app.saveformid(formId);
 
         if (formData.remark.trim().length === 0) {
             util.errorTips('请填写回执内容');
@@ -353,6 +366,9 @@ Page({
         let id = this.data.id;
         console.log('ididiididididi', id)
         formData.id = id;
+        // 增加formid
+        let formId = e.detail.formId;
+        app.saveformid(formId);
 
         formData.imgs = [];
 

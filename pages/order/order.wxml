@@ -3,8 +3,17 @@
     <view class="fixed-block">
         <view class="select-section">
             <view class="flex select-order">
-                <view wx:if="{{isFindMan}}" bindtap='getOrderData' data-task_type="1" class="{{params.task_type == 1 ? 'selected' : ''}}">找料订单</view>
-                <view wx:if="{{isDeliveryMan}}" bindtap='getOrderData' data-task_type="2" class="{{params.task_type == 2 ? 'selected' : ''}}">取送订单</view>
+                <view wx:if="{{isFindMan}}" bindtap='getOrderData' data-task_type="1" class="relative {{params.task_type == 1 ? 'selected' : ''}}">找料订单
+                    <!--应该写成组建的  -->
+                    <form style="position:absolute;left:0;top:0;width:100%;height:100%;" report-submit bindsubmit="saveformid">
+                        <button style="width:100%;height:100%;opacity:0;" formType="submit"></button>
+                    </form>
+                </view>
+                <view wx:if="{{isDeliveryMan}}" bindtap='getOrderData' data-task_type="2" class="relative {{params.task_type == 2 ? 'selected' : ''}}">取送订单
+                    <form style="position:absolute;left:0;top:0;width:100%;height:100%;" report-submit bindsubmit="saveformid">
+                        <button style="width:100%;height:100%;opacity:0;" formType="submit"></button>
+                    </form>
+                </view>
             </view>
             <!-- <view wx:if="{{isFindMan && params.task_type == 1}}" class="flex status-section find-section">
                 <view bindtap='getOrderTypeData' data-type="-1" class="{{params.type == -1 ? 'selected' : ''}}">新接（{{findNum.new}}）</view>
@@ -99,7 +108,7 @@
                                     </view>
                                 </view>
                                 <!--找到物料地址  -->
-                                 <view class="address-space" wx:if="{{item.find_stalls}}">
+                                <view class="address-space" wx:if="{{item.find_stalls}}">
                                     <view>找到物料地址：</view>
                                     <view class="fs26 lh42">
                                         {{item.find_stalls.stall || ''}}

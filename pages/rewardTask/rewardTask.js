@@ -1,5 +1,6 @@
 const api = require('../../utils/api.js');
 const util = require('../../utils/util.js');
+let app = getApp();
 Page({
 
     /**
@@ -83,6 +84,12 @@ Page({
         })
 
 
+    },
+
+    saveformid(e) {
+        // 增加formid
+        let formId = e.detail.formId;
+        app.saveformid(formId);
     },
 
     // 提交任务
@@ -223,6 +230,10 @@ Page({
         console.log('上传图片', uploadC);
 
         let formData = e.detail.value;
+
+        // 增加formid
+        let formId = e.detail.formId;
+        app.saveformid(formId);
 
         formData.imgs = [];
 

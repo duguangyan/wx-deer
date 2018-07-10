@@ -10,6 +10,11 @@ Page({
     data: {
         formid: []
     },
+    saveformid(e) {
+        // 增加formid
+        let formId = e.detail.formId;
+        app.saveformid(formId);
+    },
     formSubmit(e) {
         console.log(e.detail.formId);
         let formid = this.data.formid;

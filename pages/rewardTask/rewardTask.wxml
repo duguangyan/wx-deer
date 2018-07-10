@@ -2,8 +2,18 @@
     <view class="fixed-block">
         <view class="select-section">
             <view class="flex select-order">
-                <view bindtap="getAcceptableTaskList" class="{{type === 'acceptable' ? 'selected' : ''}}">可接悬赏</view>
-                <view bindtap="getAcceptedTaskList" data-status="1" class="{{type === 'accepted' ? 'selected' : ''}}" data-wpyacceptedtask-a="0">已接悬赏</view>
+                <view bindtap="getAcceptableTaskList" class="relative {{type === 'acceptable' ? 'selected' : ''}}">
+                    可接悬赏
+                    <form style="position:absolute;left:0;top:0;width:100%;height:100%;" report-submit bindsubmit="saveformid">
+                        <button style="width:100%;height:100%;opacity:0;" formType="submit"></button>
+                    </form>
+                </view>
+                <view bindtap="getAcceptedTaskList" data-status="1" class="relative {{type === 'accepted' ? 'selected' : ''}}" data-wpyacceptedtask-a="0">
+                    已接悬赏
+                    <form style="position:absolute;left:0;top:0;width:100%;height:100%;" report-submit bindsubmit="saveformid">
+                        <button style="width:100%;height:100%;opacity:0;" formType="submit"></button>
+                    </form>
+                </view>
             </view>
             <view wx:if="{{type === 'acceptable'}}" class="flex">
                 <!-- <view class="selected">全部</view> -->
@@ -30,71 +40,72 @@
             <block wx:for="{{rewardList}}" wx:key="{{i}}">
                 <view class="order-item relative">
 
-                <view bindtap='seeDetail' data-index="{{index}}" data-id="{{item.id}}" data-type="{{type}}">
-                    <view class="flex order-status relative">
-                        <view>
-                            <view class="c999">
-                                悬赏号：{{item.id}} <text class="mgl20" wx:if="{{item.times_limit}}">({{item.times_limit}})</text>
-                            </view>
-                            <view class="c999">
-                                发布时间：{{item.created_at}}
-                            </view>
-                        </view>
-                        <view>
-                            <view wx:if="{{type === 'accepted'}}"  class="text-theme {{item.status === 3 ? 'c666' : ''}}">{{item.status_label === '审核中' ? (item.audit_status_label ? item.audit_status_label : item.status_label)  : item.status_label}}</view>
-                        </view>
-
-                        <view wx:if="{{type === 'acceptable' && item.is_new}}" class="new">
-                            <image src="../../images/new-1.png"></image>
-                        </view>
-                    </view>
-
-                    <view class="order-info flex relative">
-                        <view class="order-info-left">
-                            <view class="ellipsis w450">
-                                悬赏内容： {{item.desc}}
-                            </view>
-                            <view class="ellipsis w450">
-                                验收说明： {{item.check_desc}}
-                            </view>
-
-                            <view class="flex">
-                                <view>　有效期 : </view>
-                                <view class="flex-1 mgl20">
-                                    <view class="ellipsis-line2 ">
-                                        <view> {{item.begin_date}} </view>
-                                        <view>{{item.end_date}}</view>
-                                    </view>
+                    <view bindtap='seeDetail' data-index="{{index}}" data-id="{{item.id}}" data-type="{{type}}">
+                        <view class="flex order-status relative">
+                            <view>
+                                <view class="c999">
+                                    悬赏号：{{item.id}}
+                                    <text class="mgl20" wx:if="{{item.times_limit}}">({{item.times_limit}})</text>
+                                </view>
+                                <view class="c999">
+                                    发布时间：{{item.created_at}}
                                 </view>
                             </view>
+                            <view>
+                                <view wx:if="{{type === 'accepted'}}" class="text-theme {{item.status === 3 ? 'c666' : ''}}">{{item.status_label === '审核中' ? (item.audit_status_label ? item.audit_status_label : item.status_label) : item.status_label}}</view>
+                            </view>
 
-                            <!--图片  -->
-                            <view wx:if="{{item.examples.length !== 0}}" class="order-pics-list">
-                               
-                                    <image mode='aspectFill' catchtap='preview'  wx:for="{{item.examples}}" wx:key="{{i}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}" src="{{img}}" />
-                               
+                            <view wx:if="{{type === 'acceptable' && item.is_new}}" class="new">
+                                <image src="../../images/new-1.png"></image>
+                            </view>
+                        </view>
+
+                        <view class="order-info flex relative">
+                            <view class="order-info-left">
+                                <view class="ellipsis w450">
+                                    悬赏内容： {{item.desc}}
+                                </view>
+                                <view class="ellipsis w450">
+                                    验收说明： {{item.check_desc}}
+                                </view>
+
+                                <view class="flex">
+                                    <view>　有效期 : </view>
+                                    <view class="flex-1 mgl20">
+                                        <view class="ellipsis-line2 ">
+                                            <view> {{item.begin_date}} </view>
+                                            <view>{{item.end_date}}</view>
+                                        </view>
+                                    </view>
+                                </view>
+
+                                <!--图片  -->
+                                <view wx:if="{{item.examples.length !== 0}}" class="order-pics-list">
+
+                                    <image mode='aspectFill' catchtap='preview' wx:for="{{item.examples}}" wx:key="{{i}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}" src="{{img}}" />
+
+                                </view>
+
+                            </view>
+
+                            <!--悬赏币定位  -->
+                            <view class="c-orange" style="position:absolute;right:10rpx;top:20rpx;">
+                                <text class="iconfont icon-jinbi mgr10" />悬赏币：{{item.reward_amount}} 个
                             </view>
 
                         </view>
-
-                        <!--悬赏币定位  -->
-                        <view class="c-orange" style="position:absolute;right:10rpx;top:20rpx;">
-                            <text class="iconfont icon-jinbi mgr10" />悬赏币：{{item.reward_amount}} 个
-                        </view>
-
                     </view>
-                     </view>
-                <!--已接  -->
+                    <!--已接  -->
                     <view class="flex flex-end order-handle" wx:if="{{type === 'accepted'}}">
-                      
+
                         <view class="flex find-status">
                             <view data-id="{{item.id}}" data-index="{{index}}" bindtap='submitJob' wx:if="{{item.audit_status === null  && item.status !== 3}}" class="ctheme theme-border">提交任务</view>
                             <view data-id="{{item.id}}" data-index="{{index}}" bindtap='submitJob' wx:if="{{(item.audit_status === 0 && item.status === 1) || (item.audit_status === 2)}}" class="ctheme theme-border">再次提交</view>
                             <!-- <view bindtap='viewDetail' data-index="{{index}}" data-id="{{item.id}}" wx:if="{{ item.status === 3}}" class="c999 gray-border">详情</view> -->
                         </view>
                     </view>
-                <!--未接  -->
-                     <view class="flex flex-end order-handle" wx:if="{{type === 'acceptable'}}">
+                    <!--未接  -->
+                    <view class="flex flex-end order-handle" wx:if="{{type === 'acceptable'}}">
                         <view class="flex find-status">
                             <view class="theme-border text-theme" bindtap="acceptTask" data-id="{{item.id}}" data-index="{{index}}">接此任务</view>
 
@@ -141,9 +152,9 @@
 
             <view class="flex flex-start form-add-img">
                 <view class="tl">上传图片：</view>
-                <upload id="upload"/>
+                <upload id="upload" />
             </view>
-<!-- 
+            <!-- 
              <view class="flex flex-start bdb form-add-img">
                 <view>上传图片：</view>
                 <view class="flex-1 flex space-around pd20">
