@@ -17,7 +17,6 @@ Page({
             page: 1
         },
 
-        files: [{}],
         multiIndex: [6, 0, 8]
     },
     // 大类选择
@@ -223,13 +222,22 @@ Page({
         }
 
     },
+
+    saveformid(e) {
+        // 增加formid
+        let formId = e.detail.formId;
+        app.saveformid(formId);
+    },
     // 提交表单
     formSubmit1(e) {
         let formData = e.detail.value;
         let id = this.data.id;
 
-        //  限制填写
+        // 增加formid
+        let formId = e.detail.formId;
+        app.saveformid(formId);
 
+        //  限制填写
         if (formData.name.trim().length === 0) {
             util.errorTips('请填写地址信息');
             return false
@@ -302,8 +310,12 @@ Page({
     },
 
     formSubmit2(e) {
-        let formData = e.detail.value;
+        let formData = e.detail.value,
+            formId = e.detail.formId;
         let id = this.data.id;
+
+        // 增加formid
+        app.saveformid(formId);
 
         if (formData.remark.trim().length === 0) {
             util.errorTips('请填写回执内容');
@@ -354,16 +366,31 @@ Page({
         let id = this.data.id;
         console.log('ididiididididi', id)
         formData.id = id;
+        // 增加formid
+        let formId = e.detail.formId;
+        app.saveformid(formId);
 
         formData.imgs = [];
 
-        // 暂时 上传图片
-        if (formData.img1.length !== 0) {
-            formData.imgs.push(formData.img1)
+        let uploadC = this.selectComponent('#upload');
+
+        // 判定是否在已是完成状态
+        let isUploading = uploadC.data.files.every((ele, i) => {
+            return (ele.pct && (ele.pct === 'finish' || ele.pct === 'fail'))
+        })
+        console.log('isUploading', isUploading)
+        if (!isUploading) {
+            util.errorTips('图片正在上传')
+            return false
         }
-
-        console.log(formData);
-
+        // 添加数据
+        uploadC.data.files.forEach((ele, i) => {
+            if (ele.full_url) {
+                formData.imgs.push(ele.full_url)
+            }
+        })
+        
+        // 必须上传
         if (formData.imgs.length === 0) {
             util.errorTips('请上传图片');
             return false
@@ -392,8 +419,12 @@ Page({
             // 更新列表数据
 
             this.setData({
-                formshow: false,
-                files: [{}],
+                formshow: false
+            })
+
+            // 清除数据
+            uploadC.setData({
+                files: []
             })
 
             let params = this.data.params;
@@ -519,7 +550,9 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
-        let params = this.data.params;
+        let params = JSON.parse(JSON.stringify(this.data.params));
+
+        params.onPull = true;
 
         this.getMyOrderList(params)
         wx.stopPullDownRefresh()
@@ -543,16 +576,29 @@ Page({
     // 获取数据
     getMyOrderList(params = {}) {
 
-        wx.showLoading({
-            title: '加载中',
-            mask: false
-        })
+        // 处理下拉
+        if(params.onPull){
 
-        this.setData({
-            orderList: [],
-            isFullLoad: false,
-            isShow: false
-        })
+            this.setData({
+                
+                isFullLoad: false,
+                isShow: false
+            })
+
+        }else{
+            
+            wx.showLoading({
+                title: '加载中',
+                mask: false
+            })
+
+            this.setData({
+                orderList: [],
+                isFullLoad: false,
+                isShow: false
+            })
+
+        }
 
         this.data.page = 1;
 

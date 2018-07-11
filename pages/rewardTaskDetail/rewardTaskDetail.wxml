@@ -70,6 +70,10 @@
         <view>
             最大参与人数: {{data.people_limit ? data.people_limit+ '人' : '不限'}}
         </view>
+        <!--  每人参与次数 -->
+        <view wx:if="{{data.times_limit}}">
+            每人参与次数: {{data.times_limit  + '次'}}
+        </view>
         <!--已经完成  -->
         <view wx:if="{{false}}">
             <view>

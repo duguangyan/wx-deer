@@ -1,6 +1,4 @@
-<view class="flex flex-start">
-
-  
+<view hidden class="flex flex-start">
 
     <view class="upload-box relative" wx:for="{{files}}" wx:key="{{i}}">
 
@@ -12,8 +10,13 @@
 
     </view>
 
-      <view bindtap='uploadAll' wx:if="{{addUpload}}" class="upload-box" style="">+</view>
+    <view bindtap='uploadAll' wx:if="{{addUpload}}" class="upload-box" style="">+</view>
 
 </view>
 
-<view>upload 分支</view>
+
+<form bindsubmit="formSubmit">
+    <upload/>
+    <input name="name"></input>
+    <button formType="submit">Submit</button>
+</form>

@@ -1,0 +1,37 @@
+.upload-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.relative {
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
+
+.upload-img-box {
+    width: 160rpx;
+    height: 160rpx;
+    line-height: 160rpx;
+    text-align: center;
+    font-size: 120rpx;
+    color: #fff;
+    background: #ccc;
+    margin: 20rpx;
+}
+
+/*删除icon  */
+
+.delete-icon {
+    width: 44rpx;
+    height: 44rpx;
+    position: absolute;
+    right: -12rpx;
+    top: -12rpx;
+    background: transparent;
+    z-index: 999;
+}

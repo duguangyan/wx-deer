@@ -1,3 +1,7 @@
 {
-    "navigationBarTitleText": "悬赏任务"
+    "navigationBarTitleText": "悬赏任务",
+    "enablePullDownRefresh": true,
+    "usingComponents": {
+        "upload": "../../component/upload/index"
+    }
 }

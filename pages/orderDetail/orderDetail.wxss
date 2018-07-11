@@ -21,3 +21,11 @@
   padding: 2rpx 10rpx;
   border-radius: 6rpx;
 }
+
+/*标签tag  */
+.tag {
+    color: #EF7510;
+    padding: 2rpx 4rpx;
+    border: 1px #EF7510 solid;
+    border-radius: 6rpx;
+}

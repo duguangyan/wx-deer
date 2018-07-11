@@ -15,6 +15,10 @@ Page({
         files: []
     },
 
+    formSubmit (e) {
+        console.log(e)
+    },
+
     // 删除上传
     deleteItem(e) {
 

@@ -75,6 +75,24 @@ App({
         //   }
         // })
     },
+
+    saveformid(form_id) {
+
+        if (!this.globalData.userInfo){
+            return
+        }
+        api.saveformid({
+            data:{
+                form_id,
+                from: '4'
+            },
+            method: 'POST'
+        }).then( (res) => {
+            
+        }).catch((err)=>{
+
+        })
+    },
     globalData: {
         userInfo: null
     }

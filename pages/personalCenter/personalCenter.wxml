@@ -37,19 +37,25 @@
     </view>
 
     <view class="flex flex-start tc service-list">
-        <navigator open-type='switchTab' url="../order/order" class="shadow">
+        <navigator open-type='switchTab' url="../order/order" class="shadow relative">
             <image src="../../images/order-icon.png" class="mgt30" style="width:90rpx;height:90rpx;" />
             <view class="fs30 b600 lh50">我的订单</view>
             <image src="../../images/member-bg-2.png" style="display:block;width:345rpx;height:44rpx;"></image>
+            <form style="position:absolute;left:0;top:0;width:100%;height:100%;" report-submit bindsubmit="saveformid">
+                <button style="width:100%;height:100%;opacity:0;" formType="submit"></button>
+            </form>
         </navigator>
-        <navigator open-type='switchTab' url="../rewardTask/rewardTask" class="shadow">
+        <navigator open-type='switchTab' url="../rewardTask/rewardTask" class="shadow relative">
             <image src="../../images/task-icon.png" class="mgt30" style="width:90rpx;height:90rpx;" />
             <view class="fs30 b600 lh50">我的悬赏任务</view>
             <image src="../../images/member-bg-3.png" style="display:block;width:345rpx;height:44rpx;"></image>
+            <form style="position:absolute;left:0;top:0;width:100%;height:100%;" report-submit bindsubmit="saveformid">
+                <button style="width:100%;height:100%;opacity:0;" formType="submit"></button>
+            </form>
         </navigator>
     </view>
 
-<!--表单 formid  -->
+    <!--表单 formid  -->
     <!-- <form bindsubmit="formSubmit" report-submit="{{true}}">
 
         <view class="btn-area">
@@ -61,5 +67,5 @@
             {{item}}
         </view>
     </form> -->
-   
+
 </view>

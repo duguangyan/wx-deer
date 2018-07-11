@@ -158,6 +158,9 @@ const orderNum = (params) => myRequest(params, `${apiUrl}/find/api/order_records
 // 悬赏数量统计展示
 const rewardTaskNum = (params) => myRequest(params, `${apiUrl}/find/api/task_records/num`);
 
+// 获取formid
+const saveformid = (params) => myRequest(params, `${apiUrl}/api/member/form_id`);
+
 
 
 
@@ -191,7 +194,7 @@ module.exports = {
 
     orderNum,
     rewardTaskNum,
-
+    saveformid,
 
     getAddress
 }

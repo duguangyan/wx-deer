@@ -1,5 +1,6 @@
 const api = require('../../utils/api.js');
 const util = require('../../utils/util.js');
+let app = getApp();
 Page({
 
     /**
@@ -13,7 +14,7 @@ Page({
         // 弹窗
         isShowPop: false,
         // 回执信息图片
-        files: [{}, {}],
+        //files: [{}, {}],
     },
 
     // 查看详情
@@ -71,13 +72,6 @@ Page({
 
                         // 刷新可接悬赏列表
                         this.getAcceptableTaskList()
-                        // let rewardList = this.data.rewardList;
-
-                        // rewardList.splice(index, 1);
-
-                        // this.setData({
-                        //     rewardList
-                        // })
 
                     }).catch((res) => {
                         util.errorTips(res.msg);
@@ -90,6 +84,12 @@ Page({
         })
 
 
+    },
+
+    saveformid(e) {
+        // 增加formid
+        let formId = e.detail.formId;
+        app.saveformid(formId);
     },
 
     // 提交任务
@@ -118,7 +118,7 @@ Page({
     },
     //   选择上传图片
     chooseImage: function (e) {
-
+       
         const i = e.currentTarget.dataset.id;
 
         wx.chooseImage({
@@ -225,34 +225,33 @@ Page({
     // 提交表单
     formSubmit(e) {
 
-        console.log('上传图片', this.data.files)
+        let uploadC = this.selectComponent('#upload');
+
+        console.log('上传图片', uploadC);
+
         let formData = e.detail.value;
+
+        // 增加formid
+        let formId = e.detail.formId;
+        app.saveformid(formId);
 
         formData.imgs = [];
 
-        // 暂时 上传图片
-        if (formData.img1.length !== 0) {
-            formData.imgs.push(formData.img1)
-        }
-
-        if (formData.img2.length !== 0) {
-            formData.imgs.push(formData.img2)
-        }
-
-        console.log(formData);
-
-        // if (formData.imgs.length === 0) {
-        //     util.errorTips('请上传图片');
-        //     return false
-        // }
-
-        let files = this.data.files;
-
-
-        if (((files[0].pct && files[0].pct !== 'finish') === true) || ((files[1].pct && files[1].pct !== 'finish') === true)) {
+        // 判定是否在已是完成状态
+        let isUploading = uploadC.data.files.every( (ele, i) => {
+            return  (ele.pct && (ele.pct === 'finish' || ele.pct === 'fail'))
+        })
+        console.log('isUploading',isUploading)
+        if (!isUploading){
             util.errorTips('图片正在上传')
-            return false;
+            return false
         }
+        // 添加数据
+        uploadC.data.files.forEach( (ele, i) => {
+            if (ele.full_url){
+                formData.imgs.push(ele.full_url)
+            }
+        })
 
         // 内容不为空
         if (formData.content.trim().length === 0) {
@@ -292,7 +291,12 @@ Page({
             // 关闭弹窗，清空弹窗数据
             this.setData({
                 isShowPop: false,
-                files: [{}, {}],
+               
+            })
+
+            // 组建设置为空
+            uploadC.setData({
+                files: []
             })
 
         }).catch((res) => {
@@ -301,7 +305,6 @@ Page({
         }).finally(() => {
 
         })
-
 
     },
 
@@ -346,6 +349,32 @@ Page({
      */
     onPullDownRefresh: function () {
 
+        let type = this.data.type;
+        // 可接悬赏
+        if (type === 'acceptable') {
+
+            let e = {
+                onPull: true
+            }
+
+            this.getAcceptableTaskList(e)
+
+        } else if (type === 'accepted') {
+            // 已接悬赏
+            let e = {
+                currentTarget: {
+                    dataset: {
+                        status: this.data.status
+                    }
+                },
+                onPull: true
+            }
+            this.getAcceptedTaskList(e);
+        }
+
+        wx.stopPullDownRefresh()
+
+
     },
 
     /**
@@ -373,20 +402,29 @@ Page({
 
     },
     // 可接悬赏任务列表
-    getAcceptableTaskList() {
+    getAcceptableTaskList(e = {}) {
         this.data.page = 1;
         let page = this.data.page;
 
-        this.setData({
-            rewardList: [],
-            type: 'acceptable',
-            status: 0,
-            isShow: false
-        })
+        if(e.onPull){
+            this.setData({
+                type: 'acceptable',
+                status: 0,
+                isShow: false
+            })
 
-        wx.showLoading({
-            title: '加载中',
-        })
+        }else{
+            this.setData({
+                rewardList: [],
+                type: 'acceptable',
+                status: 0,
+                isShow: false
+            })
+
+            wx.showLoading({
+                title: '加载中',
+            })
+        }
 
         api.acceptableTaskList({
             data: {
@@ -477,8 +515,6 @@ Page({
 
         })
 
-
-
     },
 
     //   已接受悬赏任务
@@ -490,17 +526,27 @@ Page({
         let page = this.data.page;
 
         // 设置样式
-        this.setData({
-            rewardList: [],
-            type: 'accepted',
-            status,
-            isShow: false
-        })
+        if(e.onPull){
 
-        wx.showLoading({
-            title: '加载中',
-        })
+            this.setData({
+                type: 'accepted',
+                status,
+                isShow: false
+            })
 
+        }else {
+            this.setData({
+                rewardList: [],
+                type: 'accepted',
+                status,
+                isShow: false
+            })
+
+            wx.showLoading({
+                title: '加载中',
+            })
+        }
+        
         api.acceptedTaskList({
             data: {
                 status,

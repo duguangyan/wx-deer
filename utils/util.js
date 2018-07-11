@@ -171,11 +171,19 @@ const successTips = (msg = '成功') => {
 // 错误弹窗
 const errorTips = (msg = '发生了错误') => {
 
-    wx.showToast({
-        title: msg,
-        image: '../../images/error.png',
-        duration: 1500
-    })
+    if(msg.length > 7){
+        wx.showToast({
+            title: msg,
+            icon: 'none',
+            duration: 3000
+        })
+    }else{
+        wx.showToast({
+            title: msg,
+            image: '../../images/error.png',
+            duration: 1500
+        })
+    }
 
 }
 
