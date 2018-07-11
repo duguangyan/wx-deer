@@ -130,7 +130,14 @@
         <view wx:if="{{detailData.find_at}}">
             <text class="c999">找到物料：</text> {{detailData.find_at}}
         </view>
-        <view wx:if="{{detailData.distribution_name}}">
+        <!--快递  -->
+        <view wx:if="{{detailData.distribution_name && detailData.shipping_address.area_id > 0}}">
+            <text class="c999">　配送员：</text> {{detailData.distribution_name}}/{{detailData.distribution_mobile}}
+        </view>
+        <view wx:elif="{{detailData.distribution_name && detailData.shipping_address.area_id == 0}}">
+            <text class="c999">　配送：</text> {{detailData.express_company}}/{{detailData.express_sn}}
+        </view>
+        <view wx:elif="{{detailData.distribution_name}}">
             <text class="c999">　配送员：</text> {{detailData.distribution_name}}/{{detailData.distribution_mobile}}
         </view>
         <view wx:if="{{detailData.confirm_shipping_at}}">
