@@ -111,13 +111,13 @@
                                 <view class="address-space" wx:if="{{item.find_stalls}}">
                                     <view>找到物料地址：</view>
                                     <view class="fs26 lh42">
-                                        {{item.find_stalls.stall || ''}}
+                                        {{item.find_stalls.name || ''}}
                                         <!-- <text wx:if="{{item.find_stalls.stall}}" class="tag mgl30 lh42"></text> -->
                                     </view>
                                     <view class="flex align-item-start lh42">
-                                        <view class="fs26 c999 mgr30">{{item.find_stalls.consignee}} {{item.find_stalls.mobile}}</view>
+                                        <view class="fs26 c999 mgr30">{{item.find_stalls.contacts}} {{item.find_stalls.phone}}</view>
                                         <view class="flex-1 fs26 c999">
-                                            {{item.find_stalls.city_str}} {{ item.find_stalls.address}}
+                                            {{item.find_stalls.province}}{{item.find_stalls.city}}{{item.find_stalls.area}} {{ item.find_stalls.address}}
                                         </view>
                                     </view>
                                 </view>

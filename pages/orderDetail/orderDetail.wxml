@@ -71,13 +71,13 @@
     <view wx:if="{{detailData.find_stalls}}" class="padding">
 
         <view class="lh42">
-            {{detailData.find_stalls.stall || ''}}
+            {{detailData.find_stalls.name || ''}}
             <!-- <text wx:if="{{detailData.find_stalls.stall}}" class="tag mgl30 lh42"></text> -->
         </view>
         <view class="flex align-item-start lh42">
-            <view class="c999 mgr30">{{detailData.find_stalls.consignee}} {{detailData.find_stalls.mobile}}</view>
+            <view class="c999 mgr30">{{detailData.find_stalls.contacts}} {{detailData.find_stalls.phone}}</view>
             <view class="flex-1 c999">
-                {{detailData.find_stalls.city_str}} {{ detailData.find_stalls.address}}
+                {{detailData.find_stalls.province}}{{detailData.find_stalls.city}} {{ detailData.find_stalls.area}} {{detailData.find_stalls.address}}
             </view>
         </view>
     </view>
