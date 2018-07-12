@@ -40,9 +40,9 @@
             </view>
         </view>
 
-        <view wx:if="{{data.examples}}" class="flex flex-start img-box pd20">
+        <view wx:if="{{data.examples}}" class="flex flex-start img-box">
             <block wx:for="{{data.examples}}" wx:key="{{i}}">
-                <image mode='aspectFill' bindtap='preview' data-index="{{index}}" class="mgr20" src="{{item}}"></image>
+                <image mode='aspectFill' bindtap='preview' data-index="{{index}}" class="mgr20 mgt20" src="{{item}}"></image>
             </block>
         </view>
 
@@ -66,13 +66,14 @@
             <text class="mgl50">悬赏类型:</text>
             <text>{{data.reward_type_label}}</text>
         </view>
-
-        <view>
+        <view class="flex ">
+        <view class="">
             最大参与人数: {{data.people_limit ? data.people_limit+ '人' : '不限'}}
         </view>
         <!--  每人参与次数 -->
-        <view wx:if="{{data.times_limit}}">
+        <view class="flex-1 mgl50" wx:if="{{data.times_limit}}">
             每人参与次数: {{data.times_limit  + '次'}}
+        </view>
         </view>
         <!--已经完成  -->
         <view wx:if="{{false}}">
@@ -101,9 +102,9 @@
 
         <view wx:if="{{data.imgs.length !== 0}}" class="flex mgb20">
             <view>上传图片: </view>
-            <view class="flex flex-start flex-1 mgl20 img-box">
+            <view class="flex flex-start flex-1 mgl10 img-box">
             <block wx:for="{{data.imgs}}" wx:key="{{i}}">
-                 <image bindtap='preview2' data-index="{{index}}" src="{{item}}" mode='aspectFill' class="mgr20"></image>
+                 <image bindtap='preview2' data-index="{{index}}" src="{{item}}" mode='aspectFill' class="mgr10"></image>
             </block>
             </view>
         </view>

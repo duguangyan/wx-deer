@@ -26,13 +26,13 @@
                 <view bindtap='getOrderTypeData' data-type="1" class="{{params.type == 1 ? 'selected' : ''}}">找料中（{{findNum.find_in}}）</view>
                 <view bindtap='getOrderTypeData' data-type="4" class="{{params.type == 4 ? 'selected' : ''}}">找料结果（{{findNum.found_unfound}}）</view>
                 <view bindtap='getOrderTypeData' data-type="2" class="{{params.type == 2 ? 'selected' : ''}}">配送中（{{findNum.delivery_in}}）</view>
-                <view bindtap='getOrderTypeData' data-type="3" class="{{params.type == 3 ? 'selected' : ''}}">已完成</view>
+                <view bindtap='getOrderTypeData' data-type="3" class="{{params.type == 3 ? 'selected' : ''}}">已完成 ({{findNum.finish}})</view>
             </scroll-view>
 
             <view wx:elif="{{isDeliveryMan && params.task_type == 2}}" class="flex status-section">
                 <view bindtap='getOrderTypeData' data-type="-1" class="{{params.type == -1 ? 'selected' : ''}}">新接（{{sendNum.new}}）</view>
                 <view bindtap='getOrderTypeData' data-type="2" class="{{params.type == 2 ? 'selected' : ''}}">配送中（{{sendNum.delivery_in}}）</view>
-                <view bindtap='getOrderTypeData' data-type="3" class="{{params.type == 3 ? 'selected' : ''}}">已完成</view>
+                <view bindtap='getOrderTypeData' data-type="3" class="{{params.type == 3 ? 'selected' : ''}}">已完成({{sendNum.finish}})</view>
             </view>
         </view>
     </view>
@@ -111,13 +111,14 @@
                                 <view class="address-space" wx:if="{{item.find_stalls}}">
                                     <view>找到物料地址：</view>
                                     <view class="fs26 lh42">
-                                        {{item.find_stalls.name || ''}}
+
+                                        {{item.find_stalls.province}}{{item.find_stalls.city}}{{item.find_stalls.area}} {{ item.find_stalls.address}}
                                         <!-- <text wx:if="{{item.find_stalls.stall}}" class="tag mgl30 lh42"></text> -->
                                     </view>
                                     <view class="flex align-item-start lh42">
                                         <view class="fs26 c999 mgr30">{{item.find_stalls.contacts}} {{item.find_stalls.phone}}</view>
                                         <view class="flex-1 fs26 c999">
-                                            {{item.find_stalls.province}}{{item.find_stalls.city}}{{item.find_stalls.area}} {{ item.find_stalls.address}}
+                                            {{item.find_stalls.name || ''}}
                                         </view>
                                     </view>
                                 </view>
@@ -125,13 +126,13 @@
                                 <view class="address-space" wx:elif="{{item.get_address}}">
                                     <view>取样地址：</view>
                                     <view class="fs26 lh42">
-                                        {{item.get_address.stall || ''}}
-                                        <text wx:if="{{item.get_address.stall}}" class="tag mgl30 lh42">取样</text>
+
+                                        <text wx:if="{{item.get_address.remark}}" class="tag lh42">{{item.get_address.remark}}</text> {{item.get_address.city_str}} {{ item.get_address.address}}
                                     </view>
                                     <view class="flex align-item-start lh42">
                                         <view class="fs26 c999 mgr30">{{item.get_address.consignee}} {{item.get_address.mobile}}</view>
                                         <view class="flex-1 fs26 c999">
-                                            {{item.get_address.city_str}} {{ item.get_address.address}}
+                                            {{item.get_address.stall || ''}}
                                         </view>
                                     </view>
                                 </view>
@@ -141,13 +142,14 @@
 
                                     <view>送料地址：</view>
                                     <view class="fs26 lh42">
-                                        {{item.shipping_address.stall || ''}}
-                                        <text wx:if="{{item.shipping_address.stall}}" class="tag mgl30 lh42">送料</text>
+
+                                        <text wx:if="{{item.shipping_address.remark}}" class="tag lh42">{{item.shipping_address.remark}}</text> {{ item.shipping_address.city_str}} {{ item.shipping_address.address}}
                                     </view>
                                     <view class="flex align-item-start lh42">
                                         <view class="fs26 c999 mgr30">{{item.shipping_address.consignee}} {{item.shipping_address.mobile}}</view>
                                         <view class="flex-1 fs26 c999">
-                                            {{ item.shipping_address.city_str}} {{ item.shipping_address.address}}
+                                            {{item.shipping_address.stall || ''}}
+
                                         </view>
                                     </view>
 

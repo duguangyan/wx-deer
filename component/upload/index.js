@@ -1,4 +1,5 @@
 const api = require('../../utils/api.js');
+const util = require('../../utils/util.js')
 let index = undefined;
 Component({
   /**
@@ -169,7 +170,7 @@ Component({
           let files = this.data.files;
 
           let isFiniish = files.every((ele, i) => {
-              return ele.pct === 'finish'
+              return (ele.pct === 'finish' || ele.pct === 'fail')
           })
 
           if (!isFiniish) {

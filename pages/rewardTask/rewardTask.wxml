@@ -21,7 +21,7 @@
             <view wx:if="{{type === 'accepted'}}" class="flex status-section">
                 <view bindtap="getAcceptedTaskList" class="{{status == 1 ? 'selected' : ''}}" data-status="1">进行中({{taskNum.in}})</view>
                 <view bindtap="getAcceptedTaskList" class="{{status == 2 ? 'selected' : ''}}" data-status="2">已提交({{taskNum.submit}})</view>
-                <view bindtap="getAcceptedTaskList" class="{{status == 3 ? 'selected' : ''}}" data-status="3">已完成</view>
+                <view bindtap="getAcceptedTaskList" class="{{status == 3 ? 'selected' : ''}}" data-status="3">已完成({{taskNum.finish}})</view>
             </view>
         </view>
     </view>
