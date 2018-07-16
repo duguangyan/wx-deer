@@ -33,7 +33,7 @@ Page({
         // }
 
         let isFiniish = files.every( (ele,i) => {
-            return ele.pct === 'finish'
+            return (ele.pct === 'finish' || ele.pct === 'fail')
         })
 
         if (!isFiniish) {

@@ -1,6 +1,7 @@
 const api = require('../../utils/api.js');
 const util = require('../../utils/util.js')
-let index = undefined;
+//let index;
+
 Component({
   /**
    * 组件的属性列表
@@ -18,8 +19,8 @@ Component({
   data: {
 
       addUpload: true,
-      files: []
-
+      files: [],
+        index: 0,
   },
 
   /**
@@ -38,7 +39,7 @@ Component({
                   console.log('上传数据数组', res.tempFilePaths);
 
                   res.tempFilePaths.forEach((ele, i) => {
-                      console.log(i);
+                      console.log('临时缓存',ele);
 
                       let item = {
                           url: ele,
@@ -78,11 +79,11 @@ Component({
                   let that = this;
 
                   // i 应该是对应的
-                  console.log(']]]]]]]]]]]]]]]]]]', index)
-                  uploadimg(files, index);
+                  console.log(']]]]]]]]]]]]]]]]]]', this.data.index)
+                  uploadimg(files, this.data.index);
 
                   function uploadimg(files, i = 0) {
-                      console.log('=============', i)
+                      console.log('=============', files[i].url)
                       const access_token = wx.getStorageSync('access_token') || '';
                       // 上传图片，返回链接地址跟id,返回进度对象
                       let uploadTask = wx.uploadFile({
@@ -127,10 +128,11 @@ Component({
                           complete: () => {
 
                               i++; //这个图片执行完上传后，开始上传下一张
-                              index = i;
+                              that.data.index = i;
                               if (i == files.length) { //当图片传完时，停止调用          
                                   console.log('执行完毕');
                                   // wx.hideLoading()
+                                  
 
                               } else { //若图片还没有传完，则继续调用函数
                                   console.log(i);
@@ -183,7 +185,7 @@ Component({
 
           files.splice(i, 1);
 
-          index -= 1;
+          this.data.index -= 1;
 
           if (files.length === this.data.upLoadMaxNum) {
               this.setData({
