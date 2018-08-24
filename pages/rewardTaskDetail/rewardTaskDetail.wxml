@@ -124,9 +124,14 @@
 
     </view>
 
-    <view class="flex pd20">
+    <view class="flex pd20 bb1">
         <view>悬赏币</view>
-        <view>{{data.reward_amount}}个</view>
+        <view>{{data.reward_amount || 0}} 个</view>
+    </view>
+
+    <view class="flex pd20">
+        <view>积分</view>
+        <view>{{data.reward_score || 0}} 分</view>
     </view>
 
     <view class="space h260"></view>

@@ -38,6 +38,8 @@ Page({
             asset_type = 4;
         } else if (type === 'reward') {
             asset_type = 3;
+        } else if (type =='integral'){
+          asset_type = 2;
         }
 
         this.setData({
@@ -111,7 +113,11 @@ Page({
 
             wx.hideLoading()
             let list = res.data;
-
+          if (this.data.asset_type==2){ 
+            list.forEach((v,i)=>{
+              list[i].assets_amount = parseInt(list[i].assets_amount);
+            })
+          }
             let fullLoad = false
             if (res.current_page * res.perPage >= res.total) {
                 // 加载完毕

@@ -9,7 +9,7 @@ Component({
   properties: {
       upLoadMaxNum: {
           type: Number,
-          value: 6
+          value: 9
       }
   },
 

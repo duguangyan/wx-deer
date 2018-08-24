@@ -29,11 +29,12 @@
                 <view bindtap='getOrderTypeData' data-type="3" class="{{params.type == 3 ? 'selected' : ''}}">已完成 ({{findNum.finish}})</view>
             </scroll-view>
 
-            <view wx:elif="{{isDeliveryMan && params.task_type == 2}}" class="flex status-section">
+            <scroll-view scroll-x="{{true}}" wx:elif="{{isDeliveryMan && params.task_type == 2}}" class="flex status-section">
                 <view bindtap='getOrderTypeData' data-type="-1" class="{{params.type == -1 ? 'selected' : ''}}">新接（{{sendNum.new}}）</view>
                 <view bindtap='getOrderTypeData' data-type="2" class="{{params.type == 2 ? 'selected' : ''}}">配送中（{{sendNum.delivery_in}}）</view>
                 <view bindtap='getOrderTypeData' data-type="3" class="{{params.type == 3 ? 'selected' : ''}}">已完成({{sendNum.finish}})</view>
-            </view>
+                <view bindtap='getOrderTypeData' data-type="5" class="{{params.type == 5 ? 'selected' : ''}}">未收货({{sendNum.unconfirm}})</view>
+            </scroll-view>
         </view>
     </view>
 

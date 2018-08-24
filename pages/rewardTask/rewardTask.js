@@ -351,7 +351,9 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
-
+      wx.showLoading({
+        title: '加载中',
+      })
         let type = this.data.type;
         // 可接悬赏
         if (type === 'acceptable') {
@@ -376,7 +378,9 @@ Page({
         }
 
         wx.stopPullDownRefresh()
-
+        setTimeout(function () {
+          wx.hideLoading()
+        }, 2000)
 
     },
 

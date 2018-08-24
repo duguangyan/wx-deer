@@ -10,6 +10,10 @@
                 <text class="iconfont icon-jinbi fs50"/> 悬赏币
             </view>
 
+            <view wx:elif="{{type === 'integral'}}" class="b600 c-blue">
+                <text class="iconfont icon-ziyuan fs50"/> 积分
+            </view>
+
             <view class="hidden">
                 2017年5月4日----2019年8年18日
             </view>
@@ -20,6 +24,10 @@
 
         <view wx:if="{{type === 'reward'}}"  class="b600 c-orange">
             {{ num + '个'}}
+        </view>
+
+        <view wx:if="{{type === 'integral'}}"  class="b600 c-blue">
+            {{ num + '分'}}
         </view>
     </view>
 

@@ -25,7 +25,27 @@ Page({
             title: '已读',
         })
     },
+  click(){
+    wx.navigateToMiniProgram({
+      appId: 'wx57bc26c9fbe8dbfb', // 要跳转的小程序的appid
+      path: 'pages/index/index', // 跳转的目标页面
+      extarData: {
+        open: 'auth'
+      },
+      success(res) {
+        // 打开成功  
+        console.log('xxx');
+      }
+    })
+    // wx.scanCode({
+    //   success: (res) => {
+    //     console.log(res)
 
+         
+    //   }
+    // })
+
+  },
     //   找料单页
     goFindPage() {
 

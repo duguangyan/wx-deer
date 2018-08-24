@@ -30,6 +30,11 @@
                 <view class="c-orange">
                     <text class="iconfont icon-jinbi " />悬赏币</view>
             </navigator>
+            <navigator open-type='navigate' url="../recordList/recordList?type=integral&num={{userInfo.asset.score_amount}}" class="flex-1">
+                <view class="c-blue">{{userInfo.asset ?  userInfo.asset.score_amount + '分' : '　'}}</view>
+                <view class="c-blue">
+                    <text class="iconfont icon-ziyuan " />积分</view>
+            </navigator>
         </view>
 
         <image src="../../images/member-bg-1.png" style="display:block;width:710rpx;height:71rpx;"></image>
@@ -54,6 +59,15 @@
             </form>
         </navigator>
     </view>
+
+
+    <view class="navigator-box section-order mgt-20">
+      <block class='navigator'>
+          <view class="navigator-text fs24 text-666 pdl-30 text-center">Copyright @2018 一大批 版权所有 版本 V2.4.0</view>
+      </block>
+    </view>
+
+
 
     <!--表单 formid  -->
     <!-- <form bindsubmit="formSubmit" report-submit="{{true}}">

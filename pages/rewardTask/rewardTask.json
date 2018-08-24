@@ -1,6 +1,9 @@
 {
     "navigationBarTitleText": "悬赏任务",
     "enablePullDownRefresh": true,
+    "onReachBottomDistance":20,
+    "backgroundColor": "#f0eff5",
+    "backgroundTextStyle": "dark",
     "usingComponents": {
         "upload": "../../component/upload/index"
     }

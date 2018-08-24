@@ -89,30 +89,41 @@
                             </view>
 
                             <!--悬赏币定位  -->
-                            <view class="c-orange" style="position:absolute;right:10rpx;top:20rpx;">
-                                <text class="iconfont icon-jinbi mgr10" />悬赏币：{{item.reward_amount}} 个
-                            </view>
+                            
 
                         </view>
                     </view>
-                    <!--已接  -->
-                    <view class="flex flex-end order-handle" wx:if="{{type === 'accepted'}}">
-
-                        <view class="flex find-status">
-                            <view data-id="{{item.id}}" data-index="{{index}}" bindtap='submitJob' wx:if="{{item.audit_status === null  && item.status !== 3}}" class="ctheme theme-border">提交任务</view>
-                            <view data-id="{{item.id}}" data-index="{{index}}" bindtap='submitJob' wx:if="{{(item.audit_status === 0 && item.status === 1) || (item.audit_status === 2)}}" class="ctheme theme-border">再次提交</view>
-                            <!-- <view bindtap='viewDetail' data-index="{{index}}" data-id="{{item.id}}" wx:if="{{ item.status === 3}}" class="c999 gray-border">详情</view> -->
-                        </view>
+                    <view style='position:relative;height:120rpx;line-height:120rpx;'>
+                        <!--已接  -->
+                      <view class="flex flex-end order-handle" wx:if="{{type === 'accepted'}}">
+                          <view class="flex find-status">
+                              <view data-id="{{item.id}}" data-index="{{index}}"
+                              bindtap='submitJob' wx:if="{{item.audit_status === null  && item.status !== 3}}" 
+                              class="ctheme theme-border">提交任务</view>
+                              <view data-id="{{item.id}}" data-index="{{index}}" 
+                              bindtap='submitJob' 
+                              wx:if="{{(item.audit_status === 0 && item.status === 1) || (item.audit_status === 2)}}" 
+                              class="ctheme theme-border">再次提交</view>
+                              <!-- <view bindtap='viewDetail' data-index="{{index}}" data-id="{{item.id}}" wx:if="{{ item.status === 3}}" class="c999 gray-border">详情</view> -->
+                          </view>
+                      </view>
+                      <!--未接  -->
+                      <view class="flex flex-end order-handle" wx:if="{{type === 'acceptable'}}">
+                          <view class="flex find-status">
+                              <view class="theme-border text-theme" 
+                              bindtap="acceptTask" data-id="{{item.id}}" 
+                              data-index="{{index}}">接此任务</view>
+                          </view>
+                      </view>
+                      <view class="c-orange">
+                          <text class="iconfont icon-jinbi mgr30"> 悬赏币:{{item.reward_amount}}个</text>
+                          <text class="iconfont icon-ziyuan c-blue"> 积分:{{item.reward_score}}分</text>
+                      </view>
                     </view>
-                    <!--未接  -->
-                    <view class="flex flex-end order-handle" wx:if="{{type === 'acceptable'}}">
-                        <view class="flex find-status">
-                            <view class="theme-border text-theme" bindtap="acceptTask" data-id="{{item.id}}" data-index="{{index}}">接此任务</view>
-
-                        </view>
-                    </view>
-
+                    
                 </view>
+
+                
             </block>
             <view wx:if="{{fullLoad}}" class="tc fs24 c999 bg-base lh60 b600">
                 已经全部加载完毕

@@ -1,7 +1,7 @@
-//const apiUrl = 'https://apiv2.yidap.com';
-const apiUrl = 'https://devv2.yidap.com';
+// const apiUrl = 'https://apiv2.yidap.com';
+  const apiUrl = 'https://devv2.yidap.com';
 
-const apiAddress = 'https://api.yidap.com';
+ const apiAddress = 'https://api.yidap.com';
 
 Promise.prototype.finally = function (callback) {
     let P = this.constructor;
