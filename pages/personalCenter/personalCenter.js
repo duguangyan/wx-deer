@@ -61,7 +61,8 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+      // 版本号
+      let v = wx.getStorageSync('v');
 
         // 获取用户信息
         api.getUserInfo().then((res) => {
@@ -69,6 +70,7 @@ Page({
             app.globalData.userInfo = res.data;
 
             this.setData({
+                v,
                 userInfo: res.data
             })
 

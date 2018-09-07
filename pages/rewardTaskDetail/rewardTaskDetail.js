@@ -29,7 +29,7 @@ Page({
         })
     },
     //   接受悬赏任务
-    acceptTask(e) {
+    acceptTask(e) { 
         let id = e.currentTarget.dataset.id;
 
         console.log(id);
@@ -49,30 +49,63 @@ Page({
 
             util.successTips('接单成功');
             //   更新数据
-            let newid = res.data.id;
-            this.rewardTaskDetail(newid, 'accepted')
-            // 删除上一页数据
-            try {
-                let pages = getCurrentPages(),
-                    prevPage = pages[pages.length - 2];
+          let newid = res.data.id;
+         // this.rewardTaskDetail(this.data.id, 'accepted')
+          
+          this.rewardTaskDetailUnanswered(res.data.task_id);
+          
+            // // 删除上一页数据
+            // try {
+            //     let pages = getCurrentPages(),
+            //         prevPage = pages[pages.length - 2];
 
-                let rewardList = prevPage.data.rewardList;
+            //     let rewardList = prevPage.data.rewardList;
 
-                rewardList.splice(this.data.index, 1);
+            //      rewardList.splice(this.data.index, 1);
                
-                prevPage.setData({
-                    rewardList
-                })
-            }catch (err) {
-                console.log(err)
-            }
+            //     prevPage.setData({
+            //         rewardList
+            //     })
+            // }catch (err) {
+            //     console.log(err)
+            // }
 
 
         }).catch((res) => {
                 util.errorTips(res.msg);
             })
     },
+  rewardTaskDetailUnanswered(id){
+    // 未接悬赏
+    api.rewardTaskDetailUnanswered({
+      query: {
+        id
+      }
+    }).then((res) => { 
+      console.log(res); 
+      this.setData({
+        data:res.data
+      })
 
+      if (res.data.user_has_times ==0){
+        let pages = getCurrentPages(),
+          prevPage = pages[pages.length - 2];
+
+        let rewardList = prevPage.data.rewardList;
+
+        rewardList.splice(this.data.index, 1);
+
+        prevPage.setData({
+          rewardList
+        })
+      }
+
+
+    }).catch((res) => {
+      console.log(res)
+
+    })
+  },
     /**
      * 生命周期函数--监听页面加载
      */

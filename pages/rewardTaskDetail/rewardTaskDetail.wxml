@@ -40,7 +40,7 @@
             </view>
         </view>
 
-        <view wx:if="{{data.examples}}" class="flex flex-start img-box">
+        <view wx:if="{{data.examples!='null'}}" class="flex flex-start img-box">
             <block wx:for="{{data.examples}}" wx:key="{{i}}">
                 <image mode='aspectFill' bindtap='preview' data-index="{{index}}" class="mgr20 mgt20" src="{{item}}"></image>
             </block>
@@ -136,7 +136,7 @@
 
     <view class="space h260"></view>
 
-    <view  wx:if="{{data.type === 'acceptable'}}"  class=" flex flex-end handle-box">
+    <view  wx:if="{{type === 'acceptable' && data.user_has_times != 0 }}"  class=" flex flex-end handle-box">
         <view bindtap="acceptTask" data-id="{{data.id}}" class="fs30 bd-theme text-theme">接受此任务</view>
     </view>
 

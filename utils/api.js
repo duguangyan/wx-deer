@@ -1,7 +1,12 @@
-// const apiUrl = 'https://apiv2.yidap.com';
-  const apiUrl = 'https://devv2.yidap.com';
+// const apiUrl = 'https://devv2.yidap.com';     // 测试
+const apiUrl = 'https://apiv2.yidap.com';        // 正式
+const versionNumber = 'v2.4.5';  // 版本号
 
- const apiAddress = 'https://api.yidap.com';
+if (apiUrl == 'https://apiv2.yidap.com') {
+  wx.setStorageSync('v', versionNumber + ' 正式');
+} else {
+  wx.setStorageSync('v', versionNumber + ' 测试');
+}
 
 Promise.prototype.finally = function (callback) {
     let P = this.constructor;
@@ -165,7 +170,7 @@ const saveformid = (params) => myRequest(params, `${apiUrl}/api/member/form_id`)
 
 
 // 收货地址地区
-const getAddress = (params) => myRequest(params, `${apiAddress}/lib/region/listTree`);
+const getAddress = (params) => myRequest(params, `${apiUrl}/api/region/listTree`);
 
 module.exports = {
     apiUrl,

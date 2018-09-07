@@ -35,7 +35,7 @@
         </view>
         <view class="flex">
             <view class=" c999">描　述　：</view>
-            <view class="flex-1 ellipsis-line3">{{detailData.desc }}
+            <view class="flex-1">{{detailData.desc }}
             </view>
         </view>
         <view wx:if="{{detailData.type === 1}}">
@@ -45,7 +45,7 @@
             </view>
             <view class="flex flex-start pdb30">
                 <!--遍历图片  -->
-                <image bindtap='preview' wx:for="{{detailData.imgs}}" src="{{img}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" wx:key="{{idx}}" style="width:180rpx;height:200rpx;background:#CCC;margin:20rpx 20rpx 0 0;" mode='aspectFill'></image>
+                <image bindtap='preview' wx:for="{{detailData.front_img}}" src="{{img}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" wx:key="{{idx}}" style="width:180rpx;height:200rpx;background:#CCC;margin:20rpx 20rpx 0 0;" mode='aspectFill'></image>
             </view>
         </view>
 

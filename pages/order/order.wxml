@@ -105,7 +105,7 @@
                                         <!-- <image wx:if="{{item.front_img.length !== 0}}" src="{{item.front_img}}" />
                                     <image wx:if="{{item.side_img.length !== 0}}" src="{{item.side_img}}" />
                                     <image wx:if="{{item.back_img.length !== 0}}" src="{{item.back_img}}" /> -->
-                                        <image mode='aspectFill' catchtap='preview' wx:for="{{item.imgs}}" src="{{img}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}"></image>
+                                        <image mode='aspectFill' catchtap='preview' wx:for="{{item.front_img}}" src="{{img}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="{{idx}}"></image>
                                     </view>
                                 </view>
                                 <!--找到物料地址  -->
@@ -229,7 +229,7 @@
             <view class="flex tl bdb lh80">
                 <view class="mgr20">
                     <text class="ctheme">*</text>联系电话: </view>
-                <input name="phone" maxlength="11" class="flex-1" confirm-hold="true" confirm-type="next" placeholder='请填写详细电话'></input>
+                <input name="phone" type='number' maxlength="11" class="flex-1" confirm-hold="true" confirm-type="next" placeholder='请填写详细电话'></input>
             </view>
             <view class="flex align-item-start tl bdb lh80">
                 <view class="mgr20">

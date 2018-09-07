@@ -69,7 +69,7 @@ Page({
         let index = e.currentTarget.dataset.index;
         let idx = e.currentTarget.dataset.idx;
 
-        let imgs = this.data.orderList[index].imgs
+      let imgs = this.data.orderList[index].front_img
 
         wx.previewImage({
             current: imgs[idx], // 当前显示图片的http链接
@@ -80,16 +80,59 @@ Page({
 
     // 弹窗
 
-    showForm(e) {
+    showForm(e) { 
 
         let formtype = e.currentTarget.dataset.type,
             id = e.currentTarget.dataset.id;
         console.log(formtype)
-        this.setData({
-            id,
-            formtype,
-            formshow: true
-        })
+
+      wx.showModal({
+        title: '提示',
+        content: '确认送达?',
+        success:  (res) => {
+          if (res.confirm) {
+            console.log('用户点击确定')
+
+            if (formtype == 3) {
+              let formData = {};
+              formData.id = id;
+              // 上传数据
+              api.orderFeedback({
+                method: "POST",
+                data: formData,
+                query: {
+                  id
+                }
+              }).then((res) => {
+                util.successTips('提交成功');
+                // 清除数据
+                // uploadC.setData({
+                //   files: []
+                // })
+                let params = this.data.params;
+                setTimeout(() => {
+                  this.getMyOrderList(params);
+                }, 1500)
+              }).catch((res) => {
+                // wx.hideLoading()
+                // if (res.code !== 401) {
+                //   util.errorTips(res.msg)
+                // }
+              }).finally(() => {
+
+              })
+            } else {
+              this.setData({
+                id,
+                formtype,
+                formshow: true
+              })
+            }
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
 
     },
 
@@ -612,9 +655,7 @@ Page({
             console.log('订单列表', res.data);
 
             let orderList = res.data;
-
-            // 合并图片
-            this.mergeImg(orderList)
+           
 
             // 判断是否完毕
             let isFullLoad = this.isFullLoad(res);
@@ -624,12 +665,13 @@ Page({
                 isFullLoad,
                 isShow: true
             })
-
+          // 合并图片
+          this.mergeImg(orderList)
         }).catch((res) => {
             wx.hideLoading()
-            if (res.code !== 401) {
-                util.errorTips(res.msg)
-            }
+            // if (res.code !== 401) {
+            //     util.errorTips(res.msg)
+            // }
 
         }).finally((res) => {
 

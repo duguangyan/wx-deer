@@ -108,7 +108,7 @@
                           </view>
                       </view>
                       <!--未接  -->
-                      <view class="flex flex-end order-handle" wx:if="{{type === 'acceptable'}}">
+                      <view class="flex flex-end order-handle" wx:if="{{type === 'acceptable' && item.user_has_times !== 0}}">
                           <view class="flex find-status">
                               <view class="theme-border text-theme" 
                               bindtap="acceptTask" data-id="{{item.id}}" 

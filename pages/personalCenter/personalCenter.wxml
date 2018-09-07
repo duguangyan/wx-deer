@@ -63,7 +63,7 @@
 
     <view class="navigator-box section-order mgt-20">
       <block class='navigator'>
-          <view class="navigator-text fs24 text-666 pdl-30 text-center">Copyright @2018 一大批 版权所有 版本 V2.4.0</view>
+          <view class="navigator-text fs24 text-666 pdl-30 text-center">Copyright @2018 一大批 版权所有 版本 {{v}}</view>
       </block>
     </view>
 

@@ -13,7 +13,7 @@ Page({
     preview(e) {
         let idx = e.currentTarget.dataset.idx;
 
-        let imgs = this.data.detailData.imgs;
+      let imgs = this.data.detailData.front_img;
 
         wx.previewImage({
             current: imgs[idx],
