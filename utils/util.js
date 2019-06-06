@@ -186,9 +186,86 @@ const errorTips = (msg = '发生了错误') => {
     }
 
 }
+// 获取当前的日期时间 格式“yyyy-MM-dd HH:MM:SS”
+function getNowFormatDate() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['', '', '', '', '', '', ''];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+    month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+    day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+    hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+    minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+    seconds = "0" + seconds;
+  }
+  var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds;
+  return currentdate;
+}
 
+
+function add0(m) { return m < 10 ? '0' + m : m }
+function formatDate(shijianchuo) {
+  //shijianchuo是整数，否则要parseInt转换
+  var time = new Date(shijianchuo);
+  var y = time.getFullYear();
+  var m = time.getMonth() + 1;
+  var d = time.getDate();
+  var h = time.getHours();
+  var mm = time.getMinutes();
+  var s = time.getSeconds();
+  return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+}
+import md5 from "./md5.min.js";
+// sign签名拼接方法
+function MakeSign(url, Obj) {
+  let newKey = Object.keys(Obj).sort()
+  let newObj = {}
+  for (let i = 0; i < newKey.length; i++) {
+    newObj[newKey[i]] = Obj[newKey[i]]
+  }
+  let str = ''
+  for (let key in newObj) {
+    if (newObj[key] == null) {
+      str += key + '=&'
+    } else if (typeof newObj[key] == 'object' && newObj[key] != null) {
+      str += key + '=[object Object]&'
+    } else {
+      str += key + '=' + newObj[key] + '&'
+    }
+  }
+  let newUrl = '';
+  if (url.indexOf('https://devv2.yidap.com') > -1) {
+    newUrl = url.split('https://devv2.yidap.com')[1];
+  } else {
+    newUrl = url.split('https://apiv2.yidap.com')[1];
+  }
+  let newStr = newUrl + '?' + str.substring(0, str.length - 1) + 'zhong_pi_lian'
+  newStr = newStr.replace('sign=&', '')
+  console.log('newStr:-->', newStr);
+  return md5(newStr)
+}
 
 module.exports = {
+    MakeSign,
+    formatDate,
+    getNowFormatDate,
     getCurrentTime: getCurrentTime,
     objLength: objLength,
     displayProp: displayProp,

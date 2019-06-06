@@ -44,16 +44,16 @@
                          <view  class="lh50 b600">{{item.desc}}</view>
                         <view class="c999 fs24">{{item.created_at}}</view>
                     </view>
-                    <view class="c666"> {{ '+ ' + '￥' + item.assets_amount }}</view>
+                    <view class="c666"> {{ '+ ' + '￥' + item.change_amount }}</view>
                 </view>
 
             </block>
 
-            <view bindtap='more'  wx:if="{{!fullLoad}}" class="tc lh80 c999" data-page="{{nowPage}}">
+            <view bindtap='more'  wx:if="{{fullLoad}}" class="tc lh80 c999" data-page="{{nowPage}}">
                 查看更多>>
             </view>
 
-             <view wx:if="{{fullLoad}}" class="tc lh80 c999">
+             <view wx:if="{{!fullLoad}}" class="tc lh80 c999">
                 已加载完毕
             </view>
 

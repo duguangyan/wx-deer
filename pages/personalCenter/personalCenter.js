@@ -42,7 +42,12 @@ Page({
         })
 
     },
-
+    goout(){
+      wx.clearStorageSync();
+      wx.navigateTo({
+        url: '../login/login'　　
+      })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -61,26 +66,24 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+      
       // 版本号
       let v = wx.getStorageSync('v');
+      
+      // 获取用户信息
+      api.getUserInfo().then((res) => {
+          console.log('用户信息', res);
+          app.globalData.userInfo = res.data;
+          this.setData({
+              v,
+              userInfo: res.data
+          })
 
-        // 获取用户信息
-        api.getUserInfo().then((res) => {
-            console.log('用户信息', res);
-            app.globalData.userInfo = res.data;
+      }).catch((res) => {
+          console.log('用户信息err', res)
+      }).finally(() => {
 
-            this.setData({
-                v,
-                userInfo: res.data
-            })
-
-        }).catch((res) => {
-            console.log('用户信息err', res)
-        }).finally(() => {
-
-        })
-
-
+      })
     },
 
     /**

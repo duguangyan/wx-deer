@@ -87,7 +87,7 @@ Page({
         api.login({
             method: 'POST',
             data: {
-                user_name,
+                mobile:user_name,
                 password,
                 open_id: openid,
                 from: '4'
@@ -102,14 +102,17 @@ Page({
                 key: 'memberData',
                 data: res.data,
             })
-
+          
             wx.setStorageSync('access_token', res.data.access_token)
-
+            wx.setStorageSync('userId', res.data.id);
+          wx.setStorageSync('avatar_path', res.data.avatar_path || 'https://static.yidap.com/miniapp/deer/default_avatar.png');
+          
             wx.reLaunch({
                 url: '../personalCenter/personalCenter',
             });
 
         }).catch((res) => {
+          
             wx.hideLoading()
            // util.errorTips(res.msg);
             wx.showToast({

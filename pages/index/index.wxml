@@ -11,7 +11,7 @@
             </view>
         </view>
         <view class="section-task-info flex">
-            <view class="fs28">
+            <view class="fs28" catchtap='goFindPage' data-index='1'>
                 <text class="iconfont icon-xinrenwu mgr10" />
                 <text>新接</text> (
                 <text class="c-green">{{homeData.find.receive_num}}</text>)
@@ -31,37 +31,37 @@
     <!--配送单  -->
     <view wx:if="{{isDeliveryMan || true}}" bindtap='goSendPage' class="section-item" hover-class='hover-default'>
         <view class="section-title flex">
-            <view class="b600">取送订单(
-                <text class="ctheme">{{homeData.delivery.un_finish_num + homeData.delivery.finish_num}}</text>)</view>
+            <view class="b600">取料订单(
+                <text class="ctheme">{{homeData.fetch.un_finish_num + homeData.fetch.finish_num}}</text>)</view>
             <view class="c666 fs24">{{homeData.begin}}~{{homeData.end}}</view>
             <view class="c666 fs24">更多
                 <text class="iconfont icon-gengduo-right"></text>
             </view>
         </view>
         <view class="section-task-info flex">
-            <view class="fs28">
+            <view class="fs28" catchtap='goSendPage' data-index='1'>
                 <text class="iconfont icon-xinrenwu mgr10" />
                 <text>新接</text> (
-                <text class="c-green">{{homeData.delivery.receive_num}}</text>)
+                <text class="c-green">{{homeData.fetch.receive_num}}</text>)
             </view>
             <view class="fs28">
                 <text class="iconfont icon-weiwanchengrenwu mgr10" />
                 <text>未完成</text> (
-                <text class="text-theme">{{homeData.delivery.un_finish_num}}</text>)
+                <text class="text-theme">{{homeData.fetch.un_finish_num}}</text>)
             </view>
             <view class="fs28">
                 <text class="iconfont icon-yiwanchengrenwu mgr10" />
                 <text>已完成</text> (
                 <text class="c-blue">{{
-                homeData.delivery.finish_num}}</text>)
+                homeData.fetch.finish_num}}</text>)
             </view>
         </view>
     </view>
     <!--悬赏任务  -->
     <navigator class="section-item" open-type='switchTab' url="../rewardTask/rewardTask">
         <view class="section-title flex">
-            <view class="b600">悬赏任务(
-                <text class="ctheme">{{homeData.reward.un_finish_num + homeData.reward.finish_num}}</text>)</view>
+            <view class="b600">配送任务(
+                <text class="ctheme">{{homeData.ship.un_finish_num + homeData.ship.finish_num}}</text>)</view>
             <view class="c666 fs24">{{homeData.begin}}~{{homeData.end}}</view>
             <view class="c666 fs24">更多
                 <text class="iconfont icon-gengduo-right"></text>
@@ -72,19 +72,19 @@
                 <text class="iconfont icon-xinrenwu mgr10" />
                 <text>可接</text> (
                 <text class="c-green">{{
-                homeData.reward.receive_num}}</text>)
+                homeData.ship.receive_num}}</text>)
             </view>
             <view class="fs28">
                 <text class="iconfont icon-weiwanchengrenwu mgr10" />
                 <text>未完成</text> (
                 <text class="text-theme">{{
-                homeData.reward.un_finish_num}}</text>)
+                homeData.ship.un_finish_num}}</text>)
             </view>
             <view class="fs28">
                 <text class="iconfont icon-yiwanchengrenwu mgr10" />
                 <text>已完成</text> (
                 <text class="c-blue">{{
-                homeData.reward.finish_num}}</text>)
+                homeData.ship.finish_num}}</text>)
             </view>
         </view>
     </navigator>

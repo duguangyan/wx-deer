@@ -1,40 +1,40 @@
 <view>
-
     <view class="member-info shadow">
-
+            <view class='out' bindtap='goout'>
+                <image src='https://static.yidap.com/miniapp/o2o_find/index/index_out.png'></image>
+            </view>
         <view class="flex member-accout">
+            
             <view class="flex">
                 <image src="{{userInfo.avatar_path || '../../images/default_avatar.png'}}" class="mgr30" style="width:120rpx;height:120rpx;" />
                 <text class=" b600">{{userInfo.user_name}}</text>
             </view>
 
             <view class="flex fs24">
-                <view wx:if="{{userInfo.is_find_man}}">
+                <view wx:if="{{userInfo.find_id > 0}}">
                     <text class="iconfont icon-zhaoliaoyuan text-theme" /> 找料员</view>
-                <view wx:if="{{userInfo.is_delivery}}" class="mgl20">
+                <view wx:if="{{userInfo.dest_id > 0}}" class="mgl20">
                     <text class="iconfont icon-peisongyuan text-theme" /> 配送员</view>
-
-                <view class="b500" wx:elif="{{ !userInfo.is_find_man}}">您还不是我们的找料员</view>
             </view>
         </view>
 
         <view class="flex tc lh50">
 
-            <navigator open-type='navigate' url="../recordList/recordList?type=commission&num={{userInfo.asset.commission_amount}}" class="flex-1">
-                <view class="text-red">{{userInfo.asset ? '￥' + userInfo.asset.commission_amount : '　'}}</view>
+            <navigator open-type='navigate' url="../recordList/recordList?type=commission&num={{userInfo.commission}}" class="flex-1">
+                <view class="text-red">{{userInfo.commission ? '￥' + userInfo.commission :'0'}}</view>
                 <view class="text-red">
                     <text class="iconfont icon-yongjin" />佣金</view>
             </navigator>
-            <navigator open-type='navigate' url="../recordList/recordList?type=reward&num={{userInfo.asset.reward_amount}}" class="flex-1">
+            <!-- <navigator open-type='navigate' url="../recordList/recordList?type=reward&num={{userInfo.asset.reward_amount}}" class="flex-1">
                 <view class="c-orange">{{userInfo.asset ? userInfo.asset.reward_amount + '个' : '　'}}</view>
                 <view class="c-orange">
                     <text class="iconfont icon-jinbi " />悬赏币</view>
-            </navigator>
-            <navigator open-type='navigate' url="../recordList/recordList?type=integral&num={{userInfo.asset.score_amount}}" class="flex-1">
+            </navigator> -->
+            <!-- <navigator open-type='navigate' url="../recordList/recordList?type=integral&num={{userInfo.asset.score_amount}}" class="flex-1">
                 <view class="c-blue">{{userInfo.asset ?  userInfo.asset.score_amount + '分' : '　'}}</view>
                 <view class="c-blue">
                     <text class="iconfont icon-ziyuan " />积分</view>
-            </navigator>
+            </navigator> -->
         </view>
 
         <image src="../../images/member-bg-1.png" style="display:block;width:710rpx;height:71rpx;"></image>
@@ -42,9 +42,9 @@
     </view>
 
     <view class="flex flex-start tc service-list">
-        <navigator open-type='switchTab' url="../order/order" class="shadow relative">
+        <navigator open-type='navigate' url="../chatList/chatList" class="shadow relative">
             <image src="../../images/order-icon.png" class="mgt30" style="width:90rpx;height:90rpx;" />
-            <view class="fs30 b600 lh50">我的订单</view>
+            <view class="fs30 b600 lh50">消息列表</view>
             <image src="../../images/member-bg-2.png" style="display:block;width:345rpx;height:44rpx;"></image>
             <form style="position:absolute;left:0;top:0;width:100%;height:100%;" report-submit bindsubmit="saveformid">
                 <button style="width:100%;height:100%;opacity:0;" formType="submit"></button>
@@ -52,7 +52,7 @@
         </navigator>
         <navigator open-type='switchTab' url="../rewardTask/rewardTask" class="shadow relative">
             <image src="../../images/task-icon.png" class="mgt30" style="width:90rpx;height:90rpx;" />
-            <view class="fs30 b600 lh50">我的悬赏任务</view>
+            <view class="fs30 b600 lh50">配送订单</view>
             <image src="../../images/member-bg-3.png" style="display:block;width:345rpx;height:44rpx;"></image>
             <form style="position:absolute;left:0;top:0;width:100%;height:100%;" report-submit bindsubmit="saveformid">
                 <button style="width:100%;height:100%;opacity:0;" formType="submit"></button>

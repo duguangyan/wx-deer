@@ -4,17 +4,20 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.1.1",
+	"libVersion": "2.3.0",
 	"appid": "wx57bc26c9fbe8dbfb",
 	"projectname": "%E5%B0%8F%E9%B9%BF%E7%AB%AF%20git%20%E7%89%88",
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

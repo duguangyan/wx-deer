@@ -1,10 +1,9 @@
-/*顶部固定栏目  */
+/*顶部固定栏  */
 
 .fixed-block {
     position: fixed;
     left: 0;
     right: 0;
-    top:0;
     z-index: 999;
     background: #f0eff5;
 }
@@ -28,19 +27,30 @@
 .select-order view:nth-of-type(1) {
     border-right: 2rpx #ddd solid;
 }
-.c-orange{
-  position: absolute;
-  top: 0rpx;
-  left: 20rpx;
-}
+
 .status-section {
     padding-bottom: 2rpx;
+    white-space: nowrap;
 }
 
 .status-section view {
+    display: inline-block;
     height: 82rpx;
-    padding: 0 30rpx;
     box-sizing: border-box;
+    padding: 0 20rpx;
+    width:14%;
+    text-align:center;
+    margin:0 5%;
+}
+
+/*增加数量,减少边距  */
+
+/* .status-section.find-section {
+    padding: 0 10px;
+} */
+
+.status-section.find-section view {
+    padding: 0 10rpx;
 }
 
 .status-section view.selected, .select-order view.selected {
@@ -52,7 +62,7 @@
     padding: 200rpx 0 30rpx;
 }
 
-/*任务块 S  */
+/*订单块 S */
 
 .order-item {
     width: 710rpx;
@@ -66,16 +76,28 @@
     padding: 28rpx 30rpx 28rpx 20rpx;
 }
 
+/*new 标志  */
+
+.new {
+    position: absolute;
+    right: 0rpx;
+    top: -2rpx;
+    z-index: 10;
+}
+
+.new image {
+    width: 50rpx;
+    height: 50rpx;
+}
+
 .order-info {
-    padding: 24rpx 20rpx;
+    padding: 24rpx 20rpx 10rpx;
     border-top: 1rpx #eee solid;
     border-bottom: 1rpx #eee solid;
-    background: #fff url(https://static.yidap.com/miniapp/deer/reward-task.png) no-repeat 540rpx 70rpx;
-    background-size: 126rpx 126rpx;
 }
 
 .order-info-left {
-    width: 500rpx;
+    /* width: 430rpx; */
 }
 
 .order-pics-list {
@@ -83,14 +105,40 @@
 }
 
 .order-pics-list image {
-    width: 90rpx;
+    width: 100rpx;
     height: 100rpx;
     margin-right: 46rpx;
     background: #ccc;
+    border-radius: 4rpx;
+}
+
+/*地址边框,边距  */
+
+.address-space {
+    padding: 10rpx 0;
+    border-top: 1rpx #eee solid;
+}
+
+/*标签tag  */
+
+.tag {
+    color: #ef7510;
+    padding: 2rpx 4rpx;
+    border: 1px #ef7510 solid;
+    border-radius: 6rpx;
+}
+
+.order-info-right {
+    padding: 0 28rpx;
+}
+
+.order-info-right image {
+    width: 126rpx;
+    height: 126rpx;
 }
 
 .order-handle {
-    padding: 35rpx 20rpx 30rpx 30rpx;
+    padding: 30rpx 20rpx 30rpx 30rpx;
 }
 
 .find-status view {
@@ -101,26 +149,12 @@
     margin-left: 30rpx;
     font-size: 28rpx;
     text-align: center;
+    background: #c91a29;
+    color: #fff;
 }
 
-.find-status view.theme-border {
+.find-status view.warm-border {
     border: 1rpx #c91a29 solid;
 }
 
-.find-status view.gray-border {
-    border: 1rpx #999 solid;
-}
-
-/*new 标志  */
-.new {
-    position: absolute;
-    right: -2rpx;
-    top: -2rpx;
-    z-index: 10;
-}
-
-.new image{
-    width:50rpx;height:50rpx;
-}
-
-/*任务块 E */
+/*订单块 E  */

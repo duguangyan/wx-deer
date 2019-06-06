@@ -5,6 +5,16 @@
   background: #FFF;
   border-radius: 10rpx;
 }
+.out{
+  position: absolute;
+  z-index: 999900;
+  right: 20rpx;
+  top: 20rpx;
+}
+.out image{
+  width: 60rpx;
+  height: 60rpx;
+}
 .navigator-box {
   height: 115rpx;
   line-height: 115rpx;
@@ -38,6 +48,7 @@
 }
 .member-accout {
   padding: 46rpx 20rpx 24rpx;
+  position: relative;
 }
 
 .member-accout image{

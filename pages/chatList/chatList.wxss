@@ -1,0 +1,107 @@
+/* pages/chatList/chatList.wxss */
+.chat-list .items{
+  background: #fff;
+  border-top: 1rpx solid #eee; 
+}
+.chat-list .items .item{
+  height: 140rpx;
+  width: 730rpx;
+  margin-left: 20rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee; 
+}
+
+.chat-list .items .item .item-1{
+  width: 120rpx;
+  position: relative;
+  text-align: center;
+}
+.chat-list .items .item .item-1 image{
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 10rpx; 
+}
+.chat-list .items .item .item-1 .spot{
+  position: absolute;
+  width: 20rpx;
+  height: 20rpx;
+  background: #C81A29;
+  border-radius: 50%;
+  top: -5rpx;
+  right: 2rpx; 
+}
+.chat-list .items .item .item-2{
+  width: 450rpx;
+  font-size: 32rpx;
+  line-height: 50rpx;
+}
+.chat-list .items .item .item-2 .ellipsis{
+  font-size: 28rpx;
+  color: #999;
+  width: 420rpx;
+  display: block;
+  position: relative;
+}
+.chat-list .items .item .item-3{
+  width: 140rpx;
+  text-align: right;
+  font-size: 24rpx;
+  color: #999;
+  padding-right: 10rpx;
+  line-height: 60rpx;
+}
+
+
+
+/* 向左滑动实现删除操作 */
+view{
+    box-sizing: border-box;
+}
+.item-box{
+    margin: 0 auto;
+}
+.items{
+    width: 100%;
+}
+.item{
+    position: relative;
+    border-top: 2rpx solid #eee;
+    height: 140rpx;
+    line-height: 140rpx;
+    overflow: hidden;
+}
+.item:last-child{
+    border-bottom: 2rpx solid #eee;
+}
+.inner{
+    position: absolute;
+    top:0;
+}
+.inner.txt{
+    font-family: Monaco;
+    background: #fff;
+    width: 100%;
+    z-index: 5;
+    transition: left 0.2s ease-in-out;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 20rpx 0;
+}
+.inner.del{
+    font-family: Monaco;
+    background-color: #e64340;
+    width: 180rpx;
+    text-align: center;
+    z-index: 4;
+    right: 0;
+    color: #fff;
+    font-size: 32rpx;
+}
+.item-icon{
+    width: 64rpx;
+    height: 120rpx;
+    vertical-align: middle;
+    margin-right: 16rpx
+}
+

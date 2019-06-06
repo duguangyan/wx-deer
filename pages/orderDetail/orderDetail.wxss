@@ -4,6 +4,7 @@
 }
 .padding {
   padding: 16rpx 20rpx;
+  border-top: 1rpx solid #eee; 
 }
 
 .pd-cell {

@@ -1,7 +1,7 @@
-// const apiUrl = 'https://devv2.yidap.com';     // 测试
-const apiUrl = 'https://apiv2.yidap.com';        // 正式
-const versionNumber = 'v2.4.5';  // 版本号
-
+const apiUrl = 'https://devv2.yidap.com';     // 测试
+// const apiUrl = 'https://apiv2.yidap.com';        // 正式
+const versionNumber = 'v3.0.1';  // 版本号
+import md5 from "./md5.min.js";
 if (apiUrl == 'https://apiv2.yidap.com') {
   wx.setStorageSync('v', versionNumber + ' 正式');
 } else {
@@ -15,6 +15,31 @@ Promise.prototype.finally = function (callback) {
         reason => P.resolve(callback()).then(() => { throw reason })
     );
 };
+
+
+// sign签名拼接方法
+function MakeSign(url, Obj) {
+  let newKey = Object.keys(Obj).sort()
+  let newObj = {}
+  for (let i = 0; i < newKey.length; i++) {
+    newObj[newKey[i]] = Obj[newKey[i]]
+  }
+  let str = ''
+  for (let key in newObj) {
+    str += key + '=' + newObj[key] + '&'
+  }
+  let newUrl = '';
+  if (url.indexOf('https://devv2.yidap.com') > -1) {
+    newUrl = url.split('https://devv2.yidap.com')[1];
+  } else {
+    newUrl = url.split('https://apiv2.yidap.com')[1];
+  }
+  let newStr = newUrl + '?' + str.substring(0, str.length - 1) + 'zhong_pi_lian'
+  newStr = newStr.replace('sign=&', '')
+  console.log('newStr:->' + newStr)
+  return md5(newStr)
+}
+
 /*
  * 
  * @param {*} params 
@@ -24,12 +49,18 @@ Promise.prototype.finally = function (callback) {
  * @param {*} fail Function
  * @param {*} complete Function
  */
+
 const myRequest = function (params = {}, url) {
 
     return new Promise((resolve, reject) => {
 
+        let timestamp = Date.parse(new Date());
         let data = params.data || {};
-
+        data.timestamp = timestamp;
+        data.sign = MakeSign(url, data);
+        data.deviceId = "wx";
+        data.platformType = "1";
+        data.versionCode = '3.0';
         const access_token = wx.getStorageSync('access_token') || '';
 
         let header = { 'content-type': 'application/json',
@@ -71,6 +102,12 @@ const myRequest = function (params = {}, url) {
                             }
                         })
 
+                    } else if (1 === res.code || -1 === res.code){
+                      wx.showToast({
+                        title: res.msg,
+                        icon: 'none',
+                        duration: 3000
+                      })
                     }
                     reject(res);
 
@@ -92,7 +129,7 @@ const myRequest = function (params = {}, url) {
 
             },
             complete(res) {
-
+              wx.hideLoading()
             }
         })
 
@@ -116,25 +153,32 @@ const regSMS = (params) => myRequest(params, `${apiUrl}/api/sms/registerSms`);
 const register = (params) => myRequest(params, `${apiUrl}/api/register`);
 
 // 用户信息
-const getUserInfo = (params) => myRequest(params, `${apiUrl}/api/show`);
+const getUserInfo = (params) => myRequest(params, `${apiUrl}/api/staff/show`);
 
 // 首页统计
-const homeData = (params) => myRequest(params, `${apiUrl}/find/api/home`);
+const homeData = (params) => myRequest(params, `${apiUrl}/api/staff/home`);
 
-// 订单列表
-const myOrderList = (params) => myRequest(params, `${apiUrl}/find/api/order_records/index/${params.query.task_type}/${params.query.type}`);
+// 找料订单列表
+const myOrderFindList = (params) => myRequest(params, `${apiUrl}/api/staff/find`);
+// 取料订单列表
+const myOrderFetchList = (params) => myRequest(params, `${apiUrl}/api/staff/fetch`);
+// 配送订单列表
+const myOrderShipList = (params) => myRequest(params, `${apiUrl}/api/staff/ship`);
 
 // 接单去new
 const receiveOrder = (params) => myRequest(params, `${apiUrl}/find/api/order_records/receive`);
 
 // 订单已经找到
-const orderBeenFound = (params) => myRequest(params, `${apiUrl}/find/api/order_records/found/${params.query.id}`);
+const orderBeenFound = (params) => myRequest(params, `${apiUrl}/api/staff/find/found`);
 
 //{id} 找不到物料
-const orderNotFound = (params) => myRequest(params, `${apiUrl}/find/api/order_records/unfound/${params.query.id}`);
+const orderNotFound = (params) => myRequest(params, `${apiUrl}/api/staff/find/unfound`);
+
+//{id} 取不到物料
+const orderFetchNotFound = (params) => myRequest(params, `${apiUrl}/api/staff/fetch/unfound`);
 
 // 订单确认送达
-const orderFeedback = (params) => myRequest(params, `${apiUrl}/find/api/order_records/shipped/${params.query.id}`);
+const orderFeedback = (params) => myRequest(params, `${apiUrl}/api/staff/ship/confirm`);
 
 // 可接悬赏任务
 const acceptableTaskList = (params) => myRequest(params, `${apiUrl}/find/api/task_rewards`);
@@ -166,13 +210,39 @@ const rewardTaskNum = (params) => myRequest(params, `${apiUrl}/find/api/task_rec
 // 获取formid
 const saveformid = (params) => myRequest(params, `${apiUrl}/api/member/form_id`);
 
-
-
-
 // 收货地址地区
 const getAddress = (params) => myRequest(params, `${apiUrl}/api/region/listTree`);
 
+// 快送佣金明细
+const staffCommissions = (params) => myRequest(params, `${apiUrl}/api/staff/commissions`);
+
+// 找料详情+接单
+const findShowDetail = (params) => myRequest(params, `${apiUrl}/api/staff/find/show`);
+
+// 找料详情+接单
+const fetchShowDetail = (params) => myRequest(params, `${apiUrl}/api/staff/fetch/show`);
+
+
+// 配送详情+接单
+const shipShowDetail = (params) => myRequest(params, `${apiUrl}/api/staff/ship/show`);
+
+// 确认送达
+const shipShowConfirm = (params) => myRequest(params, `${apiUrl}/api/staff/ship/confirm`);
+
+
+
+
+
 module.exports = {
+  orderFetchNotFound,
+  fetchShowDetail,
+  shipShowConfirm,
+  shipShowDetail,
+  findShowDetail,
+  myOrderShipList,
+  myOrderFetchList,
+  myOrderFindList,
+    staffCommissions,
     apiUrl,
     getOpenid,
     login,
@@ -181,8 +251,6 @@ module.exports = {
     register,
     getUserInfo,
     homeData,
-
-    myOrderList,
     receiveOrder,
     orderBeenFound,
     orderNotFound,

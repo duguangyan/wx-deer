@@ -47,26 +47,13 @@ Page({
 
   },
     //   找料单页
-    goFindPage() {
-
-        onfire.on('getInfo', function (data) {
-
-            let pages = getCurrentPages()[0];
-
-            let params = {
-                task_type: 1,
-                type: -1,
-                page: 1
-            }
-
-            pages.setData({
-                params
-            })
-         
-            pages.getMyOrderList(params)
-
-        })
-
+    goFindPage(e) {
+     
+      let index = e.currentTarget.dataset.index;
+      if (index == 1){
+        wx.setStorageSync('status', 1);
+      }
+       wx.setStorageSync('nav', 1);
         wx.switchTab({
             url: '../order/order',
         })
@@ -74,26 +61,12 @@ Page({
     },
 
     // 配送单页面
-    goSendPage() {
-
-        onfire.on('getInfo', function (data) {
-
-            let pages = getCurrentPages()[0];
-
-            let params = {
-                task_type: 2,
-                type: -1,
-                page: 1
-            }
-
-            pages.setData({
-                params
-            })
-
-            pages.getMyOrderList(params)
-
-        })
-
+    goSendPage(e) {
+      let index = e.currentTarget.dataset.index;
+      if (index == 1) {
+        wx.setStorageSync('status', 1);
+      }
+      wx.setStorageSync('nav', 2);
         wx.switchTab({
             url: '../order/order',
         })
@@ -132,7 +105,7 @@ Page({
     onShow() {
 
        
-
+        
         // 触发
         //onfire.fire('updataUserInfo',app);
 

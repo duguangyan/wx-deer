@@ -102,8 +102,8 @@ Page({
     },
 
     commissionRecord(page, asset_type) {
-
-        api.commissionRecord({
+     
+      api.staffCommissions({
             data: {
                 page,
                 asset_type
@@ -112,16 +112,16 @@ Page({
             console.log('佣金记录', res)
 
             wx.hideLoading()
-            let list = res.data;
+          let list = res.data.data;
           if (this.data.asset_type==2){ 
             list.forEach((v,i)=>{
               list[i].assets_amount = parseInt(list[i].assets_amount);
             })
           }
-            let fullLoad = false
-            if (res.current_page * res.perPage >= res.total) {
+            let fullLoad = true;
+          if (res.data.data.length <= 0) {
                 // 加载完毕
-                fullLoad = true;
+                fullLoad = false;
             }
 
             this.setData({
@@ -129,7 +129,7 @@ Page({
                 fullLoad,
                 nowPage: page
             })
-
+            
         }).catch((res) => {
             wx.hideLoading()
 

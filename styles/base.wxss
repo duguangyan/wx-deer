@@ -649,7 +649,7 @@ page {
 .close {
     position: absolute;
     right: 0rpx;
-    top: 0rpx;
+    top: -20rpx;
     padding: 20rpx;
     font-size: 50rpx;
 }
@@ -776,4 +776,14 @@ page {
     width: 200rpx;
     height: 40rpx;
     background: #eee;
+}
+
+.cf:after{display:block;clear:both;content:"";visibility:hidden;height:0}
+.cf{zoom:1}
+
+.flr{
+  float: right;
+}
+.fll{
+  float: left;
 }
