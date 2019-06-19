@@ -50,20 +50,20 @@
                 <button style="width:100%;height:100%;opacity:0;" formType="submit"></button>
             </form>
         </navigator>
-        <navigator open-type='switchTab' url="../rewardTask/rewardTask" class="shadow relative">
+        <view bindtap='switchTab' url="../rewardTask/rewardTask" class="shadow relative">
             <image src="../../images/task-icon.png" class="mgt30" style="width:90rpx;height:90rpx;" />
-            <view class="fs30 b600 lh50">配送订单</view>
+            <view class="fs30 b600 lh50">联系平台</view>
             <image src="../../images/member-bg-3.png" style="display:block;width:345rpx;height:44rpx;"></image>
             <form style="position:absolute;left:0;top:0;width:100%;height:100%;" report-submit bindsubmit="saveformid">
                 <button style="width:100%;height:100%;opacity:0;" formType="submit"></button>
             </form>
-        </navigator>
+        </view>
     </view>
 
 
     <view class="navigator-box section-order mgt-20">
       <block class='navigator'>
-          <view class="navigator-text fs24 text-666 pdl-30 text-center">Copyright @2018 一大批 版权所有 版本 {{v}}</view>
+          <view class="navigator-text fs24 text-666 pdl-30 text-center">Copyright @2019 众皮联 版权所有 版本 {{v}}</view>
       </block>
     </view>
 

@@ -233,22 +233,22 @@
              <view class="flex tl bdb lh80" bindtap='getMapAddress'>
                 <view class="mgr20">
                     <text class="ctheme"></text>地址: </view>
-                <input name="address" value='{{address}}' type='number' maxlength="11" class="flex-1"  confirm-hold="true" disabled='true' confirm-type="next" placeholder='请填写地址'></input>
+                <input name="address" value='{{address}}' maxlength="11" class="flex-1"  confirm-hold="true" disabled='true' confirm-type="next" placeholder='请填写地址'></input>
             </view>
             <view class="flex tl bdb lh80">
                 <view class="mgr20">
                     <text class="ctheme"></text>街道: </view>
-                <input name="name" value='{{name}}' type='number' maxlength="11" class="flex-1"  confirm-hold="true" confirm-type="next" placeholder='请填写街道'></input>
+                <input name="name" value='{{name}}' maxlength="11" class="flex-1"  confirm-hold="true" confirm-type="next" placeholder='请填写街道'></input>
             </view>
             <view class="flex tl bdb lh80">
                 <view class="mgr20">
                     <text class="room"></text>门牌号: </view>
-                <input name="room" type='number' maxlength="11" class="flex-1" confirm-hold="true" confirm-type="next" placeholder='门牌号'></input>
+                <input name="room"  maxlength="11" class="flex-1" confirm-hold="true" confirm-type="next" placeholder='门牌号'></input>
             </view>
             <view class="flex tl bdb lh80">
                 <view class="mgr20">
                     <text class="room"></text>备注: </view>
-                <input name="remark" type='number' maxlength="11" class="flex-1" confirm-hold="true" confirm-type="next" placeholder='备注'></input>
+                <input name="remark" maxlength="11" class="flex-1" confirm-hold="true" confirm-type="next" placeholder='备注'></input>
             </view>
             <view class="submit-box">
                 <button formType="submit">提交</button>
@@ -260,9 +260,9 @@
     <view wx:if="{{formtype == '2'}}" class="form-box-2" catchtouchmove="preventD">
         <text bindtap='close' class="iconfont icon-guanbi close"></text>
         <form bindsubmit="formSubmit2" report-submit>
-            <view class="fs34 b600">填写{{na==1?'找':'取'}}不到物料原因</view>
-            <view class="fs24 lh36">（多次{{na==1?'找':'取'}}不到物料，将影响绩效考核，请谨慎操作！）</view>
-            <textarea class="tl reason bdb bdt" placeholder="请填写{{na==1?'找':'取'}}不到物料的原因" name="remark" />
+            <view class="fs34 b600">填写{{nav==1?'找':'取'}}不到物料原因</view>
+            <view class="fs24 lh36">（多次{{nav==1?'找':'取'}}不到物料，将影响绩效考核，请谨慎操作！）</view>
+            <textarea class="tl reason bdb bdt" placeholder="请填写{{nav==1?'找':'取'}}不到物料的原因" name="remark" />
             <view class="submit-box">
                 <button formType="submit">提交</button>
             </view>

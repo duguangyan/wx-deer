@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view wx:if="{{homeData}}" class="">
     <!-- 找料单  -->
-    <view wx:if="{{isFindMan || true}}" bindtap='goFindPage' class="section-item" hover-class='hover-default'>
+    <view wx:if="{{userInfo.find_id>0}}" bindtap='goFindPage' class="section-item" hover-class='hover-default'>
         <view class="section-title flex">
             <view class="b600">找料订单(
                 <text class="ctheme">{{homeData.find.un_finish_num+homeData.find.finish_num}}</text>)</view>
@@ -29,7 +29,7 @@
         </view>
     </view>
     <!--配送单  -->
-    <view wx:if="{{isDeliveryMan || true}}" bindtap='goSendPage' class="section-item" hover-class='hover-default'>
+    <view wx:if="{{userInfo.find_id>0}}" bindtap='goSendPage' class="section-item" hover-class='hover-default'>
         <view class="section-title flex">
             <view class="b600">取料订单(
                 <text class="ctheme">{{homeData.fetch.un_finish_num + homeData.fetch.finish_num}}</text>)</view>
@@ -58,7 +58,7 @@
         </view>
     </view>
     <!--悬赏任务  -->
-    <navigator class="section-item" open-type='switchTab' url="../rewardTask/rewardTask">
+    <view class="section-item" wx:if="{{userInfo.dest_id>0}}" bindtap='switchTab' data-status='1'>
         <view class="section-title flex">
             <view class="b600">配送任务(
                 <text class="ctheme">{{homeData.ship.un_finish_num + homeData.ship.finish_num}}</text>)</view>
@@ -68,7 +68,7 @@
             </view>
         </view>
         <view class="section-task-info flex">
-            <view class="fs28">
+            <view class="fs28" catchtap='switchTab' data-status='2'>
                 <text class="iconfont icon-xinrenwu mgr10" />
                 <text>可接</text> (
                 <text class="c-green">{{
@@ -87,7 +87,7 @@
                 homeData.ship.finish_num}}</text>)
             </view>
         </view>
-    </navigator>
+    </view>
 
 </view>
 

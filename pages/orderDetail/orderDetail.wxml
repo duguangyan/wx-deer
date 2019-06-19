@@ -84,7 +84,7 @@
 
         <view class="lh42">
 
-            <text wx:if="{{detailData.get_address.remark}}" class="tag lh42">{{detailData.get_address.remark}}</text>
+            <text wx:if="{{detailData.get_address.remark != ''}}" class="tag lh42">{{detailData.get_address.remark}}</text>
              {{detailData.get_address.city_str}} {{ detailData.get_address.address}}
         </view>
         <view class="flex align-item-start lh42">
@@ -99,7 +99,7 @@
     <view class="padding">
         <view class="lh42">
            
-            <text wx:if="{{detailData.shipping_address&& index ==3}}" class="tag lh42">{{ detailData.shipping_address.remark}}</text>
+            <text wx:if="{{detailData.shipping_address.remark !='' && index ==3}}" class="tag lh42">{{ detailData.shipping_address.remark}}</text>
              {{ detailData.shipping_address.city_str}} {{ detailData.shipping_address.address}}
         </view>
         <view class="flex align-item-start lh42">
@@ -166,11 +166,15 @@
             <view class="c999">备注:</view>
             <view>{{ detailData.remark}}</view>
         </view>
-
     </view>
     <view class="space" />
     <view wx:if="{{false}}" class="pd30 flex flex-end">
         <view class="normal-btn">找不到物料</view>
         <view class="warm-btn mgl30">找到物料</view>
     </view>
+
+
+    <button data-id='{{detailData.user_id}}' bindtap='goChat' class='order-footer-btn-red order-chat'>
+    联系客户</button>
+    <view class='height40'></view>
 </view>

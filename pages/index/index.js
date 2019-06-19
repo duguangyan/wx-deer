@@ -59,8 +59,17 @@ Page({
         })
 
     },
-
-    // 配送单页面
+    // 配送页面
+    switchTab(e){
+      let status = e.currentTarget.dataset.status;     
+      
+      wx.setStorageSync('statusT', status)
+      
+      wx.switchTab({
+        url: '../rewardTask/rewardTask',
+      })
+    },
+    // 订单页面
     goSendPage(e) {
       let index = e.currentTarget.dataset.index;
       if (index == 1) {
@@ -73,7 +82,7 @@ Page({
 
     },
     onLoad: function () {
-
+        
         // if (app.globalData.userInfo) {
         //   this.setData({
         //     userInfo: app.globalData.userInfo,
@@ -103,48 +112,73 @@ Page({
     },
 
     onShow() {
+      let _this = this;
+        if (app.globalData.userInfo) {
+          this.setData({
+            userInfo: app.globalData.userInfo,
+          })
+        }else{
+          // wx.showModal({
+          //   title: '提示',
+          //   content: '您还没有使用权限，如果您是我们公司的找(送）料员，请前往登录页登录使用系统',
+          //   confirmText: '前往',
+          //   confirmColor: '#c81a29',
+          //   success: (res) => {
 
-       
-        
+          //     if (res.confirm) {
+          //       wx.navigateTo({
+          //         url: '../login/login',
+          //       })
+          //     } else if (res.cancel) {
+          //       console.log('用户点击取消')
+          //     }
+          //   }
+          // })
+        }
         // 触发
         //onfire.fire('updataUserInfo',app);
-
         //   更新数据
+
+      // 获取用户信息
+      const access_token = wx.getStorageSync('access_token');
+
+      if (!!access_token) {
+
+        
+
+      }
+
+      api.getUserInfo(
+
+      ).then((res) => {
+        console.log('用户信息', res);
+
+        app.globalData.userInfo = res.data;
+        this.setData({
+          userInfo: res.data
+        })
         api.homeData().then((res) => {
 
-            console.log('首页统计数据', res)
-            let homeData = res.data;
+          console.log('首页统计数据', res)
+          let homeData = res.data;
 
-            this.setData({
-                homeData
-            })
+          this.setData({
+            homeData
+          })
 
         }).catch((res) => {
+          if (res.code !== 401) {
+            util.errorTips(res.msg)
+          }
 
-            console.log('首页统计数据', res)
+        }).finally(() => {
 
-            // 用户身份判定,显示对应栏目
-            let userInfo = app.globalData.userInfo;
-
-            if (userInfo && !userInfo.is_delivery) {
-                this.setData({
-                    isDeliveryMan: false,
-                })
-            }
-
-            if (userInfo && !userInfo.is_find_man) {
-                this.setData({
-                    isFindMan: false,
-                })
-            }
-
-            if(res.code !== 401) {
-                util.errorTips(res.msg)
-            }
-           
-        }).finally( () => {
-            
         })
+      }).catch((res) => {
+        console.log('用户信息', res)
+      })
+        
+        
     },
 
     /**

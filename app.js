@@ -37,48 +37,34 @@ App({
 
         // 是否有openid
 
-        let openid = wx.getStorageSync('openid');
+        // let openid = wx.getStorageSync('openid');
 
-        if (!openid) {
-            wx.login({
-                success: res => {
-                    // 发送 res.code 到后台换取 openId, sessionKey, unionId
-                    console.log(res.code)
+        // if (!openid) {
+        //     wx.login({
+        //         success: res => {
+        //             // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        //             console.log(res.code)
 
-                    if (res.code) {
-                        api.getOpenid({
-                            data: {
-                                code: res.code,
-                                from: '4'
-                            }
-                        }).then((res) => {
-                            console.log('openid信息 == ', res)
-                            wx.setStorage({
-                                key: 'openid',
-                                data: res.data.openid,
-                            })
-                        })
-                    }
-                }
-            })
+        //             if (res.code) {
+        //                 api.getOpenid({
+        //                     data: {
+        //                         code: res.code,
+        //                         from: '4'
+        //                     }
+        //                 }).then((res) => {
+        //                     console.log('openid信息 == ', res)
+        //                     wx.setStorage({
+        //                         key: 'openid',
+        //                         data: res.data.openid,
+        //                     })
+        //                 })
+        //             }
+        //         }
+        //     })
 
-        }
+        // }
 
-        // 获取用户信息
-        const access_token = wx.getStorageSync('access_token');
-
-        if (!!access_token) {
-
-            api.getUserInfo(
-
-            ).then((res) => {
-                console.log('用户信息', res);
-                this.globalData.userInfo = res.data;
-            }).catch((res) => {
-                console.log('用户信息', res)
-            })
-
-        }
+        
 
         // 获取用户信息
         // wx.getSetting({

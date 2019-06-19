@@ -10,7 +10,10 @@
   padding: 20rpx 0;
   border-bottom: 1rpx solid #eee; 
 }
-
+.no-data{
+  text-align: center;
+  line-height: 100rpx;
+}
 .chat-list .items .item .item-1{
   width: 120rpx;
   position: relative;

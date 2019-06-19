@@ -22,7 +22,15 @@
   padding: 2rpx 10rpx;
   border-radius: 6rpx;
 }
-
+.order-chat{
+  background: #EF7510;
+  color: #fff;
+  width:300rpx;
+  margin:40rpx auto;
+}
+.height40{
+  height: 40rpx;
+}
 /*标签tag  */
 .tag {
     color: #EF7510;

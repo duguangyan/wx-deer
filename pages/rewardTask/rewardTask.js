@@ -487,7 +487,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getMyOrders();
+    
+    
     // 缓存地址信息
     // let addressList = wx.getStorageSync('addressList');
 
@@ -535,13 +536,19 @@ Page({
    */
   onShow: function () {
     console.log('onSHow 进入');
-
-
-
     onfire.fire('getInfo', '参数');
-
     onfire.fire('updataOrder', 'neworder');
-
+    let x = wx.getStorageSync('statusT');
+    if (x == 2) {
+      this.setData({
+        status: 2
+      })
+    }
+    this.setData({
+      page:1,
+      orderList:[]
+    })
+    this.getMyOrders();
   },
 
   /**

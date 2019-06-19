@@ -14,7 +14,7 @@ Page({
     preview(e) {
       let idx = e.currentTarget.dataset.idx;
 
-      let imgs = this.data.detailData.front_img;
+      let imgs = this.data.detailData.desc_img;
 
         wx.previewImage({
             current: imgs[idx],
@@ -97,12 +97,18 @@ Page({
           this.setData({
             detailData: res.data
           })
+          
         })
       }
-      
+    
      
     },
-
+  goChat(e) {
+    let id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '../chat1/chat?id=' + id
+    })
+  },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */

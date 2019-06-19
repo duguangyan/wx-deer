@@ -29,7 +29,7 @@
 	</view>
 </view>
 <view class="reply">
-	<image src="./images/{{mode ? 'voice' : 'text'}}.png" class="voice-image" bindtap="switchMode" />
+	<image style='display:none' src="./images/{{mode ? 'voice' : 'text'}}.png" class="voice-image" bindtap="switchMode" />
 	<view class="opration-area">
 		<input wx:if="{{mode}}" type="text" confirm-type="send" confirm-hold="true" bindconfirm="reply" value="{{content}}" />
 		<button class="voice-button" bindlongtap="record" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" wx:else>{{tips[status]}}</button>

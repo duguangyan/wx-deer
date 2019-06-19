@@ -10,6 +10,7 @@
     "pages/register/register",
     "pages/login/login",
     "pages/chat/chat",
+    "pages/chat1/chat",
     "pages/chatList/chatList"
   ],
   "window": {

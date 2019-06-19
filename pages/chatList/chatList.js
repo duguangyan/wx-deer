@@ -83,14 +83,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.closeSocket();
+    if (app.globalData.socket) {
+      wx.closeSocket();
+    }
     // this.getCacheMessage();
     let userId = wx.getStorageSync('userId');
-    console.log('userId:' + userId);
-    wx.connectSocket({
-      url: 'wss://im.yidap.com/notice/socket?userId=' + userId + '&openType=1'
+    let url = 'wss://webapi.yidapi.com.cn/notice/socket?userId=' + userId + '&openType=1';
+    console.log('连接用户ID：' + userId);
+    console.log(url);
+    app.globalData.socket = wx.connectSocket({ // im.yidap.com
+      url
     });
     let _this = this;
+    wx.onSocketClose((res) => {
+      console.log("onSocketClose:断开了");
+      this.onShow();
+    })
     wx.onSocketOpen(function (res) {
       console.log("连接上了");
       console.log(res);
@@ -101,43 +109,43 @@ Page({
         
         let resLists = JSON.parse(res.data);
         if (resLists.length>0){
-          let chatListIds = wx.getStorageSync('chatListIds') || [];
-          
-          resLists.forEach((o,i)=>{
-            chatListIds.forEach((oo,ii)=>{
-              if (oo == o.to_user_id) {
-                o.isRead = false
-              }
-            })
-          })
+          //let chatListIds = wx.getStorageSync('chatListIds') || [];
+          // resLists.forEach((o,i)=>{
+          //   chatListIds.forEach((oo,ii)=>{
+          //     if (oo == o.to_user_id) {
+          //       o.isRead = false
+          //     }
+          //   })
+          // })
           _this.setData({
             lists: resLists
           })
         }else{
-          let ii = 0;
-          _this.data.lists.forEach((o,i)=>{
-            if (resLists.fromUserId == o.to_user_id){
-              ii++;
-              _this.data.lists[i].userMessage[0].content = resLists.content;
-              _this.data.lists[i].userMessage[0].sms_type = resLists.smsType;
-              _this.data.lists[i].isRead = true;
-              let chatListIds = wx.getStorageSync('chatListIds') ||[];
-             
-              if (resLists.to_user_id == o){
-                chatListIds.splice(i,1);
-                wx.setStorageSync('chatListIds', chatListIds);
-              }
-                
-            
-            }
-          })
-          if(ii == 0){
-            resLists.isRead = false;
-            _this.data.lists.push(resLists);
-          }
-          _this.setData({
-            lists: _this.data.lists
-          })
+          _this.onShow();
+          // let ii = 0;
+          // console.log(_this.data.lists);
+          // console.log(resLists);
+          // _this.data.lists.forEach((o,i)=>{
+          //   if (resLists.fromUserId == o.to_user_id){
+          //     ii++;
+          //     _this.data.lists[i].userMessage.content = resLists.content;
+          //     _this.data.lists[i].userMessage.createTime = resLists.createTime
+          //     _this.data.lists[i].userMessage.sms_type = resLists.smsType;
+          //     _this.data.lists[i].isRead = true;
+          //     let chatListIds = wx.getStorageSync('chatListIds') ||[];
+          //     if (resLists.to_user_id == o){
+          //       chatListIds.splice(i,1);
+          //       wx.setStorageSync('chatListIds', chatListIds);
+          //     }
+          //   }
+          // })
+          // if(ii == 0){
+          //   resLists.isRead = false;
+          //   _this.data.lists.push(resLists);
+          // }
+          // _this.setData({
+          //   lists: _this.data.lists
+          // })
         }
         // resLists.forEach((o,i)=>{
         //   lists.push(o)
@@ -298,7 +306,7 @@ Page({
     
     wx.setStorageSync('chatListIds', oldArr);
     wx.navigateTo({
-      url: '../chat/chat?toUserId=' + toUserId + "&chatListIndex=" + chatListIndex,
+      url: '../chat1/chat?toUserId=' + toUserId + "&chatListIndex=" + chatListIndex,
     })
   }
 })

@@ -1,12 +1,6 @@
-const apiUrl = 'https://webapi.yidap.com';   // 测试
-//const apiUrl = 'https://apiv2.yidap.com';     // 正式
-const versionNumber = 'v3.0.1';  //版本号
+//const apiUrl = 'https://webapi.yidap.com';   // 测试
+const apiUrl = 'https://apiv2.yidap.com';     // 正式
 import md5 from "./md5.min.js";
-if (apiUrl == 'https://apiv2.yidap.com'){
-  wx.setStorageSync('v', versionNumber+' 正式');
-}else{
-  wx.setStorageSync('v', versionNumber+' 测试');
-}
 Promise.prototype.finally = function (callback) {
     let P = this.constructor;
     return this.then(
@@ -56,7 +50,7 @@ const myRequest = function (params = {}, url , id, st, page) {
             data.sign         = MakeSign(url, data);
             data.deviceId     = "wx";
             data.platformType =  "1";
-            data.versionCode  = '3.0';
+            data.versionCode  = '4.0';
             
         const token = wx.getStorageSync('token') || '';
         const token_type = wx.getStorageSync('token_type') || 'Bearer';
@@ -150,6 +144,7 @@ const getCacheMessage = (params) => myRequest(params, `${apiUrl}/socket/getCache
 
 
 module.exports = {
+  apiUrl,
   getCacheMessage,
   getMessageBySocket,
   getUserInfoformSocket

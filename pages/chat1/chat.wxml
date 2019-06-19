@@ -1,0 +1,71 @@
+<!-- <ad unit-id="adunit-e406b44681194b7e"></ad> -->
+
+<scroll-view upper-threshold="20" scroll-into-view="{{toView}}"  scroll-top="{{scrollTop}}" scroll-y="isScrollY" focus="{{mode}}" enable-back-to-top="true" style="height: {{scroll_height}}px;" bindscroll="bindscroll" class="message-list">
+  <view class='loding-img'>
+    <image  wx:if="{{noData && HideData.length>0 && EventData.length>0}}" src='./images/loading.gif'></image>
+    <view wx:if="{{!noData && HideData.length<=0 && EventData.length<=0}}">没有更多数据了</view>
+  </view>
+  <view id="hideview">
+    <!-- 每一行 -->
+    <view  class="row" wx:for="{{HideData}}" wx:key="index">
+      <!-- 日期 -->
+      <view class="datetime" wx:if="{{item.createTime != ''}}">{{item.createTime}}</view>
+      <!-- 头像与内容文本 -->
+      <view class="body" style="flex-flow: {{item.fromUserId != userId ? 'row' : 'row-reverse'}}">
+        <view class="avatar-container">
+          <image class="avatar" src="{{item.fromUserId != userId ?item.fromUserPhoto:item.toUserPhoto}}" />
+        </view>
+        <!-- 画三角箭头 -->
+        <view class="triangle" style="{{item.fromUserId == userId ? 'right: 140rpx; background: #7ECB4B' : 'left: 140rpx;'}}"></view>
+        <view class="content" style="{{item.fromUserId == userId ? 'background: #7ECB4B;left:5rpx;top:2rpx' : ''}}">
+          <image class="picture" wx:if="{{item.smsType == 'IMAGE'}}" src="{{item.content}}" mode="widthFix" bindtap="preview" data-src="{{item.content}}" />
+          <view wx:if="{{item.smsType == 'TEXT'}}">{{item.content}}</view>
+          <audio style='width:100px;height:20px' wx:if="{{item.smsType == 'VOICE'}}" bindtap="audioPlay" data-id="audio_{{index}}"
+          src="{{item.content}}"></audio>
+        </view>
+      </view>
+    </view>
+
+  </view>
+    
+  
+
+	<!-- 每一行 -->
+  <view id="showview">
+    <view class="row" wx:for="{{EventData}}"  wx:key="index"  id="row_{{index}}">
+		<!-- 日期 -->
+		<view class="datetime" wx:if="{{item.createTime != ''}}">{{item.createTime}}</view>
+		<!-- 头像与内容文本 -->
+		<view class="body" style="flex-flow: {{item.fromUserId != userId ? 'row' : 'row-reverse'}}">
+			<view class="avatar-container">
+				<image class="avatar" src="{{item.fromUserId != userId ?item.fromUserPhoto:item.toUserPhoto}}" />
+			</view>
+			<!-- 画三角箭头 -->
+			<view class="triangle" style="{{item.fromUserId == userId ? 'right: 140rpx; background: #7ECB4B' : 'left: 140rpx;'}}"></view>
+			<view class="content" style="{{item.fromUserId == userId ? 'background: #7ECB4B;left:5rpx;top:2rpx' : ''}}">
+				<image class="picture" wx:if="{{item.smsType == 'IMAGE'}}" src="{{item.content}}" mode="widthFix" bindtap="preview" data-src="{{item.content}}" />
+				<view wx:if="{{item.smsType == 'TEXT'}}">{{item.content}}</view>
+        <audio style='width:100px;height:20px' wx:if="{{item.smsType == 'VOICE'}}" bindtap="audioPlay" data-id="audio_{{index}}"
+        src="{{item.content}}"></audio>
+			</view>
+		</view>
+	</view>
+  </view>
+	
+</scroll-view>
+<view class="hud-container" wx:if="{{status != state.normal}}">
+	<view class="hud-background"></view>
+	<view class="hud-body">
+		<image src="./images/mic.png" />
+		<view class="tip {{status == state.cancel ? 'warning' : ''}}">{{tips[status]}}</view>
+	</view>
+</view>
+<view class="reply">
+	<image style='display:none' src="./images/{{mode ? 'voice' : 'text'}}.png" class="voice-image" bindtap="switchMode" />
+	<view class="opration-area">
+		<input wx:if="{{mode}}"  focus="{{inputShowed}}" confirm-hold="true" type="text" confirm-type="send" bindconfirm="reply" value="{{content}}" />
+		<button class="voice-button" bindlongtap="record" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" wx:else>{{tips[status]}}</button>
+	</view>
+	<image src="./images/image.png" class="choose-image" bindtap="chooseImage" />
+</view>
+<view style='height:100rpx;'></view>

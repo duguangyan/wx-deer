@@ -1,6 +1,6 @@
-const apiUrl = 'https://devv2.yidap.com';     // 测试
-// const apiUrl = 'https://apiv2.yidap.com';        // 正式
-const versionNumber = 'v3.0.1';  // 版本号
+ const apiUrl = 'https://devv2.yidap.com';     // 测试
+//const apiUrl = 'https://apiv2.yidap.com';        // 正式
+const versionNumber = 'v3.0.7';  // 版本号
 import md5 from "./md5.min.js";
 if (apiUrl == 'https://apiv2.yidap.com') {
   wx.setStorageSync('v', versionNumber + ' 正式');
@@ -60,7 +60,7 @@ const myRequest = function (params = {}, url) {
         data.sign = MakeSign(url, data);
         data.deviceId = "wx";
         data.platformType = "1";
-        data.versionCode = '3.0';
+        data.versionCode = '4.0';
         const access_token = wx.getStorageSync('access_token') || '';
 
         let header = { 'content-type': 'application/json',
@@ -87,7 +87,7 @@ const myRequest = function (params = {}, url) {
 
                         wx.showModal({
                             title: '提示',
-                            content: '您还没有使用权限，如果您是我们公司的找料员，请前往登录页登录使用系统',
+                            content: '您还没有使用权限，如果您是我们公司的找(送）料员，请前往登录页登录使用系统',
                             confirmText: '前往',
                             confirmColor: '#c81a29',
                             success: (res) => {
