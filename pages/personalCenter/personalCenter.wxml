@@ -7,7 +7,7 @@
             
             <view class="flex">
                 <image src="{{userInfo.avatar_path || '../../images/default_avatar.png'}}" class="mgr30" style="width:120rpx;height:120rpx;" />
-                <text class=" b600">{{userInfo.user_name}}</text>
+                <text class=" b600">{{ userInfo.nick_name|| userInfo.user_name}}</text>
             </view>
 
             <view class="flex fs24">
