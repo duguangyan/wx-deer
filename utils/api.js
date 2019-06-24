@@ -5,7 +5,6 @@ import md5 from "./md5.min.js";
 if (apiUrl == 'https://apiv2.yidap.com') {
   wx.setStorageSync('v', versionNumber + ' 正式');
 } else {
-
   wx.setStorageSync('v', versionNumber + ' 测试');
 }
 
