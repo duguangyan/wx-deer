@@ -57,7 +57,7 @@ const myRequest = function (params = {}, url) {
         let timestamp = Date.parse(new Date());
         let data = params.data || {};
         data.timestamp = timestamp;
-        data.sign = MakeSign(url, datadasdsdd
+        data.sign = MakeSign(url, data)
         data.deviceId = "wx";
         data.platformType = "2";
         data.versionCode = '4.0';
