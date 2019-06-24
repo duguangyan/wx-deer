@@ -13,6 +13,7 @@ function getCurrentTime() {
     return keep; //20160614134947
 }
 
+
 function objLength(input) {
     var type = toString(input);
     var length = 0;
