@@ -57,9 +57,9 @@ const myRequest = function (params = {}, url) {
         let timestamp = Date.parse(new Date());
         let data = params.data || {};
         data.timestamp = timestamp;
-        data.sign = MakeSign(url, data);
+        data.sign = MakeSign(url, datadasdsdd
         data.deviceId = "wx";
-        data.platformType = "1";
+        data.platformType = "2";
         data.versionCode = '4.0';
         const access_token = wx.getStorageSync('access_token') || '';
 

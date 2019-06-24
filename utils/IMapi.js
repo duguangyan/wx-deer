@@ -49,7 +49,7 @@ const myRequest = function (params = {}, url , id, st, page) {
             data.timestamp    = timestamp;
             data.sign         = MakeSign(url, data);
             data.deviceId     = "wx";
-            data.platformType =  "1";
+            data.platformType =  "2";
             data.versionCode  = '4.0';
             
         const token = wx.getStorageSync('token') || '';
