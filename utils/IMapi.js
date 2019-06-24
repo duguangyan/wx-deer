@@ -1,5 +1,6 @@
 //const apiUrl = 'https://webapi.yidap.com';   // 测试
-const apiUrl = 'https://apiv2.yidap.com';     // 正式
+//const apiUrl = 'https://apiv2.yidap.com';     // 正式
+const apiUrl = 'http://localhost:9331';
 import md5 from "./md5.min.js";
 Promise.prototype.finally = function (callback) {
     let P = this.constructor;
@@ -133,14 +134,14 @@ const myRequest = function (params = {}, url , id, st, page) {
 };
 
 // 根据用户ID获取用户信息
-const getUserInfoformSocket = (params) => myRequest(params, `${apiUrl}/socket/getUserInfo`);
+const getUserInfoformSocket = (params) => myRequest(params, `${apiUrl}/app/socket/getPhoto?userId=${params.data.userId}`);
 
 // 获取聊天记录
-const getMessageBySocket = (params) => myRequest(params, `${apiUrl}/socket/getMessage`);
+const getMessageBySocket = (params) => myRequest(params, `${apiUrl}/app/socket/getMessage`);
 
 
 // 未读消息
-const getCacheMessage = (params) => myRequest(params, `${apiUrl}/socket/getCacheMessage`);
+const getCacheMessage = (params) => myRequest(params, `${apiUrl}/app/socket/getCacheMessage`);
 
 
 module.exports = {

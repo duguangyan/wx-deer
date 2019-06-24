@@ -88,7 +88,7 @@ Page({
     }
     // this.getCacheMessage();
     let userId = wx.getStorageSync('userId');
-    let url = 'wss://webapi.yidapi.com.cn/notice/socket?userId=' + userId + '&openType=1';
+    let url = 'ws://192.168.11.113:9099/notice/socket?userId=' + userId + '&openType=1';
     console.log('连接用户ID：' + userId);
     console.log(url);
     app.globalData.socket = wx.connectSocket({ // im.yidap.com
@@ -104,7 +104,7 @@ Page({
       console.log(res);
       wx.onSocketMessage(function (res) {
         console.log("接收消息");
-        console.log(res);
+        console.log(JSON.parse(res.data));
         //let lists = _this.data.lists;
         
         let resLists = JSON.parse(res.data);
@@ -293,6 +293,8 @@ Page({
   goChat(e){
     let toUserId = e.currentTarget.dataset.id; 
     let chatListIndex    = e.currentTarget.dataset.index;
+    let fromUserPhoto = e.currentTarget.dataset.photo;
+    let userName = e.currentTarget.dataset.name;
     let oldArr = wx.getStorageSync('chatListIds') || [];
     if (oldArr.length > 0) {
       oldArr.forEach((o, i) => {
@@ -306,7 +308,7 @@ Page({
     
     wx.setStorageSync('chatListIds', oldArr);
     wx.navigateTo({
-      url: '../chat1/chat?toUserId=' + toUserId + "&chatListIndex=" + chatListIndex,
+      url: '../chat1/chat?toUserId=' + toUserId + "&chatListIndex=" + chatListIndex + "&fmUserName=" +userName + "&fromUserPhoto=" + fromUserPhoto
     })
   }
 })

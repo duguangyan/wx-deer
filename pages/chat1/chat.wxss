@@ -25,12 +25,13 @@
   display: flex;
   flex-direction: column;
   margin: 0 30rpx;
+  margin-bottom: 20rpx;
 }
 
 /*日期*/
 .datetime {
 	font-size: 10px;
-	padding: 10px 0;
+	margin-bottom: 10px;
 	color: #999;
 	text-align: center;
 }
@@ -42,7 +43,7 @@
 	align-items: flex-start;
 	justify-content: flex-start;
 	width: 100%;
-	margin-top: 10px;
+	/* margin-top: 10px; */
 }
 
 
@@ -192,4 +193,24 @@
 .hud-body .warning {
 	background: #cc3333;
 	border-radius: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 6rpx;
+  height: 6rpx;
+  color: transparent;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+-webkit-box-shadow: inset 0 0 20rpx rgba(0,0,0,0);
+border-radius: 20rpx;
+background-color: transparent;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+border-radius: 20rpx;
+-webkit-box-shadow: inset 0 0 20rpx rgba(0,0,0,.2);
+background-color: rgba(0,0,0,.2);
 }

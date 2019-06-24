@@ -9,7 +9,7 @@
     <!-- 每一行 -->
     <view  class="row" wx:for="{{HideData}}" wx:key="index">
       <!-- 日期 -->
-      <view class="datetime" wx:if="{{item.createTime != ''}}">{{item.createTime}}</view>
+      <view class="datetime" wx:if="{{item.timeInterval && item.timeInterval != ''}}">{{item.timeInterval}}</view>
       <!-- 头像与内容文本 -->
       <view class="body" style="flex-flow: {{item.fromUserId != userId ? 'row' : 'row-reverse'}}">
         <view class="avatar-container">
@@ -34,7 +34,7 @@
   <view id="showview">
     <view class="row" wx:for="{{EventData}}"  wx:key="index"  id="row_{{index}}">
 		<!-- 日期 -->
-		<view class="datetime" wx:if="{{item.createTime != ''}}">{{item.createTime}}</view>
+		<view class="datetime" wx:if="{{item.timeInterval && item.timeInterval != ''}}">{{item.timeInterval}}</view>
 		<!-- 头像与内容文本 -->
 		<view class="body" style="flex-flow: {{item.fromUserId != userId ? 'row' : 'row-reverse'}}">
 			<view class="avatar-container">
