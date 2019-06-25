@@ -23,7 +23,7 @@
 <!-- 自定义单选/多选/全选实现删除功能 -->
 <view class="chat-list">
     <view class="items">
-        <view wx:for="{{lists}}" wx:key="{{index}}" class="item" data-id='{{item.to_user_id}}' data-index='{{index}}' bindtap='goChat'>
+        <view wx:for="{{lists}}" wx:key="{{index}}" class="item" data-name='{{item.nick_name || item.user_name}}' data-photo='{{item.avatar_path}}' data-id='{{item.to_user_id}}' data-index='{{index}}' bindtap='goChat'>
             <view bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" 
             style="{{item.txtStyle}}" class="inner txt cf">
               <view class='fll item-1'>
@@ -31,11 +31,12 @@
                   <view wx:if="{{item.userMessage.sms_status == 1}}" class='spot'></view>
               </view>
               <view class='fll item-2'>
-                <view>{{item.nick_name || item.user_name}}</view>
-                <view class='ellipsis'>{{item.userMessage.sms_type=="TEXT"?item.userMessage.content:'图片'}}</view>
+                <view class='nickName'>{{item.nick_name || item.user_name}}</view>
+                <view class='ellipsis'>{{item.userMessage.sms_type=="TEXT"?item.userMessage.content:'[图片]'}}</view>
               </view>
               <view class='flr item-3'>
-               {{dateUtil.dateFormat(item.update_time)}}
+                {{item.userMessage.date_time}}
+               <!-- {{dateUtil.dateFormat(item.update_time)}} -->
               </view>
             </view>
             <view data-index="{{index}}" bindtap= "delItem" class="inner del">删除</view>

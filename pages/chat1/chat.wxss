@@ -24,13 +24,14 @@
 .row {
   display: flex;
   flex-direction: column;
-  margin: 0 30rpx;
+  margin: 0;
+  margin-bottom: 40rpx;
 }
 
 /*日期*/
 .datetime {
 	font-size: 10px;
-	padding: 10px 0;
+	margin-bottom: 10px;
 	color: #999;
 	text-align: center;
 }
@@ -42,7 +43,7 @@
 	align-items: flex-start;
 	justify-content: flex-start;
 	width: 100%;
-	margin-top: 10px;
+	/* margin-top: 10px; */
 }
 
 
@@ -61,7 +62,8 @@
 
 /*文本消息*/
 .body .content {
-	font-size: 32rpx;
+  display: inline-block;
+	font-size: 28rpx;
 	background: #fff;
 	border-radius: 10rpx;
 	padding: 20rpx;
@@ -70,6 +72,11 @@
   position: relative;
   left:-2rpx;
   top:6rpx;
+  word-break: break-all;
+  max-width: calc(85% - 140rpx);
+}
+.content-text {
+  width: 80%;
 }
 
 /* 三角箭头 */
@@ -82,9 +89,14 @@
 	position: absolute;
 }
 
+.msg-text {
+  font-size: 30rpx;
+}
+
 /*图片消息*/
 .picture {
-	width: 160px;
+	width: 130px;
+  border-radius: 10rpx;
 }
 
 /*回复框*/
@@ -192,4 +204,24 @@
 .hud-body .warning {
 	background: #cc3333;
 	border-radius: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 6rpx;
+  height: 6rpx;
+  color: transparent;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+-webkit-box-shadow: inset 0 0 20rpx rgba(0,0,0,0);
+border-radius: 20rpx;
+background-color: transparent;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+border-radius: 20rpx;
+-webkit-box-shadow: inset 0 0 20rpx rgba(0,0,0,.2);
+background-color: rgba(0,0,0,.2);
 }

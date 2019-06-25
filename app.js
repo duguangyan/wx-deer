@@ -1,6 +1,11 @@
-const api = require('./utils/api.js');
+
 let onfire = require('./utils/onfire.js');
+const api = require('./utils/api.js');
+const util = require('./utils/util.js');
 App({
+    data: {
+      initSocket: 0
+    },
     onLaunch: function () {
 
         // 版本更新
@@ -86,6 +91,7 @@ App({
         //     }
         //   }
         // })
+        
     },
 
     saveformid(form_id) {

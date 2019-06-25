@@ -37,6 +37,7 @@
   width: 450rpx;
   font-size: 32rpx;
   line-height: 50rpx;
+  margin-left: 12rpx;
 }
 .chat-list .items .item .item-2 .ellipsis{
   font-size: 28rpx;
@@ -50,10 +51,12 @@
   text-align: right;
   font-size: 24rpx;
   color: #999;
-  padding-right: 10rpx;
+  padding-right: 30rpx;
   line-height: 60rpx;
 }
-
+.nickName{
+  font-weight: 500;
+}
 
 
 /* 向左滑动实现删除操作 */
