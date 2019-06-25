@@ -179,7 +179,7 @@ Page({
     userInfoId = md5.md5(userInfoId);
 
     // im.yidap.com webapi.yidapi.com.cn
-    let url = 'wss://webapi.yidapi.com.cn/notice/socket?userId=' + userId + '&toUserId=' + this.data.toId + '&openType=1&sms=' + this.data.sms;
+    let url = 'wss://im.yidap.com/notice/socket?userId=' + userId + '&toUserId=' + this.data.toId + '&openType=1&sms=' + this.data.sms;
     console.log('连接用户ID：' + this.data.toId);
     console.log(url);
     app.globalData.socket = wx.connectSocket({

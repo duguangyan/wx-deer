@@ -88,7 +88,7 @@ Page({
     }
     // this.getCacheMessage();
     let userId = wx.getStorageSync('userId');
-    let url = 'wss://webapi.yidapi.com.cn/notice/socket?userId=' + userId + '&openType=1';
+    let url = 'wss://im.yidap.com/notice/socket?userId=' + userId + '&openType=1';
     console.log('连接用户ID：' + userId);
     console.log(url);
     app.globalData.socket = wx.connectSocket({ // im.yidap.com
