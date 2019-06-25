@@ -85,9 +85,10 @@ Component({
                   function uploadimg(files, i = 0) {
                       console.log('=============', files[i].url)
                       const access_token = wx.getStorageSync('access_token') || '';
+                      
                       // 上传图片，返回链接地址跟id,返回进度对象
                       let uploadTask = wx.uploadFile({
-                          url: `${api.apiUrl}/api/upload/simpleUpload`,
+                          url: `${api.apiUrl}/api/upload`,
                           filePath: files[i].url,
                           name: 'file',
                           header: {

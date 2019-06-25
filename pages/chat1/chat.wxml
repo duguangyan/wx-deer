@@ -16,13 +16,16 @@
           <image class="avatar" src="{{item.fromUserId != userId ?item.fromUserPhoto:item.toUserPhoto}}" />
         </view>
         <!-- 画三角箭头 -->
-        <view class="triangle" style="{{item.fromUserId == userId ? 'right: 140rpx; background: #7ECB4B' : 'left: 140rpx;'}}"></view>
-        <view class="content" style="{{item.fromUserId == userId ? 'background: #7ECB4B;left:5rpx;top:2rpx' : ''}}">
-          <image class="picture" wx:if="{{item.smsType == 'IMAGE'}}" src="{{item.content}}" mode="widthFix" bindtap="preview" data-src="{{item.content}}" />
-          <view wx:if="{{item.smsType == 'TEXT'}}">{{item.content}}</view>
-          <audio style='width:100px;height:20px' wx:if="{{item.smsType == 'VOICE'}}" bindtap="audioPlay" data-id="audio_{{index}}"
-          src="{{item.content}}"></audio>
-        </view>
+        <block wx:if="{{item.smsType == 'TEXT'}}">
+          <view class="triangle" style="{{item.fromUserId == userId ? 'right: 110rpx; background: #7ECB4B' : 'left: 110rpx;'}}"></view>
+          <view class="content" style="{{item.fromUserId == userId ? 'background: #7ECB4B;left:5rpx;top:2rpx' : ''}}">
+            <text class="msg-text" wx:if="{{item.smsType == 'TEXT'}}">{{item.content}}</text>
+            <!-- <view class="content-text" wx:if="{{item.smsType == 'TEXT'}}">{{item.content}}</view> -->
+            <audio style='width:100px;height:20px' wx:if="{{item.smsType == 'VOICE'}}" bindtap="audioPlay" data-id="audio_{{index}}"
+            src="{{item.content}}"></audio>
+          </view>
+        </block>
+        <image class="picture" wx:if="{{item.smsType == 'IMAGE'}}" src="{{item.content}}" mode="widthFix" bindtap="preview" data-src="{{item.content}}" />
       </view>
     </view>
 
@@ -41,13 +44,15 @@
 				<image class="avatar" src="{{item.fromUserId != userId ?item.fromUserPhoto:item.toUserPhoto}}" />
 			</view>
 			<!-- 画三角箭头 -->
-			<view class="triangle" style="{{item.fromUserId == userId ? 'right: 140rpx; background: #7ECB4B' : 'left: 140rpx;'}}"></view>
-			<view class="content" style="{{item.fromUserId == userId ? 'background: #7ECB4B;left:5rpx;top:2rpx' : ''}}">
-				<image class="picture" wx:if="{{item.smsType == 'IMAGE'}}" src="{{item.content}}" mode="widthFix" bindtap="preview" data-src="{{item.content}}" />
-				<view wx:if="{{item.smsType == 'TEXT'}}">{{item.content}}</view>
-        <audio style='width:100px;height:20px' wx:if="{{item.smsType == 'VOICE'}}" bindtap="audioPlay" data-id="audio_{{index}}"
-        src="{{item.content}}"></audio>
-			</view>
+      <block wx:if="{{item.smsType == 'TEXT'}}">
+        <view class="triangle" style="{{item.fromUserId == userId ? 'right: 110rpx; background: #7ECB4B' : 'left: 110rpx;'}}"></view>
+        <view class="content" wx:if="{{item.smsType == 'TEXT'}}" style="{{item.fromUserId == userId ? 'background: #7ECB4B;left:5rpx;top:2rpx' : ''}}">
+          <text class="msg-text" wx:if="{{item.smsType == 'TEXT'}}">{{item.content}}</text>
+          <audio style='width:100px;height:20px' wx:if="{{item.smsType == 'VOICE'}}" bindtap="audioPlay" data-id="audio_{{index}}"
+          src="{{item.content}}"></audio>
+        </view>
+      </block>
+      <image class="picture" wx:if="{{item.smsType == 'IMAGE'}}" src="{{item.content}}" mode="widthFix" bindtap="preview" data-src="{{item.content}}" />
 		</view>
 	</view>
   </view>

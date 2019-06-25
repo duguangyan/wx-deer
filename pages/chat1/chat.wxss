@@ -24,8 +24,8 @@
 .row {
   display: flex;
   flex-direction: column;
-  margin: 0 30rpx;
-  margin-bottom: 20rpx;
+  margin: 0;
+  margin-bottom: 40rpx;
 }
 
 /*日期*/
@@ -62,7 +62,8 @@
 
 /*文本消息*/
 .body .content {
-	font-size: 32rpx;
+  display: inline-block;
+	font-size: 28rpx;
 	background: #fff;
 	border-radius: 10rpx;
 	padding: 20rpx;
@@ -71,6 +72,11 @@
   position: relative;
   left:-2rpx;
   top:6rpx;
+  word-break: break-all;
+  max-width: calc(85% - 140rpx);
+}
+.content-text {
+  width: 80%;
 }
 
 /* 三角箭头 */
@@ -83,9 +89,14 @@
 	position: absolute;
 }
 
+.msg-text {
+  font-size: 30rpx;
+}
+
 /*图片消息*/
 .picture {
-	width: 160px;
+	width: 130px;
+  border-radius: 10rpx;
 }
 
 /*回复框*/

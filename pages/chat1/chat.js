@@ -13,13 +13,13 @@ const md5 = require('../../utils/md5.js');
 var app = getApp();
 Page({
   data: {
-    isFalse:false,
-    inputShowed:false,
-    isConfirmHold:true,
-    isScrollY:true,
-    toId:'',
-    sms:0,
-    baseUrl:'https://webapi.yidap.com',
+    isFalse: false,
+    inputShowed: false,
+    isConfirmHold: true,
+    isScrollY: true,
+    toId: '',
+    sms: 0,
+    baseUrl: 'https://webapi.yidap.com',
     message_list: [],
     scroll_height: wx.getSystemInfoSync().windowHeight,
     page_index: 0,
@@ -33,37 +33,36 @@ Page({
       'cancel': 2
     },
     toView: '',
-    userId:'',
-    to_avatar_path:'https://static.yidap.com/miniapp/o2o/imgs/collection@2x.png',
-    currentPage:2,
-    pageSize:10,
-    scrollLoading:0,
-    HideData:[],
-    EventData :[],
-    NoMoreEvent:0,
-    noData:true,
-    fromUserPhoto: ''
+    userId: '',
+    to_avatar_path: 'https://static.yidap.com/miniapp/o2o/imgs/collection@2x.png',
+    currentPage: 2,
+    pageSize: 10,
+    scrollLoading: 0,
+    HideData: [],
+    EventData: [],
+    NoMoreEvent: 0,
+    noData: true
   },
 
-  bindscrolltoupper1(){
+  bindscrolltoupper1() {
     let _this = this;
-    
+
     if (_this.data.scrollLoading == 1) { //防止多次触发
       return false
     }
-    
+
     _this.data.scrollLoading = 1;
     let currentPage = this.data.currentPage++;
     let pageSize = this.data.pageSize;
     console.log('currentPage:' + currentPage);
-   
-    wx.showNavigationBarLoading();  
+
+    wx.showNavigationBarLoading();
     let createTime = util.getNowFormatDate(new Date());
     let avatar_path = wx.getStorageSync("avatar_path");
     let fromUserId = wx.getStorageSync('userId');
     let toUserId = this.data.toId;
     let userInfoId = fromUserId < toUserId ? (fromUserId.toString() + toUserId.toString()) : (toUserId.toString() + fromUserId.toString());
-    let message = { fromUserId, toUserId, userInfoId, content:'1', createTime, smsType: 'TEXT', sysType: 1, smsStatus: 0, toUserPhoto: avatar_path, fromUserPhoto: 'https://ossyidap.oss-cn-shenzhen.aliyuncs.com/image/png/9EAFE4BFEFDDF762718332C8F1BE9F2C.png', smsList: false, currentPage, pageSize }
+    let message = { fromUserId, toUserId, userInfoId, content: '1', createTime, smsType: 'TEXT', sysType: 1, smsStatus: 0, toUserPhoto: avatar_path, fromUserPhoto: 'https://ossyidap.oss-cn-shenzhen.aliyuncs.com/image/png/9EAFE4BFEFDDF762718332C8F1BE9F2C.png', smsList: false, currentPage, pageSize }
     console.log('下拉message：', message);
     wx.sendSocketMessage({
       data: JSON.stringify(message),
@@ -73,7 +72,7 @@ Page({
       fail() {
         console.log('sendSocketMessage:失败了');
       },
-      complete(){
+      complete() {
         wx.hideNavigationBarLoading();    //在当前页面隐藏导航条加载动画
         wx.stopPullDownRefresh();
       }
@@ -82,94 +81,103 @@ Page({
   onPullDownRefresh: function () {
     //this.bindscrolltoupper1();
   },
-  bindscroll (e) {
-    console.log(this.data.scrollLoading);
+  bindscroll(e) {
+    console.log('bindscroll', this.data.scrollLoading);
     var that = this;
     if (that.data.scrollLoading == 1) { //防止多次触发
       return false
     }
-    if (!that.data.noData){
+    if (!that.data.noData) {
       return false;
     }
     if (e.detail.scrollTop <= 10) { //触发触顶事件
-    
+
       console.log('触发顶部事件', e.detail.scrollTop)
-      
-      　　　　//获取隐藏的view 高度
+
+      //获取隐藏的view 高度
       var query = wx.createSelectorQuery();
       query.select('#hideview').boundingClientRect()
-      
+
       query.exec(function (res) {
         var EventData = that.data.EventData //此数据为展示的数据
         var HideData = that.data.HideData　　//此数据为隐藏数据
         EventData = HideData.concat(that.data.EventData)  //拼接数据
         if (HideData == '' || !HideData) {  //判断是否隐藏数据为空
-        that.setData({
-          NoMoreEvent: 1,
-          scrollTop: 0,
-        })
-        return false
-      }
+          that.setData({
+            NoMoreEvent: 1,
+            scrollTop: 0,
+          })
+          return false
+        }
         let n = that.data.totalSize - that.data.EventData.length - that.data.HideData.length;
-      if(n<10){
-        setTimeout(() => {  //自行选择是否定时进行加载
-          that.setData({
-            EventData: EventData,
-          })
-          that.bindscrolltoupper1()　　//请求新的数据
-        }, 1000)
-      }else{
-        setTimeout(() => {  //自行选择是否定时进行加载
-          that.setData({
-            EventData: EventData,
-            scrollTop: res[0].height,
-          })
-          that.bindscrolltoupper1()　　//请求新的数据
+        if (n < 10) {
+          setTimeout(() => {  //自行选择是否定时进行加载
+            that.setData({
+              EventData: EventData,
+            })
+            that.bindscrolltoupper1()　　//请求新的数据
+          }, 1000)
+        } else {
+          setTimeout(() => {  //自行选择是否定时进行加载
+            that.setData({
+              EventData: EventData,
+              scrollTop: res[0].height,
+            })
+            that.bindscrolltoupper1()　　//请求新的数据
 
-        }, 1000)
-      }
-      
-    })
-    
+          }, 1000)
+        }
+
+      })
+
     }
   },
-  onLoad(options){
-    if (options.id){
+  onLoad(options) {
+    if (options.id) {
       this.data.toId = options.id
-    }else{
+    } else {
       this.data.toId = options.toUserId
     }
     wx.setNavigationBarTitle({
-      title: options.fmUserName
+      title: options.fmUserName,
     })
+    // IMapi.getPhotoByIM({
+    //   method:'POST',
+    //   data:{
+    //     userId: parseInt(this.data.toId) 
+    //   }
+    // }).then((res)=>{
+    //   
+    // })
     this.setData({
       toId: this.data.toId,
-      fromUserPhoto:options.fromUserPhoto ? options.fromUserPhoto : 'https://ossyidap.oss-cn-shenzhen.aliyuncs.com/image/png/9EAFE4BFEFDDF762718332C8F1BE9F2C.png'
+      fromUserPhoto: options.fromUserPhoto ? options.fromUserPhoto : 'https://ossyidap.oss-cn-shenzhen.aliyuncs.com/image/png/9EAFE4BFEFDDF762718332C8F1BE9F2C.png'
     })
+
   },
   onPageScroll: function (res) {
     console.log(res);
   },
-  onHide(){
+  onHide() {
     console.log('onHide');
   },
-  onUnload(){
+  onUnload() {
     console.log('onUnload');
     wx.closeSocket();
   },
   // 连接socket
-  getSocket(){
+  getSocket() {
     let _this = this;
     // this.getUserInfoformSocket();
     // this.getMessageBySocket();
     let userId = wx.getStorageSync("userId");
-    
+
     this.setData({
       userId
     })
-    let userInfoId = userId > this.data.toId ? (this.data.toId + "") + (userId + "") : (userId + "") + (this.data.toId + "") ;
+    let userInfoId = userId > this.data.toId ? (this.data.toId + "") + (userId + "") : (userId + "") + (this.data.toId + "");
     userInfoId = md5.md5(userInfoId);
-    
+
     // im.yidap.com webapi.yidapi.com.cn
     let url = 'ws://192.168.11.113:9099/notice/socket?userId=' + userId + '&toUserId=' + this.data.toId + '&openType=1&sms=' + this.data.sms;
     console.log('连接用户ID：' + this.data.toId);
@@ -194,16 +202,16 @@ Page({
     wx.onSocketOpen(function (res) {
       console.log("onSocketOpen:连接上了");
       _this.setData({
-        noData:false
+        noData: false
       })
       wx.onSocketMessage(function (res) {
-        
+
         console.log("接收消息");
         console.log('-->', JSON.parse(res.data));
         let HideData = _this.data.HideData;
         let EventData = _this.data.EventData;
-        let arr      = [];
-        
+        let arr = [];
+
         if (JSON.parse(res.data).currentPage != undefined) {
           _this.data.totalSize = JSON.parse(res.data).totalSize;
           let dataTjson = JSON.parse(res.data).list;
@@ -223,21 +231,21 @@ Page({
                 toUserPhoto: avatar_path,
                 timeInterval: o.time_interval
               }
-               arr.push(obj);
+              arr.push(obj);
 
             })
             console.log(_this.data.currentPage);
-            if (_this.data.currentPage>2){
+            if (_this.data.currentPage > 2) {
               _this.setData({
                 HideData: arr,
                 noData: true
               })
             }
-            
-             HideData = arr.concat(HideData);
-          }else{
+
+            HideData = arr.concat(HideData);
+          } else {
             _this.setData({
-              noData:false
+              noData: false
             })
             return false;
           }
@@ -256,10 +264,10 @@ Page({
 
 
           let n = _this.data.totalSize - _this.data.EventData.length - _this.data.HideData.length;
-          
-          if( n  == 0){
+
+          if (n == 0) {
             _this.setData({
-              noData:false
+              noData: false
             })
             var query = wx.createSelectorQuery();
             query.select('#hideview').boundingClientRect();
@@ -269,23 +277,23 @@ Page({
               })
             })
           }
-          
-          
+
+
         } else { // 单条数据
-          
+
           let o = JSON.parse(res.data);
           if (o.userInfoId == userInfoId) {
             o.fromUserPhoto = _this.data.fromUserPhoto;
             o.createTime = util.formatDate(o.createTime)
             _this.data.EventData.push(o);
           }
-          
+
           _this.setData({
             EventData: _this.data.EventData
           })
           _this.scrollToBottom();
         }
-        
+
         if (_this.data.currentPage <= 2) {
           setTimeout(() => {
             _this.bindscrolltoupper1();
@@ -293,13 +301,13 @@ Page({
         }
         // 放开滚动置顶
         _this.data.scrollLoading = 0;
-        
+
       })
 
 
     })
   },
-  onShow(){
+  onShow() {
     if (app.globalData.socket) {
       wx.closeSocket();
     }
@@ -307,26 +315,26 @@ Page({
     // setTimeout(()=>{
     //   this.bindscrolltoupper1();
     // },1000)
-    
+
   },
-  getMessageBySocket(){
+  getMessageBySocket() {
     let data = {}
     data.userId = wx.getStorageSync("userId");
     IMapi.getMessageBySocket({
-      method:'POST',
+      method: 'POST',
       data
-    }).then((res)=>{
+    }).then((res) => {
 
     })
   },
-  getUserInfoformSocket(){
+  getUserInfoformSocket() {
     let _this = this;
     let data = {};
     data.userId = wx.getStorageSync("userId");
     IMapi.getUserInfoformSocket({
-      method:'POST',
+      method: 'POST',
       data
-    }).then((res)=>{
+    }).then((res) => {
       this.setData({
         to_avatar_path: res.avatar_path
       })
@@ -340,8 +348,8 @@ Page({
 
   reply: function (e) {
     let _this = this;
-    
-    var content = e ? e.detail.value : this.data.content; 
+
+    var content = e ? e.detail.value : this.data.content;
     this.data.content = content;
     if (content == '') {
       wx.showToast({
@@ -349,42 +357,42 @@ Page({
       });
       return;
     }
-    var EventData  = this.data.EventData ;
+    var EventData = this.data.EventData;
     // 发送消息
-    let createTime  = util.getNowFormatDate(new Date());
+    let createTime = util.getNowFormatDate(new Date());
     let avatar_path = wx.getStorageSync("avatar_path");
-    let fromUserId  = wx.getStorageSync('userId');
-    let toUserId    = this.data.toId;
-    
-    let userInfoId = fromUserId < toUserId ?( fromUserId.toString() + toUserId.toString() ): ( toUserId.toString() + fromUserId.toString() );
+    let fromUserId = wx.getStorageSync('userId');
+    let toUserId = this.data.toId;
+
+    let userInfoId = fromUserId < toUserId ? (fromUserId.toString() + toUserId.toString()) : (toUserId.toString() + fromUserId.toString());
 
     let message = { fromUserId, toUserId, userInfoId, content, createTime, smsType: 'TEXT', sysType: 1, smsStatus: 1, toUserPhoto: avatar_path, fromUserPhoto: _this.data.fromUserPhoto, smsList: false, currentPage: '', pageSize: '' }
-    wx.sendSocketMessage({ 
-      data: JSON.stringify(message) ,
-      success(){
+    wx.sendSocketMessage({
+      data: JSON.stringify(message),
+      success() {
         console.log('sendSocketMessage:成功了');
         EventData.push(message);
         console.log(EventData);
-        
+
         message.fromUserPhoto = avatar_path;
         _this.setData({
-          inputShowed:true,
-          EventData : EventData ,
+          inputShowed: true,
+          EventData: EventData,
           content: '' // 清空输入框文本
         })
       },
-      fail(){
+      fail() {
         console.log('sendSocketMessage:失败了')
         _this.data.sms = 1;
         _this.onShow();
       }
     })
     console.log('EventData -->');
-    console.log(this.data.EventData );
-    setTimeout(()=>{
+    console.log(this.data.EventData);
+    setTimeout(() => {
       this.scrollToBottom();
-    },100)
-    
+    }, 100)
+
   },
   chooseImage: function () {
     // 选择图片供上传
@@ -392,12 +400,12 @@ Page({
       count: 9,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success:  res => {
+      success: res => {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         var tempFilePaths = res.tempFilePaths;
         // console.log(tempFilePaths);
         // 遍历多图
-        tempFilePaths.forEach( (tempFilePath) => {
+        tempFilePaths.forEach((tempFilePath) => {
           this.upload(tempFilePath, 'image');
         });
       }
@@ -440,7 +448,7 @@ Page({
 
       }
     })
-   
+
   },
   stop: function () {
     wx.stopRecord();
@@ -478,6 +486,7 @@ Page({
     this.stop();
   },
   upload: function (tempFilePath, type) {
+    
     let _this = this;
     // 开始上传
     wx.showLoading({
@@ -502,16 +511,16 @@ Page({
 
     // 上传图片，返回链接地址跟id,返回进度对象
     let message = '';
-    if (type == 'image'){
+    if (type == 'image') {
       const access_token = wx.getStorageSync('access_token') || '';
       let data = {};
       data.file = '[object Object]';
       data.type = 'big';
       let timestamp = Date.parse(new Date());
       data.timestamp = timestamp;
-      data.sign = util.MakeSign(api.apiUrl+'/api/upload', data);
+      data.sign = util.MakeSign(api.apiUrl + '/api/upload', data);
       data.deviceId = "wx";
-      data.platformType = "2";
+      data.platformType = "1";
       data.versionCode = '4.0';
       let uploadTask = wx.uploadFile({
         url: `${api.apiUrl}/api/upload`,
@@ -528,35 +537,32 @@ Page({
           var res = JSON.parse(res.data);
           if (200 === res.code || 0 === res.code) {
             // 发送消息
-            let createTime  = util.getNowFormatDate(new Date());
+            let createTime = util.getNowFormatDate(new Date());
             let avatar_path = wx.getStorageSync("avatar_path");
-            let fromUserId  = wx.getStorageSync('userId');
-            let toUserId    = this.data.toId;
-            let userInfoId  = fromUserId < toUserId ? (fromUserId.toString() + toUserId.toString()) : (toUserId.toString() + fromUserId.toString());
-            let content     = res.data;
+            let fromUserId = wx.getStorageSync('userId');
+            let toUserId = this.data.toId;
+            let userInfoId = fromUserId < toUserId ? (fromUserId.toString() + toUserId.toString()) : (toUserId.toString() + fromUserId.toString());
+            let content = res.data;
             let message = { fromUserId, toUserId, userInfoId, content, createTime, smsType: 'IMAGE', sysType: 1, smsStatus: 1, toUserPhoto: avatar_path, fromUserPhoto: _this.data.fromUserPhoto, smsList: false, currentPage: '', pageSize: '' }
 
-            var EventData  = _this.data.EventData ;
-            
-            wx.sendSocketMessage({ 
+            var EventData = _this.data.EventData;
+
+            wx.sendSocketMessage({
               data: JSON.stringify(message),
-              success(){
-               
+              success() {
+
                 EventData.push(message);
-                
+
                 _this.setData({
-                  EventData: EventData 
+                  EventData: EventData
                 })
               },
-              fail(){
+              fail() {
                 console.log('sendSocketMessage:失败了')
                 _this.data.sms = 1;
                 _this.onShow();
               }
             })
-    
-            
-            
           } else {
             util.errorTips('上传错误');
           }

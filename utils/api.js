@@ -1,4 +1,4 @@
- const apiUrl = 'https://devv2.yidap.com';     // 测试
+const apiUrl = 'https://devv2.yidap.com';     // 测试
 //const apiUrl = 'https://apiv2.yidap.com';        // 正式
 const versionNumber = 'v3.0.7';  // 版本号
 import md5 from "./md5.min.js";
@@ -57,7 +57,7 @@ const myRequest = function (params = {}, url) {
         let timestamp = Date.parse(new Date());
         let data = params.data || {};
         data.timestamp = timestamp;
-        data.sign = MakeSign(url, datadasdsdd
+        data.sign = MakeSign(url, data)
         data.deviceId = "wx";
         data.platformType = "2";
         data.versionCode = '4.0';

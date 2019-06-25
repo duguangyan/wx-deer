@@ -1,5 +1,7 @@
-const api = require('./utils/api.js');
+
 let onfire = require('./utils/onfire.js');
+const api = require('./utils/api.js');
+const util = require('./utils/util.js');
 App({
     data: {
       initSocket: 0
@@ -89,7 +91,7 @@ App({
         //     }
         //   }
         // })
-        this.initSocket()
+        
     },
 
     saveformid(form_id) {
@@ -110,58 +112,6 @@ App({
         // })
     },
     globalData: {
-        userInfo: null,
-        localSocket: {},
-        callback: function() {}
-    },
-    initSocket() {
-      let that = this
-      let userId = wx.getStorageSync('userId')
-      console.log('app用户id',userId)
-      that.globalData.localSocket = wx.connectSocket({
-        url: 'ws://192.168.11.113:9099/notice/socket?userId=' + userId +'&openType=1&sms=1',
-      })
-
-      that.globalData.localSocket.onOpen(function(res) {
-        console.log('WebSocket连接已打开！readyState=' + that.globalData.localSocket.readyState)
-      })
-
-      that.globalData.localSocket.onError(function (res) {
-        console.log('readyState=' + that.globalData.localSocket.readyState)
-      })
-
-      that.globalData.localSocket.onClose(function (res) {
-        console.log('WebSocket连接已关闭！readyState=' + that.globalData.localSocket.readyState)
-        if (that.data.initSocket <= 2) {
-          that.initSocket()
-          that.data.initSocket++
-        } else {
-          console.log('连接次数超出限制')
-        }
-      })
-      
-      that.globalData.localSocket.onMessage(function (res) {
-        // 用于在其他页面监听 websocket 返回的消息
-        that.globalData.callback(res)
-      })
-    },
-    sendSocketMessage: function(res) {
-      let that = this
-      return new Promise((resolve, reject) => {
-        if (that.globalData.localSocket.readyState == 1) {
-          console.log('发送消息', res)
-          that.globalData.localSocket.send({
-            data: res,
-            success: function(res) {
-              resolve(res)
-            },
-            fail: function(e) {
-              reject(e)
-            }
-          })
-        } else {
-          console.log('连接已断开')
-        }
-      })
+        userInfo: null
     }
 })
