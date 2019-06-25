@@ -1,6 +1,6 @@
-//const apiUrl = 'https://webapi.yidap.com';   // 测试
+const apiUrl = 'https://webapi.yidap.com';   // 测试
 //const apiUrl = 'https://apiv2.yidap.com';     // 正式
-const apiUrl = 'http://localhost:9331';
+//const apiUrl = 'http://localhost:9331';
 import md5 from "./md5.min.js";
 Promise.prototype.finally = function (callback) {
     let P = this.constructor;

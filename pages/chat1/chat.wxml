@@ -18,7 +18,7 @@
         <!-- 画三角箭头 -->
         <block wx:if="{{item.smsType == 'TEXT'}}">
           <view class="triangle" style="{{item.fromUserId == userId ? 'right: 110rpx; background: #7ECB4B' : 'left: 110rpx;'}}"></view>
-          <view class="content" style="{{item.fromUserId == userId ? 'background: #7ECB4B;left:5rpx;top:2rpx' : ''}}">
+          <view class="msg-content" style="{{item.fromUserId == userId ? 'background: #7ECB4B;left:5rpx;' : ''}}">
             <text class="msg-text" wx:if="{{item.smsType == 'TEXT'}}">{{item.content}}</text>
             <!-- <view class="content-text" wx:if="{{item.smsType == 'TEXT'}}">{{item.content}}</view> -->
             <audio style='width:100px;height:20px' wx:if="{{item.smsType == 'VOICE'}}" bindtap="audioPlay" data-id="audio_{{index}}"
@@ -46,7 +46,7 @@
 			<!-- 画三角箭头 -->
       <block wx:if="{{item.smsType == 'TEXT'}}">
         <view class="triangle" style="{{item.fromUserId == userId ? 'right: 110rpx; background: #7ECB4B' : 'left: 110rpx;'}}"></view>
-        <view class="content" wx:if="{{item.smsType == 'TEXT'}}" style="{{item.fromUserId == userId ? 'background: #7ECB4B;left:5rpx;top:2rpx' : ''}}">
+        <view class="msg-content" wx:if="{{item.smsType == 'TEXT'}}" style="{{item.fromUserId == userId ? 'background: #7ECB4B;left:5rpx;' : ''}}">
           <text class="msg-text" wx:if="{{item.smsType == 'TEXT'}}">{{item.content}}</text>
           <audio style='width:100px;height:20px' wx:if="{{item.smsType == 'VOICE'}}" bindtap="audioPlay" data-id="audio_{{index}}"
           src="{{item.content}}"></audio>

@@ -6,6 +6,7 @@
    width: 100%;
    background: rgb(235, 235, 235);
    text-align: center;
+   margin-bottom: 40rpx;
  }
 .loding-img image{
   width: 60rpx;
@@ -25,13 +26,13 @@
   display: flex;
   flex-direction: column;
   margin: 0;
-  margin-bottom: 40rpx;
+  /* margin-bottom: 40rpx; */
 }
 
 /*日期*/
 .datetime {
 	font-size: 10px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 	color: #999;
 	text-align: center;
 }
@@ -61,17 +62,17 @@
 }
 
 /*文本消息*/
-.body .content {
+.body .msg-content {
   display: inline-block;
 	font-size: 28rpx;
 	background: #fff;
 	border-radius: 10rpx;
 	padding: 20rpx;
 	line-height: 44rpx;
-	margin-bottom: 20rpx;
+	margin-bottom: 40rpx;
   position: relative;
   left:-2rpx;
-  top:6rpx;
+  top:-4rpx;
   word-break: break-all;
   max-width: calc(85% - 140rpx);
 }
@@ -97,6 +98,7 @@
 .picture {
 	width: 130px;
   border-radius: 10rpx;
+  margin-bottom: 40rpx;
 }
 
 /*回复框*/
